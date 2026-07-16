@@ -12,13 +12,43 @@ here is guaranteed to actually compile.
 
 <div class="vp-doc">
 
+**Modeling & Types**
+
+| Page | Focus |
+| --- | --- |
+| [Make Illegal States Unrepresentable](./modeling-with-unions) | Discriminated unions and state machines that make bad states impossible to type, so they need no runtime checks. |
+| [Derive Types with `typeof`](./derive-types-with-typeof) | Using `ReturnType`, `Parameters`, `Awaited`, and plain `typeof` to derive types from real functions and values instead of hand-writing types that drift. |
+| [Const Assertions & Enum Alternatives](./const-assertions-and-enums) | `as const` for literal/`readonly` inference, and the recommended `as const` object over native `enum`. |
+| [Template Literal Types](./template-literal-types) | Giving strings real structure - typed ids, generated combinations, and route params parsed at the type level. |
+
+**Type-Level Programming**
+
+| Page | Focus |
+| --- | --- |
+| [Generics In-Depth](./generics-in-depth) | Inference over explicit type args, minimal constraints, and conditional types with `infer`. |
+| [Mapped & Conditional Types](./mapped-and-conditional-types) | Building your own utility types with key remapping, modifiers, and recursion. |
+| [Function Signatures & Overloads](./function-signatures) | Union params vs overloads vs conditional returns, and assertion signatures. |
+
+**Safety & Correctness**
+
+| Page | Focus |
+| --- | --- |
+| [Exhaustive Checks with `never`](./exhaustive-checks-with-never) | Making the compiler fail the build when a union/enum grows a new member and a `switch` wasn't updated to match. |
+| [Type-Safe Validation](./type-safe-validation) | Type guards, branded/nominal types, and `satisfies` for validating `unknown` data without losing precision. |
+| [Error Handling & Result Types](./error-handling) | Putting expected failures in the return type with `Result<T, E>`, and narrowing `unknown` in `catch`. |
+
+**Runtime Patterns**
+
 | Page | Focus |
 | --- | --- |
 | [Event Listeners with Classes](./event-listeners-with-classes) | Correct `this` binding for handlers, bulk cleanup with `AbortController`, and strongly-typed custom event emitters. |
-| [Derive Types with `typeof`](./derive-types-with-typeof) | Using `ReturnType`, `Parameters`, `Awaited`, and plain `typeof` to derive types from real functions and values instead of hand-writing types that can drift out of sync. |
-| [Exhaustive Checks with `never`](./exhaustive-checks-with-never) | Making the compiler fail the build when a union/enum grows a new member and a `switch` wasn't updated to match. |
-| [Type-Safe Validation](./type-safe-validation) | Type guards, branded/nominal types, and `satisfies` for validating `unknown` data and enum-like values without losing precision. |
-| [General Best Practices](./general-best-practices) | `strict` mode, `unknown` vs `any`, `readonly`/`as const`, utility types, generic constraints, discriminated unions, naming and module organization. |
+| [Async & Promise Patterns](./async-and-promises) | Avoiding floating promises, parallel vs sequential work, and choosing the right Promise combinator by its result type. |
+
+**Reference**
+
+| Page | Focus |
+| --- | --- |
+| [General Best Practices](./general-best-practices) | `strict` mode, `unknown` vs `any`, `readonly`/`as const`, utility types, generic constraints, naming and module organization. |
 
 </div>
 

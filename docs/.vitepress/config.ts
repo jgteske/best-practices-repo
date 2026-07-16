@@ -6,6 +6,11 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
 
+  // Served from https://jgteske.github.io/best-practices-repo/ on GitHub Pages,
+  // so every asset/link must be prefixed with the repo name. Override with the
+  // DOCS_BASE env var (e.g. "/" ) if you deploy to a custom domain or user site.
+  base: process.env.DOCS_BASE ?? "/best-practices-repo/",
+
   themeConfig: {
     nav: [
       { text: "Guide", link: "/guide/" },

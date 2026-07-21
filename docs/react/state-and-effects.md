@@ -36,12 +36,29 @@ changes "too often," fix the *cause* (memoize it, move it into the effect, or
 use a functional state update), don't delete it from the array.
 :::
 
+## Cancel with AbortController
+
+The `ignore` flag above prevents the race, but the stale request still runs to
+completion - it downloads a response nobody will read. Pass the effect's
+`AbortSignal` to `fetch` instead and the cleanup truly **cancels** the request.
+
+<<< ../../examples/react/state-effects/abortable-effect.tsx
+
+Cleanup creates one `AbortController` per effect run and calls `abort()` when
+`userId` changes or the component unmounts. A cancelled `fetch` rejects with an
+`"AbortError"`, which is *expected* here - so the `.catch` swallows it and only
+real failures reach the error state. This is the same signal-threading pattern
+covered end to end in
+[Cancellation & AbortSignal](../typescript/cancellation-and-signals) on the
+TypeScript side.
+
 ## Summary
 
 - **Derive** values during render instead of storing them in extra state.
 - Reach for **`useMemo`** only when a derivation is genuinely expensive.
 - List **every reactive value** an effect reads in its dependency array.
-- Guard async effects with a **cleanup flag** (or `AbortController`) against
-  stale responses.
+- Guard async effects with a **cleanup flag** or, better,
+  [`AbortController`](#cancel-with-abortcontroller) - which cancels the stale
+  request instead of just ignoring its response.
 - See [When to useEffect / useCallback / useMemo](./hooks-when-to-use) for
   choosing the right hook in the first place.

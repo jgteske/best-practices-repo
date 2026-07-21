@@ -43,6 +43,7 @@ here is guaranteed to actually compile.
 | --- | --- |
 | [Event Listeners with Classes](./event-listeners-with-classes) | Correct `this` binding for handlers, bulk cleanup with `AbortController`, and strongly-typed custom event emitters. |
 | [Async & Promise Patterns](./async-and-promises) | Avoiding floating promises, parallel vs sequential work, and choosing the right Promise combinator by its result type. |
+| [Cancellation & AbortSignal](./cancellation-and-signals) | Threading a signal through async APIs, `AbortSignal.timeout`/`any`, cancel-the-previous-request, and cooperative `throwIfAborted` loops. |
 
 **Reference**
 

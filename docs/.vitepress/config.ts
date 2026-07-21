@@ -64,6 +64,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Event Listeners with Classes", link: "/typescript/event-listeners-with-classes" },
             { text: "Async & Promise Patterns", link: "/typescript/async-and-promises" },
+            { text: "Cancellation & AbortSignal", link: "/typescript/cancellation-and-signals" },
           ],
         },
         {

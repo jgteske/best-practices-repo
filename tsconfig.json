@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ES2022",
     "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -16,5 +17,5 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["examples/**/*.ts"]
+  "include": ["examples/**/*.ts", "examples/**/*.tsx"]
 }

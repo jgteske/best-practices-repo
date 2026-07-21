@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: "Best Practices Repo",
   description: "A general documentation site, built from Markdown, with an in-depth TypeScript best practices guide.",
   lastUpdated: true,
@@ -15,6 +16,7 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/guide/" },
       { text: "TypeScript", link: "/typescript/" },
+      { text: "React", link: "/react/" },
     ],
 
     sidebar: {
@@ -71,6 +73,52 @@ export default defineConfig({
           ],
         },
       ],
+      "/react/": [
+        {
+          text: "React Best Practices",
+          items: [{ text: "Overview", link: "/react/" }],
+        },
+        {
+          text: "Structure & Declarations",
+          items: [
+            { text: "Component Declarations", link: "/react/component-declarations" },
+            { text: "Props & Passing Parameters", link: "/react/props-and-parameters" },
+          ],
+        },
+        {
+          text: "Sharing State",
+          items: [
+            { text: "Context: State & APIs", link: "/react/context" },
+            { text: "When Elements & APIs Are Ready", link: "/react/refs-and-availability" },
+          ],
+        },
+        {
+          text: "Hooks",
+          items: [
+            { text: "Custom Hooks & Hook Chaining", link: "/react/custom-hooks-and-chaining" },
+            { text: "When to useEffect / useCallback / useMemo", link: "/react/hooks-when-to-use" },
+            { text: "State & Effects", link: "/react/state-and-effects" },
+          ],
+        },
+        {
+          text: "Rendering",
+          items: [
+            { text: "Rendering & Component Lifecycle", link: "/react/rendering-and-lifecycle" },
+          ],
+        },
+        {
+          text: "Events",
+          items: [
+            { text: "Event Handlers & Function Chaining", link: "/react/event-handlers" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [
+            { text: "General Best Practices", link: "/react/general-best-practices" },
+          ],
+        },
+      ],
     },
 
     socialLinks: [{ icon: "github", link: "https://github.com/jgteske/best-practices-repo" }],
@@ -92,4 +140,4 @@ export default defineConfig({
   markdown: {
     lineNumbers: true,
   },
-});
+}));

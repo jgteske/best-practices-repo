@@ -9,6 +9,9 @@ hero:
     - theme: brand
       text: TypeScript Best Practices
       link: /typescript/
+    - theme: brand
+      text: React Best Practices
+      link: /react/
     - theme: alt
       text: How this site is built
       link: /guide/

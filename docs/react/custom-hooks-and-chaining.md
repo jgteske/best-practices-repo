@@ -46,6 +46,11 @@ Read it bottom-up:
 Each layer is independently testable, and you can reuse `useLocalStorage`
 elsewhere untouched.
 
+For chains whose callbacks are invoked *later* - after a timeout, on an
+interval, on the next frame - see
+[Advanced Chaining: Callbacks & Timing](./advanced-hook-chaining), which covers
+stale closures, stable callback identity, and cancellation.
+
 ## The Rules of Hooks (non-negotiable)
 
 Chaining works *only* because every hook obeys the two rules:
@@ -86,3 +91,5 @@ Enable the `eslint-plugin-react-hooks` rules (`rules-of-hooks` and
 - **Chain** higher-level hooks on top of lower-level, single-purpose ones.
 - Always obey the **Rules of Hooks**: top-level calls only, from React
   functions only - and let the ESLint plugin enforce it.
+- For deferred callbacks (timers, intervals, frames), continue with
+  [Advanced Chaining: Callbacks & Timing](./advanced-hook-chaining).

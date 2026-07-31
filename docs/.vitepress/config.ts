@@ -97,6 +97,7 @@ export default withMermaid(defineConfig({
           text: "Hooks",
           items: [
             { text: "Custom Hooks & Hook Chaining", link: "/react/custom-hooks-and-chaining" },
+            { text: "Advanced Chaining: Callbacks & Timing", link: "/react/advanced-hook-chaining" },
             { text: "When to useEffect / useCallback / useMemo", link: "/react/hooks-when-to-use" },
             { text: "State & Effects", link: "/react/state-and-effects" },
           ],

@@ -2,14 +2,15 @@
   "name": "best-practices-repo",
   "version": "1.0.0",
   "private": true,
-  "description": "General documentation repository built with VitePress, featuring an in-depth TypeScript Best Practices guide.",
+  "description": "General documentation repository built with VitePress, featuring in-depth TypeScript, React, and Linux/Bash best practices guides.",
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "check": "npm run typecheck && npm run docs:build"
+    "check:bash": "bash scripts/check-bash.sh",
+    "check": "npm run typecheck && npm run check:bash && npm run docs:build"
   },
   "devDependencies": {
     "@types/react": "^18.3.31",

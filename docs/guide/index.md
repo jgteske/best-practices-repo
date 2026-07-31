@@ -28,12 +28,17 @@ hand-written Markdown guides rather than docstrings extracted from source.
 ├── docs/                     # everything that gets published
 │   ├── .vitepress/config.ts  # site nav, sidebar, theme
 │   ├── index.md              # home page
-│   ├── guide/                 # docs about this repo itself
-│   └── typescript/            # the TypeScript best practices guide
-├── examples/                 # real, compiled source backing the docs
-│   └── typescript/
+│   ├── guide/                # docs about this repo itself
+│   ├── typescript/           # the TypeScript best practices guide
+│   ├── react/                # the React best practices guide
+│   └── linux/                # the Linux, Bash & terminal guide
+├── examples/                 # real, checked source backing the docs
+│   ├── typescript/           # .ts  - type-checked
+│   ├── react/                # .tsx - type-checked
+│   └── bash/                 # .sh  - parsed and linted
+├── scripts/check-bash.sh     # the shell equivalent of the typecheck
 ├── tsconfig.json             # typechecks everything under examples/
-└── package.json              # docs:dev / docs:build / typecheck scripts
+└── package.json              # docs:dev / docs:build / typecheck / check:bash
 ```
 
 ## Running it locally
@@ -42,9 +47,15 @@ hand-written Markdown guides rather than docstrings extracted from source.
 npm install
 npm run docs:dev       # local dev server with hot reload
 npm run docs:build     # produces docs/.vitepress/dist
-npm run typecheck      # type-checks every example under examples/
+npm run typecheck      # type-checks every TypeScript/TSX example
+npm run check:bash     # bash -n (+ shellcheck, if installed) over examples/bash
 ```
 
-`npm run check` runs both the typecheck and the production build - useful
+`npm run check` runs the checks and the production build together - useful
 as a single CI step to make sure nothing in `examples/` broke and the site
 still builds.
+
+Each language gets a verification step appropriate to it: `tsc` for the
+TypeScript and React examples, `bash -n` plus `shellcheck` for the shell
+examples. Adding a new section means adding its own check the same way - see
+[Writing new docs](./writing-docs).

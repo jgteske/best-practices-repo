@@ -5,20 +5,30 @@ turning plain Markdown files into a static documentation site - the same
 role a tool like `pydoc`/Sphinx plays for Python docstrings, but for
 hand-written guides.
 
-The flagship content right now is an in-depth **TypeScript Best Practice
-Patterns** guide under [`docs/typescript`](docs/typescript), with every code
-sample backed by a real, `strict`-mode type-checked file under
-[`examples/typescript`](examples/typescript) - so the examples in the docs
-can never silently drift from code that actually compiles.
+It currently holds three guides:
+
+- **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
+  types, generics, and runtime patterns.
+- **[React Best Practices](docs/react)** - components, props, hooks and hook
+  chaining, rendering, and events.
+- **[Linux, Bash & the Terminal](docs/linux)** - everyday commands, pipes and
+  text processing, permissions, processes, services, networking, and shell
+  scripting.
+
+Every code sample is backed by a real file under [`examples/`](examples):
+TypeScript/TSX examples are `strict`-mode type-checked, and shell examples are
+parsed with `bash -n` and linted with `shellcheck` - so the examples in the docs
+can never silently drift from code that actually works.
 
 ## Quick start
 
 ```bash
 npm install
-npm run docs:dev     # local dev server, http://localhost:5173
+npm run docs:dev      # local dev server, http://localhost:5173
 npm run docs:build    # build the static site to docs/.vitepress/dist
-npm run typecheck     # type-check every example under examples/
-npm run check         # typecheck + build, useful as a single CI step
+npm run typecheck     # type-check every TypeScript/TSX example under examples/
+npm run check:bash    # bash -n (+ shellcheck, if installed) over examples/bash
+npm run check         # all of the above, useful as a single CI step
 ```
 
 ## Structure
@@ -27,7 +37,13 @@ npm run check         # typecheck + build, useful as a single CI step
 docs/           # published site content (Markdown)
   guide/        # docs about this repo and how to extend it
   typescript/   # TypeScript best practices guide
-examples/       # real, compiled TypeScript backing the docs' code samples
+  react/        # React best practices guide
+  linux/        # Linux, Bash & terminal guide
+examples/       # real, checked source backing the docs' code samples
+  typescript/   # compiled with tsc --noEmit
+  react/        # compiled with tsc --noEmit (react-jsx)
+  bash/         # checked with bash -n and shellcheck
+scripts/        # repo tooling (check-bash.sh)
 ```
 
 See [`docs/guide`](docs/guide) for how the site is built and how to add new

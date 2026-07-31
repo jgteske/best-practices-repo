@@ -47,3 +47,23 @@ Because the source lives in a real `.ts` file included by `tsconfig.json`,
 `npm run typecheck` fails the build the moment an example stops compiling -
 docs and code cannot silently drift apart the way they can when a snippet is
 only ever pasted as inert text inside a fenced code block.
+
+## One checker per language
+
+Each `examples/` subtree gets a verification step suited to its language, wired
+up as an npm script and included in `npm run check`:
+
+| Examples | Checked by | Script |
+| --- | --- | --- |
+| `examples/typescript`, `examples/react` | `tsc --noEmit` against `tsconfig.json` | `npm run typecheck` |
+| `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed | `npm run check:bash` |
+
+`scripts/check-bash.sh` is the pattern to copy for a new language: find the
+example files, run the strictest checker that is guaranteed to be available,
+and optionally run a better one if the machine has it. Keep the mandatory check
+dependency-free so a fresh `npm install` is enough to run `npm run check`.
+
+Fenced code blocks are still the right choice for two things: an
+**anti-pattern** (deliberately broken code that must not be checked), and
+**illustrative one-liners** that are not a complete, runnable file - the
+command tables throughout the Linux guide, for example.

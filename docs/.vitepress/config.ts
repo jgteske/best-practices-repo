@@ -17,6 +17,7 @@ export default withMermaid(defineConfig({
       { text: "Guide", link: "/guide/" },
       { text: "TypeScript", link: "/typescript/" },
       { text: "React", link: "/react/" },
+      { text: "Linux", link: "/linux/" },
     ],
 
     sidebar: {
@@ -119,6 +120,41 @@ export default withMermaid(defineConfig({
           items: [
             { text: "General Best Practices", link: "/react/general-best-practices" },
           ],
+        },
+      ],
+      "/linux/": [
+        {
+          text: "Linux, Bash & the Terminal",
+          items: [{ text: "Overview", link: "/linux/" }],
+        },
+        {
+          text: "Using the Shell",
+          items: [
+            { text: "Shell Basics & Navigation", link: "/linux/shell-basics" },
+            { text: "Files & Directories", link: "/linux/files-and-directories" },
+            { text: "Pipes, Redirection & Streams", link: "/linux/pipes-and-redirection" },
+            { text: "Text Processing", link: "/linux/text-processing" },
+          ],
+        },
+        {
+          text: "The System",
+          items: [
+            { text: "Permissions & Ownership", link: "/linux/permissions-and-ownership" },
+            { text: "Processes, Jobs & Signals", link: "/linux/processes-and-jobs" },
+            { text: "System, Packages & Services", link: "/linux/system-and-packages" },
+            { text: "Networking & Remote Work", link: "/linux/networking-and-remote" },
+          ],
+        },
+        {
+          text: "Scripting",
+          items: [
+            { text: "Bash Scripting Basics", link: "/linux/scripting-basics" },
+            { text: "Writing Robust Scripts", link: "/linux/scripting-robustness" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "Command Cheat Sheet", link: "/linux/cheatsheet" }],
         },
       ],
     },

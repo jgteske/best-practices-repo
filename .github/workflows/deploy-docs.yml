@@ -48,6 +48,11 @@ jobs:
       - name: Type-check examples
         run: npm run typecheck
 
+      - name: Check shell examples
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          npm run check:bash
+
       - name: Build site
         run: npm run docs:build
 

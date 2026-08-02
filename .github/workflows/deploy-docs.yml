@@ -39,7 +39,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 is the baseline the JavaScript examples document and rely on
+          # (Object.groupBy, import.meta.dirname, glob args for `node --test`).
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -52,6 +54,11 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
           npm run check:bash
+
+      # Parses every JavaScript example, then actually executes them (including
+      # the node:test suite). No extra tooling needed - Node is already set up.
+      - name: Check JavaScript examples
+        run: npm run check:js
 
       - name: Build site
         run: npm run docs:build

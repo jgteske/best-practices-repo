@@ -31,14 +31,16 @@ hand-written Markdown guides rather than docstrings extracted from source.
 │   ├── guide/                # docs about this repo itself
 │   ├── typescript/           # the TypeScript best practices guide
 │   ├── react/                # the React best practices guide
+│   ├── javascript/           # the JavaScript & Node.js guide
 │   └── linux/                # the Linux, Bash & terminal guide
 ├── examples/                 # real, checked source backing the docs
-│   ├── typescript/           # .ts  - type-checked
-│   ├── react/                # .tsx - type-checked
-│   └── bash/                 # .sh  - parsed and linted
-├── scripts/check-bash.sh     # the shell equivalent of the typecheck
+│   ├── typescript/           # .ts        - type-checked
+│   ├── react/                # .tsx       - type-checked
+│   ├── javascript/           # .mjs/.cjs  - parsed, then executed
+│   └── bash/                 # .sh        - parsed and linted
+├── scripts/                  # check-bash.sh, check-js.sh
 ├── tsconfig.json             # typechecks everything under examples/
-└── package.json              # docs:dev / docs:build / typecheck / check:bash
+└── package.json              # docs:dev / docs:build / typecheck / check:*
 ```
 
 ## Running it locally
@@ -49,6 +51,7 @@ npm run docs:dev       # local dev server with hot reload
 npm run docs:build     # produces docs/.vitepress/dist
 npm run typecheck      # type-checks every TypeScript/TSX example
 npm run check:bash     # bash -n (+ shellcheck, if installed) over examples/bash
+npm run check:js       # node --check, then run every JavaScript example
 ```
 
 `npm run check` runs the checks and the production build together - useful
@@ -57,5 +60,7 @@ still builds.
 
 Each language gets a verification step appropriate to it: `tsc` for the
 TypeScript and React examples, `bash -n` plus `shellcheck` for the shell
-examples. Adding a new section means adding its own check the same way - see
-[Writing new docs](./writing-docs).
+examples, and for JavaScript `node --check` followed by **actually running**
+each example and the `node:test` suite - which is why the output quoted in the
+JavaScript pages is output the code really produced. Adding a new section means
+adding its own check the same way - see [Writing new docs](./writing-docs).

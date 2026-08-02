@@ -57,11 +57,18 @@ up as an npm script and included in `npm run check`:
 | --- | --- | --- |
 | `examples/typescript`, `examples/react` | `tsc --noEmit` against `tsconfig.json` | `npm run typecheck` |
 | `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed | `npm run check:bash` |
+| `examples/javascript` | `node --check` on every `.mjs`/`.cjs`, then **executes** each runnable file, then `node --test` | `npm run check:js` |
 
 `scripts/check-bash.sh` is the pattern to copy for a new language: find the
 example files, run the strictest checker that is guaranteed to be available,
 and optionally run a better one if the machine has it. Keep the mandatory check
 dependency-free so a fresh `npm install` is enough to run `npm run check`.
+
+`scripts/check-js.sh` goes one step further and runs the examples, which is what
+lets the JavaScript pages quote real program output. Every example is written to
+terminate on its own; one that legitimately cannot be run unattended opts out
+with a `// check-js: no-run` marker comment, which is visible in the rendered
+snippet so the exemption documents itself.
 
 Fenced code blocks are still the right choice for two things: an
 **anti-pattern** (deliberately broken code that must not be checked), and

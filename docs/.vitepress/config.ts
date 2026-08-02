@@ -17,6 +17,7 @@ export default withMermaid(defineConfig({
       { text: "Guide", link: "/guide/" },
       { text: "TypeScript", link: "/typescript/" },
       { text: "React", link: "/react/" },
+      { text: "JavaScript & Node", link: "/javascript/" },
       { text: "Linux", link: "/linux/" },
     ],
 
@@ -120,6 +121,44 @@ export default withMermaid(defineConfig({
           items: [
             { text: "General Best Practices", link: "/react/general-best-practices" },
           ],
+        },
+      ],
+      "/javascript/": [
+        {
+          text: "JavaScript & Node.js",
+          items: [{ text: "Overview", link: "/javascript/" }],
+        },
+        {
+          text: "The Language",
+          items: [
+            { text: "Values, Types & Coercion", link: "/javascript/values-and-coercion" },
+            { text: "Scope, Closures & this", link: "/javascript/scope-and-closures" },
+            { text: "Objects, Prototypes & Classes", link: "/javascript/objects-and-classes" },
+            { text: "Arrays, Iteration & Collections", link: "/javascript/arrays-and-iteration" },
+          ],
+        },
+        {
+          text: "Modules & Async",
+          items: [
+            { text: "ESM vs CommonJS", link: "/javascript/modules-esm-and-cjs" },
+            { text: "The Event Loop & Promises", link: "/javascript/event-loop-and-async" },
+          ],
+        },
+        {
+          text: "The Node Runtime",
+          items: [
+            { text: "Running Node", link: "/javascript/running-node" },
+            { text: "npm, package.json & Semver", link: "/javascript/npm-and-packages" },
+            { text: "Node Core APIs", link: "/javascript/core-apis" },
+            { text: "Streams & Buffers", link: "/javascript/streams-and-buffers" },
+            { text: "HTTP & Networking", link: "/javascript/http-and-networking" },
+            { text: "Errors & Graceful Shutdown", link: "/javascript/errors-and-shutdown" },
+            { text: "Testing with node:test", link: "/javascript/testing-with-node-test" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "JavaScript & Node Cheat Sheet", link: "/javascript/cheatsheet" }],
         },
       ],
       "/linux/": [

@@ -1,3 +1,106 @@
+# Task: `.ts` vs `.tsx` vs `.d.ts`, and namespaces
+
+## Plan
+
+- [x] `examples/typescript/declarations/ambient-declarations.d.ts` - script-mode
+      declaration file: ambient module, wildcard asset modules, `Window` merge,
+      `declare namespace`.
+- [x] `examples/typescript/declarations/using-ambient-declarations.ts` - the
+      consumer that proves each declaration resolves.
+- [x] `examples/typescript/declarations/module-augmentation.d.ts` - module-mode:
+      augments React's `CSSProperties`, plus `declare global`.
+- [x] `examples/typescript/declarations/using-module-augmentation.ts` - consumer.
+- [x] `examples/typescript/declarations/tsx-file-kind.tsx` - what `.tsx` changes,
+      the generic-arrow trap and its three fixes.
+- [x] `examples/typescript/namespaces/namespace-basics.ts` and
+      `declaration-merging.ts`.
+- [x] New pages `docs/typescript/file-kinds-and-declarations.md` and
+      `docs/typescript/namespaces.md`, plus a "Files & Declarations" sidebar
+      group, index rows, and cross-links.
+
+## Review
+
+### What was built
+
+**7 example files** in two new folders under `examples/typescript/`, and **2 new
+pages** in a new sidebar group. The declaration files are the first `.d.ts` in
+the repo; `tsconfig.json` already globbed `examples/**/*.ts`, so they are
+type-checked with everything else and needed no build changes.
+
+The organising idea of the first page is **script mode vs module mode**: a
+`.d.ts` with no top-level `import`/`export` is global, and `declare module "x"`
+*declares* a module; add one `import` and the identical syntax *augments* an
+existing module instead, so an import of the package fails with TS2307. Both
+modes get their own example file plus a consumer.
+
+### Verified rather than assumed
+
+Everything asserted about the compiler was checked against a scratch project
+using this repo's exact strict options before any of it was written up:
+
+- The TS2307 script-vs-module gotcha - reproduced, and quoted with its real
+  error code.
+- The `.tsx` generic-arrow trap - reproduced (TS17008 / TS1382 / TS1005), and all
+  three documented fixes confirmed to compile.
+- The compiled JavaScript quoted on the namespaces page is real `tsc` output for
+  the example file, emitted with `--removeComments`, not hand-written.
+- `@types/react` really is `declare namespace React` + `export = React` +
+  `export as namespace React` (`node_modules/@types/react/index.d.ts:47-50`), so
+  the "where namespaces still live" claim cites something checkable.
+
+### Non-vacuity check
+
+A declaration file compiles whatever you write, so the consumer files are the
+only real test. Renaming `track` to `trackRenamed` in the ambient `.d.ts` made
+`using-ambient-declarations.ts` fail with **TS2614: Module '"legacy-analytics"'
+has no exported member 'track'**; the declaration was then restored and the
+project type-checks clean. The page says this explicitly.
+
+### Two things found along the way
+
+1. **VitePress interpolates `{{ }}` inside inline code.** A prose mention of a
+   JSX `style` prop broke `docs:build` with a Vue compiler error. Reworded rather
+   than escaped.
+2. **Numbered headings get underscore-prefixed anchors** (`### 3. Interface
+   merging` → `id="_3-interface-merging"`), and **VitePress's dead-link check
+   does not validate anchors** - so a wrong `#fragment` builds green. The
+   headings were renumbered to plain text, and every anchor link in the repo was
+   then checked against the ids in the built HTML. That swept up one
+   **pre-existing** dead anchor in `const-assertions-and-enums.md`
+   (`#the-satisfies-operator` → `#satisfies-validate-without-widening`), fixed
+   here. The whole `docs/` tree now scans clean.
+
+### Decisions worth recording
+
+- **The ambient declarations are global to the project**, because
+  `tsconfig.json` compiles `examples/` as one program. That is exactly how a
+  `.d.ts` behaves in a real repo and is the lesson itself; the declarations are
+  additive, and the names (`legacy-analytics`, `LegacyWidgets`, `buildId`) do not
+  collide with anything.
+- **No `NodeJS.ProcessEnv` example.** `@types/node` is not installed, so
+  `declare namespace NodeJS` would create a new namespace rather than augment
+  one - the page would have been teaching something untrue here. The `react` and
+  `Window` augmentations are real in this project.
+- **The pages recommend *against* writing most of what they demonstrate** -
+  generate declarations for code you own, and prefer modules to namespaces. The
+  examples exist so the reader can recognise these constructs, which is the
+  actual need.
+
+### Verification performed
+
+- `npm run typecheck` - all 7 new files compile under `strict`,
+  `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `isolatedModules`.
+- `npm run check` - typecheck + bash + 21 JS examples + `docs:build`, passing.
+- Both pages present in `docs/.vitepress/dist/typescript/` with `<<<` snippets
+  inlined; sidebar group and index rows render.
+- Repo-wide anchor scan: **no dead anchors**.
+
+### Not done
+
+- No browser spot-check (no Chrome in this environment).
+
+---
+
 # Task: Promise queues, rate limiting & timing examples
 
 ## Plan

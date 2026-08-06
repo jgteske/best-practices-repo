@@ -39,7 +39,7 @@ both the runtime list and the type.
 ::: tip Pairs well with `satisfies`
 Use `satisfies` to validate an `as const` object against a constraint while
 keeping the narrow literal types. See
-[Type-Safe Validation](./type-safe-validation#the-satisfies-operator).
+[Type-Safe Validation](./type-safe-validation#satisfies-validate-without-widening).
 :::
 
 ## Summary
@@ -51,3 +51,10 @@ keeping the narrow literal types. See
 - Derive the union from the object (`(typeof X)[keyof typeof X]`) so there's
   one source of truth.
 - The values remain ordinary data - iterable, serializable, tree-shakeable.
+
+::: tip The other construct that emits runtime code
+`enum` and `namespace` are TypeScript's two non-erased features - both leave
+JavaScript behind in your output rather than disappearing at compile time. The
+same reasoning applies to each; see
+[Namespaces & Declaration Merging](./namespaces).
+:::

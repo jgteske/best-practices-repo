@@ -70,6 +70,13 @@ export default withMermaid(defineConfig({
           ],
         },
         {
+          text: "Files & Declarations",
+          items: [
+            { text: ".ts, .tsx & .d.ts", link: "/typescript/file-kinds-and-declarations" },
+            { text: "Namespaces & Declaration Merging", link: "/typescript/namespaces" },
+          ],
+        },
+        {
           text: "Reference",
           items: [
             { text: "General Best Practices", link: "/typescript/general-best-practices" },

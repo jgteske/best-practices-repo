@@ -49,6 +49,14 @@ Reach for an arrow const when you genuinely need an expression - e.g. wrapping
 in `memo` (see [General Best Practices](./general-best-practices)) or defining a
 tiny local component inside another function.
 
+::: tip A generic arrow component needs `<T,>`
+In a `.tsx` file `<T>` opens a JSX tag, so
+`const List = <T>(props: Props<T>) => …` is a syntax error - write `<T,>` or use
+a function declaration, which has no ambiguity. That trap, and when a React file
+should be `.ts` rather than `.tsx` at all, are covered in
+[`.ts`, `.tsx` & `.d.ts`](/typescript/file-kinds-and-declarations).
+:::
+
 ## Summary
 
 - Declare components as **plain functions** with an **exported, named props

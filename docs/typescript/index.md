@@ -45,6 +45,13 @@ here is guaranteed to actually compile.
 | [Async & Promise Patterns](./async-and-promises) | Avoiding floating promises, parallel vs sequential work, and choosing the right Promise combinator by its result type. |
 | [Cancellation & AbortSignal](./cancellation-and-signals) | Threading a signal through async APIs, `AbortSignal.timeout`/`any`, cancel-the-previous-request, and cooperative `throwIfAborted` loops. |
 
+**Files & Declarations**
+
+| Page | Focus |
+| --- | --- |
+| [`.ts`, `.tsx` & `.d.ts`](./file-kinds-and-declarations) | What each file kind is for, the JSX-vs-generics trap in `.tsx`, ambient modules for untyped packages, and why script-mode declares while module-mode augments. |
+| [Namespaces & Declaration Merging](./namespaces) | What a namespace is and what it compiles to, why modules replaced it, and the merging patterns that are still the right answer. |
+
 **Reference**
 
 | Page | Focus |

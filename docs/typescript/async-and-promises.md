@@ -47,6 +47,15 @@ Note how `allSettled` returns a **tagged union** per input - you must narrow
 on `.status` before touching `.value` or `.reason`, exactly the discipline
 that prevents "why is this `undefined`" bugs.
 
+::: tip None of them bound the concurrency
+Every combinator here takes promises that have **already started**, so the
+number running at once is `items.length`. Bounding it needs a queue that accepts
+functions instead - see
+[Promise Queues & Concurrency Limits](/javascript/promise-queues) for the
+mechanics, and [Timers, Rate Limits & Scheduling](/javascript/timers-and-scheduling)
+for the rate limiting, backoff and deadlines that usually go with it.
+:::
+
 ## Summary
 
 - Every promise should be awaited, returned, or `void`-ed with a `.catch()`.

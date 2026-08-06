@@ -70,20 +70,27 @@ flowchart TD
     D["useDebouncedCallback<br/>(collapse a burst)"]
     I["useInterval<br/>(repeat, null = pause)"]
     F["useFrameThrottledCallback<br/>(≤1 per repaint)"]
+    TH["useThrottledCallback<br/>(≤1 per wait ms)"]
+    LD["useLoadingDelay<br/>(perceived timing —<br/>owns its own timers)"]
   end
   subgraph L3["Layer 3 — domain policy"]
     DS["useDebouncedSearch<br/>+ AbortController"]
     P["usePolling<br/>+ backoff + visibility"]
     S["useScrollProgress"]
+    TP["useTypingPresence"]
+    SR["useSearchResults"]
   end
   LR --> EC
   LR --> T
   LR --> I
   EC --> D
   EC --> F
+  EC --> TH
   D --> DS
   I --> P
   F --> S
+  TH --> TP
+  LD --> SR
   L3 --> C["Components"]
 ```
 
@@ -174,6 +181,69 @@ arguments.
 
 <<< ../../examples/react/hooks/frame-throttled-callback.tsx
 
+## Time throttling: a steady trickle, not silence
+
+Debouncing asks "has it stopped?", so a user who types continuously for a minute
+sends **nothing** for a minute. That is correct for a search box and wrong for
+anything the other side is waiting on - presence, live cursors, collaborative
+edits, progress reporting. Those want the first call to go out immediately and
+then at most one per window.
+
+<<< ../../examples/react/hooks/use-throttled-callback.tsx
+
+The two throttles are not interchangeable, and the difference is which clock the
+work is bound to:
+
+<div class="vp-doc">
+
+| | `useFrameThrottledCallback` | `useThrottledCallback` |
+| --- | --- | --- |
+| Clock | one repaint (`requestAnimationFrame`) | a fixed number of ms |
+| Bound by | what the **screen** can show | what the **network or server** should receive |
+| Use for | scroll, pointermove, resize, drag | presence, telemetry, live sync, autosave-while-typing |
+| At 60Hz | ~16.7ms, automatically | whatever you chose, regardless of frame rate |
+
+</div>
+
+Both keep the newest arguments for the trailing call, so the last event of a
+burst - the final drag position, the last character before a pause - is never
+dropped. The plain-JavaScript versions of both, with the same burst measured
+three ways, are on
+[Timers, Rate Limits & Scheduling](/javascript/timers-and-scheduling#debounce-throttle-rate-limit).
+
+## Perceived timing: a spinner that never flashes
+
+Two bugs only a human notices, and both come from rendering `isLoading`
+directly. A 40ms cached response flashes a spinner for a single frame, which
+reads as a glitch rather than as feedback. And a response landing just after the
+spinner appears makes it flicker straight back out.
+
+The fix is a delayed birth and a minimum lifetime:
+
+<<< ../../examples/react/hooks/use-loading-delay.tsx
+
+<div class="vp-doc">
+
+| Response takes | `delayMs: 200`, `minDurationMs: 400` |
+| --- | --- |
+| 40ms | no spinner at all - the timer is cleared before it fires |
+| 250ms | spinner at 200ms, stays until 600ms |
+| 2s | spinner at 200ms, hidden as soon as the data lands |
+
+</div>
+
+Note that the request state and the *perceived* request state are two different
+values. `isFetching` is what drives the request logic; `showSpinner` is the only
+one that belongs in the markup.
+
+::: tip Why this one owns its timers
+Every other hook on this page reads its callback through `useLatestRef`, because
+the *caller* supplies the behaviour. `useLoadingDelay` takes a boolean, not a
+callback - there is no user function to keep fresh, so chaining on
+`useEventCallback` would add a layer that carries nothing. Chain when a layer has
+a concern to add, not to be consistent.
+:::
+
 ## Choosing a timing policy
 
 <div class="vp-doc">
@@ -181,9 +251,12 @@ arguments.
 | Policy | Fires | Use for |
 | --- | --- | --- |
 | **Debounce** | once, `delay` after the **last** call | search-as-you-type, autosave, validation |
+| **Time throttle** | ≤ once per `wait`, leading + trailing | presence, telemetry, live sync |
 | **Frame throttle** | ≤ once per repaint | scroll, pointermove, resize, drag |
 | **Interval** | every `delay` until paused | polling, clocks, countdowns |
 | **Timeout** | once, `delay` after scheduling | toasts, tooltips, "still loading…" hints |
+| **Loading delay** | shows late, hides no earlier than a floor | any spinner over a request that is sometimes fast |
+| **[Queue](./queues-and-concurrency)** | when a slot frees up | uploads, imports, any user-sized batch of requests |
 
 </div>
 
@@ -208,6 +281,12 @@ arguments.
   domain policy (cancellation, backoff, visibility) → markup.
 - Expose timing as **values, not commands** - `delay: number | null` to pause,
   `cancel`/`flush` to override.
-- **Debounce ≠ throttle ≠ interval**: match the policy to the event source.
+- **Debounce ≠ throttle ≠ interval**: match the policy to the event source - and
+  throttle by **frames** for what the screen shows, by **milliseconds** for what
+  the network carries.
 - Pair every timing hook with **cancellation**; debouncing alone does not fix
   response races.
+- The state a request is in and the state the *user should perceive* it to be in
+  are two values. Delay the spinner and give it a minimum lifetime.
+- When the work is unbounded in number rather than in frequency, the policy is a
+  [queue](./queues-and-concurrency), not a timer.

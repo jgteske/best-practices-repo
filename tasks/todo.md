@@ -1,3 +1,102 @@
+# Task: Promise queues, rate limiting & timing examples
+
+## Plan
+
+- [x] `examples/javascript/async/promise-queue.mjs` - a side-effect-free module
+      exporting `PromiseQueue` + `mapConcurrent` / `mapSettled`.
+- [x] `examples/javascript/async/promise-queue-usage.mjs` - the measured
+      demonstrations (unbounded vs queued, ordering, failure, abort, mutex, idle).
+- [x] `examples/javascript/async/rate-limit-and-retry.mjs` - sliding-window
+      limiter, backoff with full jitter, per-attempt vs overall deadlines, and
+      the four policies stacked.
+- [x] `examples/javascript/async/timers-and-scheduling.mjs` - timer drift,
+      interval overlap, vanilla debounce/throttle, clock-derived countdowns.
+- [x] `examples/react/hooks/use-async-queue.tsx` - `useAsyncQueue` →
+      `useUploadQueue` → `UploadPanel`.
+- [x] `examples/react/hooks/use-throttled-callback.tsx` - time-based throttle
+      (leading + trailing) → `useTypingPresence` → `MessageComposer`.
+- [x] `examples/react/hooks/use-loading-delay.tsx` - delayed, minimum-duration
+      spinner → `useSearchResults` → `SearchResults`.
+- [x] New pages: `docs/javascript/promise-queues.md`,
+      `docs/javascript/timers-and-scheduling.md`,
+      `docs/react/queues-and-concurrency.md`.
+- [x] Extend `docs/react/advanced-hook-chaining.md` (two new timing policies, the
+      Layer-2 chain diagram, the policy table).
+- [x] Wire up sidebar, both section `index.md` tables, and cross-links from the
+      event-loop and TypeScript async pages.
+
+## Review
+
+### What was built
+
+**4 JavaScript examples** and **3 React examples**, plus **3 new pages** and
+edits to five existing ones. `examples/javascript` went from 17 files to 21.
+
+The queue is split in two on purpose: `promise-queue.mjs` is a module that
+prints nothing, `promise-queue-usage.mjs` is the script that exercises it. The
+first draft had them in one file, and importing the class into
+`rate-limit-and-retry.mjs` then re-ran the whole demo inside another example's
+output - which is precisely the side-effect-on-import problem the ESM page warns
+about. `examples/javascript/testing/cart.mjs` was already the precedent for a
+runnable-but-silent module.
+
+### Where running the code changed the docs
+
+1. **The drift claim was wrong.** The example was written to show `setInterval`
+   drifting because Node "re-arms after the callback returns". Measured:
+   `setInterval` +8ms vs a self-correcting chain +5ms over 10 ticks - no
+   meaningful difference. `setInterval` schedules on a fixed grid and absorbs
+   callback time. The section was rebuilt around the timer that *does* drift, a
+   naive chained `setTimeout` (+62ms over the same 200ms), and the page now says
+   so explicitly against the folklore.
+2. **The deadline demo's error name was racy** - `AbortError` or `TimeoutError`
+   depending on whether the budget expired during an attempt or during a backoff
+   sleep. Fixed in `retry` by always re-throwing `signal.reason`, which is better
+   behaviour as well as a stable doc: "why did this stop" now has one answer.
+3. **The rate limiter is not FIFO**, which one run made obvious (`call 3` landed
+   in the third window while calls 4-6 went in the second). Rather than hide it,
+   the example prints sorted by call number with a comment, and the page calls
+   the property out and says what to do when fairness matters.
+
+### Decisions worth recording
+
+- **No new dependency.** The whole point is that a bounded queue is ~40 lines, so
+  `p-limit` stays out of `package.json`.
+- **The React queue lives in refs, mirrored into state.** The state-driven
+  version reads better and double-starts every job under StrictMode's
+  `setup → cleanup → setup`, because both setups see the same `jobs` snapshot.
+  The page explains the choice rather than just showing it.
+- **`useLoadingDelay` does not chain on `useEventCallback`.** It takes a boolean,
+  not a callback, so there is no user function to keep fresh. The Layer-2
+  diagram shows it owning its own timers instead of inventing a dependency for
+  consistency's sake.
+- **Jittered output is quoted as-is** and the page says the numbers differ every
+  run - that being the point of jitter.
+
+### Verification performed
+
+- `npm run check:js` - **all 21 examples passed (20 executed)**; every output
+  block on the three new pages is pasted from a real run.
+- Timing-sensitive output confirmed stable across repeated runs; the one
+  deliberately non-deterministic demo (jitter) is labelled as such, and the
+  deadline demo has jitter switched off so its numbers repeat.
+- `npm run typecheck` - the three new `.tsx` files compile under `strict` with
+  `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
+- `npm run check` - typecheck + bash + js + `docs:build`, **passing**, including
+  VitePress's dead-link check over every new cross-link and `<<<` path.
+- All four new/edited mermaid diagrams parse: each clears the grammar and fails
+  only at DOMPurify (no browser DOM here), while a deliberately broken control
+  diagram fails with a real `Parse error` - so the check is not vacuous.
+- Anchor targets used in cross-links verified against ids in the built HTML.
+
+### Not done
+
+- No browser spot-check of the rendered pages or the new sidebar entries (no
+  Chrome in this environment). The built HTML contains all three new pages with
+  snippets inlined and highlighted.
+
+---
+
 # Task: JavaScript & Node.js documentation section
 
 ## Plan

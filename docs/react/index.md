@@ -32,7 +32,8 @@ is guaranteed to actually compile against React's own types.
 | Page | Focus |
 | --- | --- |
 | [Custom Hooks & Hook Chaining](./custom-hooks-and-chaining) | Extracting logic into `use*` hooks, returning `[value, actions]` tuples, and *chaining* higher-level hooks on top of lower-level ones under the Rules of Hooks. |
-| [Advanced Chaining: Callbacks & Timing](./advanced-hook-chaining) | Chains where a callback is scheduled now and runs later - stable-identity callbacks, debouncing with `cancel`/`flush`, pausable intervals with backoff, and frame-throttled handlers. |
+| [Advanced Chaining: Callbacks & Timing](./advanced-hook-chaining) | Chains where a callback is scheduled now and runs later - stable-identity callbacks, debouncing with `cancel`/`flush`, pausable intervals with backoff, frame- and time-throttled handlers, and spinners that never flash. |
+| [Queues & Concurrency](./queues-and-concurrency) | Bounding how many async jobs run at once - a queue kept in refs and mirrored into state, a status union per job, cancellation, and retrying only what failed. |
 | [When to useEffect / useCallback / useMemo](./hooks-when-to-use) | A decision guide for the built-in hooks - what each is for, and when a plain calculation or event handler is the right answer instead. |
 | [State & Effects](./state-and-effects) | Deriving values instead of duplicating state, and writing effects with correct dependencies and race-safe cleanup. |
 

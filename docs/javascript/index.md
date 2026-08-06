@@ -32,6 +32,8 @@ output the code really produced, not output somebody typed by hand.
 | --- | --- |
 | [ESM vs CommonJS](./modules-esm-and-cjs) | `import`/`export`, `"type": "module"`, `.mjs`/`.cjs`, dynamic `import()`, the interop rules, and the `exports` map. |
 | [The Event Loop & Promises](./event-loop-and-async) | Microtasks vs macrotasks, promise patterns, `AbortSignal`, async iterators, and the three ways people lose an error. |
+| [Promise Queues & Concurrency Limits](./promise-queues) | Why `Promise.all(map)` has no ceiling, a ~40-line queue, ordered results, abort, and `concurrency: 1` as a mutex. |
+| [Timers, Rate Limits & Scheduling](./timers-and-scheduling) | Which repeating timer drifts, intervals that overlap async work, debounce vs throttle vs rate limit, backoff with jitter, and deadlines. |
 
 **The Node runtime**
 

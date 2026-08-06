@@ -101,8 +101,10 @@ each other, that is pure latency for nothing. Start them all, then await:
 `await Promise.all(items.map(work))`.
 
 The inverse mistake exists too: firing 10,000 requests concurrently because
-`map` made it easy. When the list is unbounded, cap the concurrency (a small
-worker-pool loop, or a library like `p-limit`).
+`map` made it easy. `Promise.all` cannot cap that - by the time it sees the
+array, every promise in it is already running - so an unbounded list needs a
+queue that takes *functions*:
+[Promise Queues & Concurrency Limits](./promise-queues).
 
 ### Choosing a combinator
 

@@ -100,6 +100,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Custom Hooks & Hook Chaining", link: "/react/custom-hooks-and-chaining" },
             { text: "Advanced Chaining: Callbacks & Timing", link: "/react/advanced-hook-chaining" },
+            { text: "Queues & Concurrency", link: "/react/queues-and-concurrency" },
             { text: "When to useEffect / useCallback / useMemo", link: "/react/hooks-when-to-use" },
             { text: "State & Effects", link: "/react/state-and-effects" },
           ],
@@ -142,6 +143,8 @@ export default withMermaid(defineConfig({
           items: [
             { text: "ESM vs CommonJS", link: "/javascript/modules-esm-and-cjs" },
             { text: "The Event Loop & Promises", link: "/javascript/event-loop-and-async" },
+            { text: "Promise Queues & Concurrency Limits", link: "/javascript/promise-queues" },
+            { text: "Timers, Rate Limits & Scheduling", link: "/javascript/timers-and-scheduling" },
           ],
         },
         {

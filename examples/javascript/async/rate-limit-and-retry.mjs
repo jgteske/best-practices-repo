@@ -1,77 +1,20 @@
 /**
- * Rate limiting, retries and deadlines - the timing policies that sit ON TOP of
- * a concurrency queue.
+ * Retries, deadlines and the order the timing policies stack in - everything
+ * that sits ON TOP of a concurrency queue and a rate limiter.
  *
  * A concurrency limit bounds how many calls are in flight; it says nothing about
  * how many you make per second. Two in flight against a 5ms endpoint is 400
  * requests/second, which is exactly the number an API's rate limiter cares
  * about. The two limits are different tools and you usually want both.
  *
+ * The limiters themselves live in rate-limiter.mjs; this file imports one.
+ *
  * Run: node examples/javascript/async/rate-limit-and-retry.mjs
  */
 
 import { setTimeout as delay } from "node:timers/promises";
 import { PromiseQueue } from "./promise-queue.mjs";
-
-// --- A sliding-window rate limiter --------------------------------------------------
-
-export class RateLimiter {
-  #limit;
-  #intervalMs;
-  /** Timestamps of the grants still inside the window. */
-  #grants = [];
-
-  constructor({ limit, intervalMs }) {
-    this.#limit = limit;
-    this.#intervalMs = intervalMs;
-  }
-
-  /** Resolves once the caller is allowed to proceed. */
-  async take() {
-    for (;;) {
-      const now = Date.now();
-      // Drop grants that have aged out of the window.
-      while (this.#grants.length > 0 && now - this.#grants[0] >= this.#intervalMs) {
-        this.#grants.shift();
-      }
-      if (this.#grants.length < this.#limit) {
-        this.#grants.push(now);
-        return;
-      }
-      // Sleep exactly until the oldest grant expires, then re-check: several
-      // callers can wake together, and the loop is what keeps that safe.
-      await delay(this.#intervalMs - (now - this.#grants[0]));
-    }
-  }
-
-  /** Convenience wrapper: `await limiter.run(() => fetch(url))`. */
-  async run(task) {
-    await this.take();
-    return task();
-  }
-}
-
-const startedAt = Date.now();
-const at = () => `${String(Math.round((Date.now() - startedAt) / 10) * 10).padStart(4)}ms`;
-
-console.log("rate limiter: 3 calls per 100ms window");
-
-const limiter = new RateLimiter({ limit: 3, intervalMs: 100 });
-const windowLog = [];
-await Promise.all(
-  Array.from({ length: 9 }, (_, i) =>
-    limiter.run(async () => {
-      windowLog.push({ call: i, at: at() });
-    }),
-  ),
-);
-// Printed by call number, not by arrival: waiters wake together and grab slots
-// in whatever order the runtime resumes them, so this limiter is NOT FIFO.
-// If fairness matters, hand the tasks to a PromiseQueue and rate-limit inside it.
-for (const { call, at: when } of windowLog.sort((a, b) => a.call - b.call)) {
-  console.log(`   call ${call} at ${when}`);
-}
-console.log("   3 go immediately, the rest wait for a slot to age out of the window");
+import { SlidingWindowLimiter } from "./rate-limiter.mjs";
 
 // --- Retry with exponential backoff and full jitter ----------------------------------
 
@@ -112,7 +55,7 @@ export async function retry(task, { attempts = 3, baseMs = 100, jitter = true, s
   }
 }
 
-console.log("\nretry with backoff:");
+console.log("retry with backoff:");
 
 let calls = 0;
 const flakyEndpoint = async () => {
@@ -196,7 +139,7 @@ try {
 console.log("\nstacked: queue -> limiter -> retry -> deadline");
 
 const queue = new PromiseQueue({ concurrency: 2 });
-const apiLimiter = new RateLimiter({ limit: 4, intervalMs: 100 });
+const apiLimiter = new SlidingWindowLimiter({ limit: 4, intervalMs: 100 });
 let serverCalls = 0;
 
 const fetchWithPolicy = (id) =>

@@ -47,6 +47,62 @@ teams allow it as a deliberate exception (ESLint's
 `"smart"`/`null: "ignore"` option for precisely this).
 :::
 
+## Negation: `!`, `!!`, `!=` and `!==`
+
+`!x` asks a single question - "is `x` falsy?" - by converting to boolean and
+flipping. `!!x` converts without flipping, which makes it exactly `Boolean(x)`
+in two characters. Neither one looks at the type: `!!"0"`, `!![]` and `!!{}` are
+all `true`, because only the eight falsy values below produce `false`.
+
+```
+! and !!:
+  0           !x -> true  !!x -> false
+  ""          !x -> true  !!x -> false
+  "0"         !x -> false !!x -> true
+  []          !x -> false !!x -> true
+  {}          !x -> false !!x -> true
+  null        !x -> true  !!x -> false
+  undefined   !x -> true  !!x -> false
+  NaN         !x -> true  !!x -> false
+  "hi"        !x -> false !!x -> true
+```
+
+That is why `if (!retries)` is a bug when `0` is a legal value: it puts a
+deliberate `0` (or `""`) on the "missing" branch. Test for absence with
+`retries == null`, and keep `!x` for cases where truthiness really is the
+question.
+
+`!=` and `!==` are just the negations of `==` and `===`, and inherit their
+behaviour exactly - `!=` converts, `!==` does not:
+
+```
+!= vs !==:
+  0 / ""            != -> false !== -> true
+  "" / "0"          != -> true  !== -> true
+  null / undefined  != -> false !== -> true
+  1 / true          != -> false !== -> true
+  NaN / NaN         != -> true  !== -> true
+```
+
+`0 != ""` is `false` because `==` converted the string to a number first, and
+`NaN` differs from itself under both operators. Use `!==` everywhere, with the
+same deliberate exception as before: `x != null` is "neither null nor
+undefined", where `x !== null` would let `undefined` through.
+
+| Form | Converts? | Use it for |
+| --- | --- | --- |
+| `!x` | yes, to boolean | "is this falsy" - never for "is this missing" |
+| `!!x` | yes, to boolean | same as `Boolean(x)`; prefer `filter(Boolean)` |
+| `!=` | yes, `==` rules | only as `x != null` |
+| `!==` | no | everything else |
+
+::: tip
+`Boolean(x)` reads better than `!!x` when the conversion itself is the point -
+building a flag, returning from a predicate, or filtering
+(`values.filter(Boolean)`). Save `!x` for conditions, where the negation is
+what you actually mean.
+:::
+
 ## `null` vs `undefined`
 
 Both mean "no value", and the distinction that survives contact with real code
@@ -146,6 +202,9 @@ library's `cloneDeep` only when you need class instances preserved.
 
 - Use `===` everywhere; allow `x == null` only as a deliberate null-or-undefined
   check.
+- `!x` and `!!x` only ask about truthiness - `!!"0"` and `!![]` are `true`, and
+  `!x` misreports a legitimate `0` as missing. `!=`/`!==` negate `==`/`===` with
+  the same conversion rules.
 - `undefined` is "never set", `null` is "explicitly empty" - and only `undefined`
   triggers a default parameter.
 - `??` falls back on null/undefined; `||` falls back on any falsy value,

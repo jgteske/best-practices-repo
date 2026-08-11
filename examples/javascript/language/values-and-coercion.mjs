@@ -40,6 +40,63 @@ console.log("  null == 0 ..........", null == 0); // null only loosely equals un
 const missing = undefined;
 console.log("\n  x == null catches both null and undefined:", missing == null);
 
+// --- ! and !! -----------------------------------------------------------------
+// `!x` asks "is x falsy?" - it converts to boolean and flips. `!!x` converts
+// without flipping, so it is exactly Boolean(x) in two characters. Neither one
+// inspects the value's type: they only ever ask the truthiness question.
+
+const inputs = [
+  ["0", 0],
+  ['""', ""],
+  ['"0"', "0"], // a non-empty string, so truthy - unlike Number("0")
+  ["[]", []],
+  ["{}", {}],
+  ["null", null],
+  ["undefined", undefined],
+  ["NaN", NaN],
+  ['"hi"', "hi"],
+];
+
+console.log("\n! and !!:");
+for (const [label, value] of inputs) {
+  console.log(`  ${label.padEnd(11)} !x -> ${String(!value).padEnd(5)} !!x -> ${!!value}`);
+}
+
+// !!x === Boolean(x) for every value; prefer Boolean(x) when the conversion is
+// the point, and `filter(Boolean)` over `filter((x) => !!x)`.
+console.log("  !!x is Boolean(x) ..", inputs.every(([, v]) => !!v === Boolean(v)));
+
+// The bug `!x` causes in practice: a deliberate 0 or "" takes the "missing" branch.
+const configuredRetries = 0;
+if (!configuredRetries) {
+  console.log("  !0 is true .........", true, "<- a configured 0 looks 'missing'");
+}
+console.log("  == null is correct .", configuredRetries == null, "<- 0 was actually provided");
+
+// --- != vs !== ----------------------------------------------------------------
+// `!=` is the negation of `==` and inherits its conversions; `!==` is the
+// negation of `===` and never converts. The same rule applies: use `!==`, and
+// keep `!= null` as the deliberate "neither null nor undefined" check.
+
+const pairs = [
+  ['0 / ""', 0, ""],
+  ['"" / "0"', "", "0"],
+  ["null / undefined", null, undefined],
+  ["1 / true", 1, true],
+  ["NaN / NaN", NaN, NaN], // unequal under both: NaN is not equal to itself
+];
+
+console.log("\n!= vs !==:");
+for (const [label, a, b] of pairs) {
+  console.log(`  ${label.padEnd(17)} != -> ${String(a != b).padEnd(5)} !== -> ${a !== b}`);
+}
+
+// The one deliberate `!=`: true for everything except null and undefined.
+const present = 0;
+console.log("  0 != null ..........", present != null, "<- 0 is present");
+console.log("  0 !== null .........", present !== null, "<- true too, but misses undefined");
+console.log("  undefined != null ..", undefined != null, "<- the reason to prefer !=");
+
 // --- NaN, the value that is not equal to itself -------------------------------
 
 const notANumber = Number("nope");

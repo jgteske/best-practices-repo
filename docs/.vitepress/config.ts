@@ -70,6 +70,13 @@ export default withMermaid(defineConfig({
           ],
         },
         {
+          text: "Design Patterns",
+          items: [
+            { text: "Factory Functions", link: "/typescript/factory-functions" },
+            { text: "Design Patterns in TypeScript", link: "/typescript/design-patterns" },
+          ],
+        },
+        {
           text: "Files & Declarations",
           items: [
             { text: ".ts, .tsx & .d.ts", link: "/typescript/file-kinds-and-declarations" },

@@ -45,6 +45,13 @@ here is guaranteed to actually compile.
 | [Async & Promise Patterns](./async-and-promises) | Avoiding floating promises, parallel vs sequential work, and choosing the right Promise combinator by its result type. |
 | [Cancellation & AbortSignal](./cancellation-and-signals) | Threading a signal through async APIs, `AbortSignal.timeout`/`any`, cancel-the-previous-request, and cooperative `throwIfAborted` loops. |
 
+**Design Patterns**
+
+| Page | Focus |
+| --- | --- |
+| [Factory Functions](./factory-functions) | Closures instead of `this`, generic factories, dependencies as arguments, ports with in-memory doubles, a composition root, and factory registries keyed by a union. |
+| [Design Patterns in TypeScript](./design-patterns) | Strategy, Decorator, Command, Visitor, Observer, Builder, Adapter and Singleton written the way the language wants them - mostly as functions, unions and records. |
+
 **Files & Declarations**
 
 | Page | Focus |

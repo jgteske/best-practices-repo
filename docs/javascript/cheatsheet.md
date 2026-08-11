@@ -60,6 +60,19 @@ handler = () => { … }       // class field: bound for the instance's life
 element.addEventListener("click", () => obj.method())   // not obj.method
 ```
 
+## Functions & composition — [details](./functions-and-composition)
+
+```js
+const add = (a) => (b) => a + b      // add(2)(3); add(2) is a function
+(id) => ({ id })                     // parens: `=> {` is a block, not an object
+const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x)
+const withRetry = (n) => (fn) => async (...args) => …   // config, fn, args
+arr.map(Number) ; arr.filter(Boolean)   // point-free only when arity is 1
+arr.map(parseInt)                    // 1, NaN, 3 — the index becomes the radix
+run(fn) ; run(() => fn(x)) ; run(fn(x))  // the fn / a thunk / the result
+const onTick = () => …               // hold the reference to be able to remove it
+```
+
 ## Objects & classes — [details](./objects-and-classes)
 
 ```js

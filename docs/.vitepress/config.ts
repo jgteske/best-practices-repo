@@ -141,6 +141,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Values, Types & Coercion", link: "/javascript/values-and-coercion" },
             { text: "Scope, Closures & this", link: "/javascript/scope-and-closures" },
+            { text: "Functions, Arrows & Composition", link: "/javascript/functions-and-composition" },
             { text: "Objects, Prototypes & Classes", link: "/javascript/objects-and-classes" },
             { text: "Arrays, Iteration & Collections", link: "/javascript/arrays-and-iteration" },
           ],

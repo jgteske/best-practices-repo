@@ -54,6 +54,17 @@ export default withMermaid(defineConfig({
           ],
         },
         {
+          text: "Classes",
+          items: [
+            { text: "Classes, Fields & Constructors", link: "/typescript/classes-and-constructors" },
+            { text: "Methods, this & Callers", link: "/typescript/class-methods-and-callers" },
+            { text: "Abstract Classes & Inheritance", link: "/typescript/abstract-classes-and-inheritance" },
+            { text: "Classes with Interfaces & Types", link: "/typescript/classes-with-interfaces" },
+            { text: "Chaining & Fluent Builders", link: "/typescript/class-chaining-and-builders" },
+            { text: "Mixins & Class Factories", link: "/typescript/mixins-and-class-factories" },
+          ],
+        },
+        {
           text: "Safety & Correctness",
           items: [
             { text: "Exhaustive Checks with never", link: "/typescript/exhaustive-checks-with-never" },
@@ -150,6 +161,7 @@ export default withMermaid(defineConfig({
             { text: "Scope, Closures & this", link: "/javascript/scope-and-closures" },
             { text: "Functions, Arrows & Composition", link: "/javascript/functions-and-composition" },
             { text: "Objects, Prototypes & Classes", link: "/javascript/objects-and-classes" },
+            { text: "Classes at Runtime", link: "/javascript/classes-at-runtime" },
             { text: "Arrays, Iteration & Collections", link: "/javascript/arrays-and-iteration" },
           ],
         },

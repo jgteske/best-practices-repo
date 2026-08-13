@@ -8,7 +8,8 @@ hand-written guides.
 It currently holds four guides:
 
 - **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
-  types, generics, runtime patterns, and design patterns built from factory
+  types, generics, classes (fields, `this`, abstract classes, `implements`,
+  chaining, mixins), runtime patterns, and design patterns built from factory
   functions.
 - **[React Best Practices](docs/react)** - components, props, hooks and hook
   chaining, rendering, and events.

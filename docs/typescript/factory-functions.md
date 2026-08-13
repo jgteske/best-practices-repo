@@ -154,10 +154,16 @@ Factories are the default, not the rule. Reach for `class` when:
 | Situation | Why |
 | --- | --- |
 | Thousands of instances | Methods live once on the prototype; a factory allocates a closure per method per instance. |
-| Subclassing `Error` | `instanceof` checks and stack traces depend on the prototype chain. |
+| Subclassing `Error` | [`instanceof` checks and stack traces](./abstract-classes-and-inheritance#super-super-method-and-subclassing-error) depend on the prototype chain. |
 | A framework demands it | React class components, TypeORM entities, Angular services, `extends HTMLElement`. |
-| `instanceof` is part of the API | Structural typing cannot express "this exact constructor". |
+| `instanceof` is part of the API | Structural typing cannot express "this exact constructor" - unless the class has [private state](./classes-with-interfaces#structural-until-a-class-has-private-state), which makes its type nominal. |
 | Public inheritance is genuinely the model | Rare - but when a library exposes a base class to extend, extend it. |
+| Behaviour must be *inherited* by a class you do not own | That is what a [mixin](./mixins-and-class-factories) is for. |
+
+The [Classes section](./classes-and-constructors) covers those cases in full -
+including the `this`-binding rules that make the second column of the table
+above bite, and the [chaining patterns](./class-chaining-and-builders) that a
+closure cannot express as cleanly.
 
 The measurement matters more than the rule: "one closure per method" only
 becomes real memory when instances are numerous and short-lived. For the

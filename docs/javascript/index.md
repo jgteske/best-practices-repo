@@ -25,6 +25,7 @@ output the code really produced, not output somebody typed by hand.
 | [Scope, Closures & `this`](./scope-and-closures) | `var`/`let`/`const`, hoisting and the TDZ, closures, and what `this` binds to in every call form. |
 | [Functions, Arrows & Composition](./functions-and-composition) | How `a => b => c` parses, currying and partial application, `pipe`/`compose`, wrapper chains, and passing functions as arguments. |
 | [Objects, Prototypes & Classes](./objects-and-classes) | The prototype chain, what `class` desugars to, `#private`, getters, `Object.freeze`, `?.` and `??`. |
+| [Classes at Runtime](./classes-at-runtime) | The order initializers really run in, how `this` is lost, `super` and `new.target`, `#field in obj` brand checks, static blocks, and mixins. |
 | [Arrays, Iteration & Collections](./arrays-and-iteration) | `map`/`filter`/`reduce`, destructuring and spread, `Map`/`Set`/`WeakMap`, iterators and generators. |
 
 **Modules & async**

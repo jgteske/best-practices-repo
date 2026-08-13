@@ -62,12 +62,18 @@ classes:
 useful for a registry, or for refusing to let an abstract base be constructed
 directly.
 
+[Classes at Runtime](./classes-at-runtime) takes each of those rows further: the
+exact order initializers run in, the ways `this` goes missing, `#field in obj`
+brand checks, static blocks, and mixins.
+
 ::: tip Prefer composition, and keep hierarchies shallow
 Deep `extends` chains are as painful in JavaScript as anywhere else. A class
 earns its keep when you need identity (`instanceof`), private state, and a fixed
 set of operations. A plain object plus functions is usually the smaller answer -
 and see the [TypeScript guide](/typescript/modeling-with-unions) for modelling
-variants with unions rather than subclasses.
+variants with unions rather than subclasses, or the
+[Classes section](/typescript/classes-and-constructors) for the typed version of
+everything on this page.
 :::
 
 ## Freezing is shallow

@@ -29,6 +29,17 @@ here is guaranteed to actually compile.
 | [Mapped & Conditional Types](./mapped-and-conditional-types) | Building your own utility types with key remapping, modifiers, and recursion. |
 | [Function Signatures & Overloads](./function-signatures) | Union params vs overloads vs conditional returns, and assertion signatures. |
 
+**Classes**
+
+| Page | Focus |
+| --- | --- |
+| [Classes, Fields & Constructors](./classes-and-constructors) | `readonly`/`private`/`#private`, parameter properties and the ordering trap they hide, `!` and `declare`, constructor overloads vs named static factories, accessors and `static` blocks. |
+| [Methods, `this` & Callers](./class-methods-and-callers) | Why a passed method loses `this`, the three fixes and what each costs, `this` parameters, and callbacks that pass more arguments than you expect. |
+| [Abstract Classes & Inheritance](./abstract-classes-and-inheritance) | Template methods with `protected` steps, abstract construct signatures, `super` and `Error` subclasses, what `override` catches, and the constructor that calls an override too early. |
+| [Classes with Interfaces & Types](./classes-with-interfaces) | `implements` as a check, when a class type turns nominal, typing the static side with `satisfies`, construct signatures, and generic classes. |
+| [Chaining & Fluent Builders](./class-chaining-and-builders) | The `this` return type, `this` parameters and `this is T` guards, mutable vs immutable chains, and a type-state builder whose `build()` will not compile early. |
+| [Mixins & Class Factories](./mixins-and-class-factories) | Functions that take a class and return a subclass, why the constructor type needs `any[]`, constrained and abstract bases, and functions whose product is a class. |
+
 **Safety & Correctness**
 
 | Page | Focus |

@@ -14,8 +14,9 @@ It currently holds four guides:
 - **[React Best Practices](docs/react)** - components, props, hooks and hook
   chaining, rendering, and events.
 - **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
-  objects, iteration, modules, the event loop) and the runtime (the CLI, npm,
-  core APIs, streams, HTTP, shutdown, and the built-in test runner).
+  objects, iteration, modules, the event loop), the runtime (the CLI, core APIs,
+  streams, HTTP, shutdown, and the built-in test runner), and packages
+  (publishing, version ranges, and how npm resolves a dependency tree).
 - **[Linux, Bash & the Terminal](docs/linux)** - everyday commands, pipes and
   text processing, permissions, processes, services, networking, and shell
   scripting.

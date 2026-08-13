@@ -5,6 +5,14 @@ semver is the contract between them. Most dependency pain traces back to one of
 three misunderstandings: what a range actually permits, why the lockfile is
 committed, or which dependency section a package belongs in.
 
+::: tip This page is the overview
+Three companion pages go into detail where this one summarises:
+[Creating & Publishing a Package](./creating-packages) for authoring one,
+[Version Ranges In Depth](./version-ranges) for the full range grammar, and
+[How Dependencies Get Resolved](./dependency-resolution) for what the installer
+does with those ranges.
+:::
+
 ## The fields that matter
 
 ```json
@@ -35,7 +43,9 @@ committed, or which dependency section a package belongs in.
 | `"packageManager"` | Pins the exact npm/pnpm/yarn version; Corepack enforces it. |
 
 Published packages additionally want `license`, `repository`, and either
-`"sideEffects": false` or an accurate list, so bundlers can tree-shake.
+`"sideEffects": false` or an accurate list, so bundlers can tree-shake. The
+`exports` map, the conditions inside it, and what `files` really controls are
+covered in [Creating & Publishing a Package](./creating-packages).
 
 ## Semver, and what a range really permits
 
@@ -58,6 +68,10 @@ indefinitely, so this is not an edge case.
 
 Semver is a promise about intent, not a guarantee about behaviour. A patch
 release can still break you. That is what the lockfile is for.
+
+The rest of the grammar - hyphen ranges, `||`, x-ranges, the prerelease rule,
+and which range to choose for an application versus a published library - is on
+[Version Ranges In Depth](./version-ranges).
 
 ## `npm ci` vs `npm install`
 
@@ -116,6 +130,10 @@ overly strict, and `overrides` is the surgical version:
 ```json
 { "overrides": { "vulnerable-lib": "^2.1.0" } }
 ```
+
+Why two copies are a problem in the first place, how to read the `ERESOLVE`
+error a peer conflict produces, and what the installer does with all of this:
+[How Dependencies Get Resolved](./dependency-resolution).
 
 ## Scripts
 

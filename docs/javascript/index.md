@@ -42,12 +42,20 @@ output the code really produced, not output somebody typed by hand.
 | Page | Focus |
 | --- | --- |
 | [Running Node](./running-node) | Installing and pinning versions, the CLI flags worth knowing, `--watch`, `--env-file`, arguments, and exit codes. |
-| [npm, package.json & Semver](./npm-and-packages) | Every field that matters, version ranges, `install` vs `ci`, scripts, `npx`, and dependency hygiene. |
 | [Core APIs](./core-apis) | `node:fs/promises`, `node:path`, `process`, `node:os`, child processes, and worker threads. |
 | [Streams & Buffers](./streams-and-buffers) | Why streams exist, `pipeline()`, async iteration, backpressure, and `Buffer` vs `TypedArray`. |
 | [HTTP & Networking](./http-and-networking) | A `node:http` server, body parsing and limits, the global `fetch`, timeouts, and when a framework earns its keep. |
 | [Errors & Graceful Shutdown](./errors-and-shutdown) | Custom errors and `cause`, `unhandledRejection`, signal handling, draining connections, and exit codes. |
 | [Testing with `node:test`](./testing-with-node-test) | The built-in runner, `assert/strict`, mocking, coverage, and what makes code testable in the first place. |
+
+**Packages & dependencies**
+
+| Page | Focus |
+| --- | --- |
+| [npm, package.json & Semver](./npm-and-packages) | The overview: every field that matters, `install` vs `ci`, scripts, `npx`, workspaces, and dependency hygiene. |
+| [Creating & Publishing a Package](./creating-packages) | Scopes, `exports` and conditions, shipping types, the dual-package hazard, what lands in the tarball, dist-tags, provenance, and testing before you publish. |
+| [Version Ranges In Depth](./version-ranges) | The whole range grammar, `^` below 1.0.0, why prereleases are opt-in, precedence, non-registry specifiers, and which range to pick where. |
+| [How Dependencies Get Resolved](./dependency-resolution) | Node's `node_modules` walk, hoisting vs nesting, the diamond conflict, what two copies of a package break, `ERESOLVE` and `overrides`, the lockfile, and npm vs pnpm layouts. |
 
 **Reference**
 

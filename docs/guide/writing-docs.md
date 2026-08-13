@@ -32,12 +32,30 @@ into the Markdown instead, using VitePress's snippet-import syntax:
 <!-- pulls in the whole file -->
 <<< ../../examples/typescript/event-listeners/typed-event-emitter.ts
 
-<!-- pulls in only lines 10-20 -->
-<<< ../../examples/typescript/event-listeners/typed-event-emitter.ts{10-20}
-
 <!-- syntax highlighting can be forced independently of the file extension -->
 <<< ../../examples/typescript/event-listeners/typed-event-emitter.ts{ts}
+
+<!-- pulls in only the marked region (see below) -->
+<<< ../../examples/javascript/packages/semver.mjs#bounds{js}
+
+<!-- the whole file, with lines 10-20 highlighted -->
+<<< ../../examples/typescript/event-listeners/typed-event-emitter.ts{10-20}
 ```
+
+::: warning `{10-20}` highlights, it does not select
+A line range after a snippet import still embeds the **entire** file and merely
+highlights those lines. To quote part of a file, mark a region in the source and
+import that instead:
+
+```js
+// #region bounds
+function caretUpperBound(part) { /* … */ }
+// #endregion bounds
+```
+
+The markers are stripped from the rendered snippet and the result is dedented,
+so a region taken from inside a function body reads as top-level code.
+:::
 
 The path is relative to the Markdown file doing the importing (VitePress
 also supports an `@` alias, but it resolves to `srcDir` - the `docs/`

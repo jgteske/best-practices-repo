@@ -200,7 +200,9 @@ you refactor internals without a major version. A dual package adds conditions:
 
 Conditions are matched top to bottom, so `types` must come first and a `default`
 key, if present, must come last. More on the surrounding fields in
-[npm & package.json](./npm-and-packages).
+[npm & package.json](./npm-and-packages), and on building the whole map -
+subpaths, `imports`, and the dual-package hazard that shape above invites - in
+[Creating & Publishing a Package](./creating-packages).
 
 ## Summary
 

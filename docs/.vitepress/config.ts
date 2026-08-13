@@ -178,12 +178,20 @@ export default withMermaid(defineConfig({
           text: "The Node Runtime",
           items: [
             { text: "Running Node", link: "/javascript/running-node" },
-            { text: "npm, package.json & Semver", link: "/javascript/npm-and-packages" },
             { text: "Node Core APIs", link: "/javascript/core-apis" },
             { text: "Streams & Buffers", link: "/javascript/streams-and-buffers" },
             { text: "HTTP & Networking", link: "/javascript/http-and-networking" },
             { text: "Errors & Graceful Shutdown", link: "/javascript/errors-and-shutdown" },
             { text: "Testing with node:test", link: "/javascript/testing-with-node-test" },
+          ],
+        },
+        {
+          text: "Packages & Dependencies",
+          items: [
+            { text: "npm, package.json & Semver", link: "/javascript/npm-and-packages" },
+            { text: "Creating & Publishing a Package", link: "/javascript/creating-packages" },
+            { text: "Version Ranges In Depth", link: "/javascript/version-ranges" },
+            { text: "How Dependencies Get Resolved", link: "/javascript/dependency-resolution" },
           ],
         },
         {

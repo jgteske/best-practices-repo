@@ -3,3 +3,12 @@ docs/.vitepress/dist/
 docs/.vitepress/cache/
 *.log
 .DS_Store
+
+# Python examples
+__pycache__/
+.venv/
+dist/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/

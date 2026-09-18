@@ -1,0 +1,21 @@
+# Lint and format settings for everything under examples/python.
+target-version = "py313"
+line-length = 110
+
+[lint]
+select = [
+  "E", "W",  # pycodestyle
+  "F",       # pyflakes: unused imports, undefined names
+  "I",       # isort: import ordering
+  "B",       # bugbear: likely bugs (mutable defaults, loop-variable closures, ...)
+  "UP",      # pyupgrade: modern syntax for the target version
+  "SIM",     # simplifications
+  "RUF",     # ruff-specific checks
+]
+ignore = [
+  "E501",    # line length is the formatter's job; long lines left are comments
+  "SIM905",  # the examples split literal strings on purpose, to show the result
+]
+
+[lint.isort]
+known-first-party = ["slugkit", "blog_app", "acme", "shop"]

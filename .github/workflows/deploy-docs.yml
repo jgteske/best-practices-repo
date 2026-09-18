@@ -10,6 +10,7 @@ on:
       - "package.json"
       - "package-lock.json"
       - "tsconfig.json"
+      - "scripts/**"
       - ".github/workflows/deploy-docs.yml"
   # Allow running it by hand from the Actions tab.
   workflow_dispatch:
@@ -59,6 +60,22 @@ jobs:
       # the node:test suite). No extra tooling needed - Node is already set up.
       - name: Check JavaScript examples
         run: npm run check:js
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          # 3.13 is the baseline the Python examples document and rely on
+          # (TypeIs, ReadOnly, type-parameter defaults, itertools.batched strict=).
+          python-version: "3.13"
+
+      # The mandatory part of check:python needs only Python. These make it
+      # also type-check, lint, run pytest, execute the notebook, and build and
+      # install the Poetry projects - the same way shellcheck is added above.
+      - name: Install Python tooling
+        run: pip install poetry mypy ruff pytest nbconvert ipykernel
+
+      - name: Check Python examples
+        run: npm run check:python
 
       - name: Build site
         run: npm run docs:build

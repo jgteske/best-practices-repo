@@ -1,0 +1,17 @@
+# region project
+[project]
+name = "acme-core"
+version = "0.1.0"
+description = "Shared models for the acme.* namespace."
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.poetry]
+# Ship src/acme/core - but NOT an acme/__init__.py: `acme` stays a namespace
+# package that other distributions can add subpackages to.
+packages = [{ include = "acme/core", from = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+# endregion project

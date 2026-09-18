@@ -76,6 +76,7 @@ up as an npm script and included in `npm run check`:
 | `examples/typescript`, `examples/react` | `tsc --noEmit` against `tsconfig.json` | `npm run typecheck` |
 | `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed | `npm run check:bash` |
 | `examples/javascript` | `node --check` on every `.mjs`/`.cjs`, then **executes** each runnable file, then `node --test` | `npm run check:js` |
+| `examples/python` | compiles and **executes** every standalone `.py`; when installed: `mypy --strict` (plus every quoted `<- mypy:` error), ruff, pytest, notebook execution, and building/installing the Poetry projects | `npm run check:python` |
 
 `scripts/check-bash.sh` is the pattern to copy for a new language: find the
 example files, run the strictest checker that is guaranteed to be available,

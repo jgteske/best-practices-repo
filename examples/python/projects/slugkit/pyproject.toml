@@ -1,0 +1,66 @@
+# region project
+[project]
+name = "slugkit"                       # the distribution name: pip install slugkit
+version = "0.3.0"
+description = "Turn titles into URL slugs, from Python or the command line."
+authors = [{ name = "Best Practices Repo" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []                      # runtime dependencies: none, on purpose
+keywords = ["slug", "url", "cli"]
+classifiers = ["Programming Language :: Python :: 3", "Typing :: Typed"]
+
+[project.scripts]
+slugkit = "slugkit.cli:main"           # installs a `slugkit` executable that calls main()
+
+[project.gui-scripts]
+slugkit-gui = "slugkit.gui:main"       # like scripts, but no console window on Windows
+
+[project.urls]
+Repository = "https://github.com/jgteske/best-practices-repo"
+# endregion project
+
+# region poetry
+[tool.poetry]
+packages = [{ include = "slugkit", from = "src" }]   # src layout
+
+# PEP 735 dependency groups: development-only, never installed by users of the
+# package. `poetry add --group dev pytest` writes here.
+[dependency-groups]
+dev = [
+    "pytest (>=9.1,<10.0)",
+    "mypy (>=2.3,<3.0)",
+    "ruff (>=0.16,<0.17)",
+]
+# Only needed to build standalone executables: `poetry sync --with bundle`.
+# PyInstaller caps the Python versions it supports; the marker scopes the
+# dependency to those instead of capping this project's requires-python.
+bundle = ["pyinstaller (>=6.16,<7.0) ; python_version < '3.16'"]
+
+[tool.poetry.group.bundle]
+optional = true
+# endregion poetry
+
+# region build-system
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+# endregion build-system
+
+# region tools
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers", "--import-mode=importlib"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unreachable = true
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "RUF"]
+# endregion tools

@@ -32,13 +32,15 @@ hand-written Markdown guides rather than docstrings extracted from source.
 │   ├── typescript/           # the TypeScript best practices guide
 │   ├── react/                # the React best practices guide
 │   ├── javascript/           # the JavaScript & Node.js guide
+│   ├── python/               # the Python guide
 │   └── linux/                # the Linux, Bash & terminal guide
 ├── examples/                 # real, checked source backing the docs
 │   ├── typescript/           # .ts        - type-checked
 │   ├── react/                # .tsx       - type-checked
 │   ├── javascript/           # .mjs/.cjs  - parsed, then executed
+│   ├── python/               # .py/.ipynb - executed, type-checked, linted
 │   └── bash/                 # .sh        - parsed and linted
-├── scripts/                  # check-bash.sh, check-js.sh
+├── scripts/                  # check-bash.sh, check-js.sh, check-python.sh
 ├── tsconfig.json             # typechecks everything under examples/
 └── package.json              # docs:dev / docs:build / typecheck / check:*
 ```
@@ -52,6 +54,7 @@ npm run docs:build     # produces docs/.vitepress/dist
 npm run typecheck      # type-checks every TypeScript/TSX example
 npm run check:bash     # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js       # node --check, then run every JavaScript example
+npm run check:python   # run every Python example (+ mypy, ruff, pytest, Poetry if installed)
 ```
 
 `npm run check` runs the checks and the production build together - useful

@@ -1,0 +1,18 @@
+# region project
+[project]
+name = "acme-report"
+version = "0.1.0"
+description = "Reports built on acme.core, living in the same acme.* namespace."
+requires-python = ">=3.13"
+dependencies = ["acme-core (>=0.1,<0.2)"]
+
+[tool.poetry]
+packages = [{ include = "acme/report", from = "src" }]
+
+[tool.poetry.dependencies]
+acme-core = { path = "../acme-core", develop = true }
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+# endregion project

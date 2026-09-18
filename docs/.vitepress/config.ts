@@ -3,7 +3,7 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with an in-depth TypeScript best practices guide.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python and Linux guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -18,6 +18,7 @@ export default withMermaid(defineConfig({
       { text: "TypeScript", link: "/typescript/" },
       { text: "React", link: "/react/" },
       { text: "JavaScript & Node", link: "/javascript/" },
+      { text: "Python", link: "/python/" },
       { text: "Linux", link: "/linux/" },
     ],
 
@@ -197,6 +198,51 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "JavaScript & Node Cheat Sheet", link: "/javascript/cheatsheet" }],
+        },
+      ],
+      "/python/": [
+        {
+          text: "Python",
+          items: [{ text: "Overview", link: "/python/" }],
+        },
+        {
+          text: "The Language",
+          items: [
+            { text: "Python Basics", link: "/python/basics" },
+            { text: "Function Typing", link: "/python/function-typing" },
+            { text: "Classes & Dataclasses", link: "/python/classes" },
+            { text: "Errors & Context Managers", link: "/python/errors-and-context-managers" },
+            { text: "Iterators & Generators", link: "/python/iterators-and-generators" },
+          ],
+        },
+        {
+          text: "Projects & Environments",
+          items: [
+            { text: "Poetry & Virtual Environments", link: "/python/poetry-and-virtualenvs" },
+            { text: "Managing Dependencies", link: "/python/dependencies" },
+            { text: "Modules & Imports", link: "/python/modules-and-imports" },
+            { text: "Namespace Packages & Imports", link: "/python/namespace-packages" },
+          ],
+        },
+        {
+          text: "Packaging & Distribution",
+          items: [
+            { text: "Building & Consuming Packages", link: "/python/building-packages" },
+            { text: "Command-Line Apps", link: "/python/cli-apps" },
+            { text: "Standalone Executables", link: "/python/standalone-executables" },
+          ],
+        },
+        {
+          text: "Quality & Workflow",
+          items: [
+            { text: "Testing with pytest", link: "/python/testing-with-pytest" },
+            { text: "Linting & Type Checking", link: "/python/tooling" },
+            { text: "Jupyter Notebooks", link: "/python/jupyter-notebooks" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "Python Cheat Sheet", link: "/python/cheatsheet" }],
         },
       ],
       "/linux/": [

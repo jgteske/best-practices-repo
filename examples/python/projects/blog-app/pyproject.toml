@@ -1,0 +1,26 @@
+# region project
+[project]
+name = "blog-app"
+version = "1.0.0"
+description = "An application that consumes the slugkit library from ../slugkit."
+authors = [{ name = "Best Practices Repo" }]
+requires-python = ">=3.13"
+dependencies = [
+    "slugkit (>=0.3,<0.4)",   # what the package needs - this lands in the wheel's metadata
+]
+
+[project.scripts]
+blog-app = "blog_app.main:main"
+
+[tool.poetry]
+packages = [{ include = "blog_app", from = "src" }]
+
+# Where Poetry gets slugkit FROM during local development: the sibling folder,
+# installed editable, so edits in ../slugkit are live without reinstalling.
+[tool.poetry.dependencies]
+slugkit = { path = "../slugkit", develop = true }
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+# endregion project

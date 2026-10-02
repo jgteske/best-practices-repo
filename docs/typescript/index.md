@@ -8,6 +8,12 @@ type-checked `.ts` file under [`examples/typescript`](https://github.com/jgteske
 in this repository, imported directly into the page - so the code you read
 here is guaranteed to actually compile.
 
+::: tip Part of the JavaScript & TypeScript section
+This guide is one of three, along with [JavaScript & Node.js](../javascript/) and [React](../react/).
+The sidebar groups the pages from all three by topic, so the JavaScript, TypeScript
+and React pages on classes, errors or async work sit next to each other.
+:::
+
 ## What's covered
 
 <div class="vp-doc">

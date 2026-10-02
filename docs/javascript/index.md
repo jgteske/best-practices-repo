@@ -13,6 +13,12 @@ imported directly into the page. `npm run check:js` parses each one with
 finally runs the `node:test` suite - so the output printed in the prose below is
 output the code really produced, not output somebody typed by hand.
 
+::: tip Part of the JavaScript & TypeScript section
+This guide is one of three, along with [TypeScript](../typescript/) and [React](../react/).
+The sidebar groups the pages from all three by topic, so the JavaScript, TypeScript
+and React pages on classes, errors or async work sit next to each other.
+:::
+
 ## What's covered
 
 <div class="vp-doc">

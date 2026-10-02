@@ -5,18 +5,19 @@ turning plain Markdown files into a static documentation site - the same
 role a tool like `pydoc`/Sphinx plays for Python docstrings, but for
 hand-written guides.
 
-It currently holds five guides:
+It currently holds three guides:
 
-- **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
-  types, generics, classes (fields, `this`, abstract classes, `implements`,
-  chaining, mixins), runtime patterns, and design patterns built from factory
-  functions.
-- **[React Best Practices](docs/react)** - components, props, hooks and hook
-  chaining, rendering, and events.
-- **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
-  objects, iteration, modules, the event loop), the runtime (the CLI, core APIs,
-  streams, HTTP, shutdown, and the built-in test runner), and packages
-  (publishing, version ranges, and how npm resolves a dependency tree).
+- **JavaScript & TypeScript** - one section, grouped by topic, made up of:
+  - **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
+    objects, iteration, modules, the event loop), the runtime (the CLI, core
+    APIs, streams, HTTP, shutdown, and the built-in test runner), and packages
+    (publishing, version ranges, and how npm resolves a dependency tree).
+  - **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
+    types, generics, classes (fields, `this`, abstract classes, `implements`,
+    chaining, mixins), runtime patterns, and design patterns built from factory
+    functions.
+  - **[React Best Practices](docs/react)** - components, props, hooks and hook
+    chaining, rendering, error boundaries, and events.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
   generators), projects (Poetry, virtual environments, dependencies, modules and
   namespace packages), packaging (building wheels, consuming them from another
@@ -52,9 +53,9 @@ npm run check         # all of the above, useful as a single CI step
 ```
 docs/           # published site content (Markdown)
   guide/        # docs about this repo and how to extend it
-  typescript/   # TypeScript best practices guide
-  react/        # React best practices guide
-  javascript/   # JavaScript & Node.js guide
+  javascript/   # JavaScript & TypeScript section: JavaScript & Node.js pages
+  typescript/   #   ... TypeScript pages
+  react/        #   ... React pages
   python/       # Python guide
   linux/        # Linux, Bash & terminal guide
 examples/       # real, checked source backing the docs' code samples

@@ -5,7 +5,9 @@
 1. Create a new `.md` file under the relevant folder in `docs/` (e.g.
    `docs/typescript/my-new-topic.md`).
 2. Add it to the sidebar in `docs/.vitepress/config.ts`, under the matching
-   entry in `themeConfig.sidebar`.
+   entry in `themeConfig.sidebar`. JavaScript, TypeScript and React pages
+   all go in the shared `jsTsSidebar`, under the topic group they belong
+   to (classes, errors, async, ...), not under their language.
 3. Run `npm run docs:dev` and check it renders as expected.
 
 ## Adding a whole new top-level section

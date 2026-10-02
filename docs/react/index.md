@@ -9,6 +9,12 @@ on these pages is a real, `strict`-mode type-checked `.tsx` file under
 in this repository, imported directly into the page - so the code you read here
 is guaranteed to actually compile against React's own types.
 
+::: tip Part of the JavaScript & TypeScript section
+This guide is one of three, along with [JavaScript & Node.js](../javascript/) and [TypeScript](../typescript/).
+The sidebar groups the pages from all three by topic, so the JavaScript, TypeScript
+and React pages on classes, errors or async work sit next to each other.
+:::
+
 ## What's covered
 
 <div class="vp-doc">

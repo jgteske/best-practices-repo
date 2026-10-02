@@ -5,7 +5,7 @@ turning plain Markdown files into a static documentation site - the same
 role a tool like `pydoc`/Sphinx plays for Python docstrings, but for
 hand-written guides.
 
-It currently holds three guides:
+It currently holds four guides:
 
 - **JavaScript & TypeScript** - one section, grouped by topic, made up of:
   - **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
@@ -28,11 +28,16 @@ It currently holds three guides:
 - **[Linux, Bash & the Terminal](docs/linux)** - everyday commands, pipes and
   text processing, permissions, processes, services, networking, and shell
   scripting.
+- **[Git & Collaboration](docs/git)** - the data model (snapshots, branches as
+  pointers, the index), the everyday workflow, merging and rebasing, undoing
+  mistakes and the reflog, remotes and pull requests, and repository setup
+  (`.gitignore`, `.gitattributes`, hooks).
 
 Every code sample is backed by a real file under [`examples/`](examples):
 TypeScript/TSX examples are `strict`-mode type-checked, the React examples'
 component tests are run with Vitest, shell examples are
-parsed with `bash -n` and linted with `shellcheck`, and JavaScript examples are
+parsed with `bash -n` and linted with `shellcheck` (and the Git examples are
+run, in throwaway repositories), and JavaScript examples are
 parsed with `node --check` and then **actually executed**, and Python examples
 are executed, type-checked with `mypy --strict`, linted with ruff, and the real
 Poetry projects are built and installed - so the examples in the docs can never
@@ -62,12 +67,13 @@ docs/           # published site content (Markdown)
   react/        #   ... React pages
   python/       # Python guide
   linux/        # Linux, Bash & terminal guide
+  git/          # Git & collaboration guide
 examples/       # real, checked source backing the docs' code samples
   typescript/   # compiled with tsc --noEmit
   react/        # compiled with tsc --noEmit (react-jsx); *.test.tsx run by Vitest
   javascript/   # parsed with node --check, then executed (incl. node --test)
   python/       # executed, mypy --strict, ruff, pytest; Poetry projects built
-  bash/         # checked with bash -n and shellcheck
+  bash/         # checked with bash -n and shellcheck; git/ scripts are also run
 scripts/        # repo tooling (check-bash.sh, check-js.sh, check-python.sh)
 ```
 

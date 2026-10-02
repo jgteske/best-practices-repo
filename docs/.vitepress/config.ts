@@ -166,7 +166,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python and Linux guides.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux and Git guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -188,6 +188,7 @@ export default withMermaid(defineConfig({
       },
       { text: "Python", link: "/python/" },
       { text: "Linux", link: "/linux/" },
+      { text: "Git", link: "/git/" },
     ],
 
     sidebar: {
@@ -281,6 +282,35 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "Command Cheat Sheet", link: "/linux/cheatsheet" }],
+        },
+      ],
+      "/git/": [
+        {
+          text: "Git & Collaboration",
+          items: [{ text: "Overview", link: "/git/" }],
+        },
+        {
+          text: "Foundations",
+          items: [
+            { text: "The Mental Model", link: "/git/mental-model" },
+            { text: "The Everyday Workflow", link: "/git/everyday-workflow" },
+          ],
+        },
+        {
+          text: "Working with Others",
+          items: [
+            { text: "Branching, Merging & Rebasing", link: "/git/branching-merge-rebase" },
+            { text: "Undoing Things", link: "/git/undoing-things" },
+            { text: "Remotes & Pull Requests", link: "/git/remotes-and-prs" },
+          ],
+        },
+        {
+          text: "Repository Setup",
+          items: [{ text: "Config, Ignore Files & Hooks", link: "/git/config-ignore-hooks" }],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "Git Cheat Sheet", link: "/git/cheatsheet" }],
         },
       ],
     },

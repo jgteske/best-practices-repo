@@ -77,7 +77,7 @@ up as an npm script and included in `npm run check`:
 | --- | --- | --- |
 | `examples/typescript`, `examples/react` | `tsc --noEmit` against `tsconfig.json` | `npm run typecheck` |
 | `examples/react/**/*.test.tsx` | **runs** the tests with Vitest + Testing Library in jsdom (`vitest.config.ts`) | `npm run check:react` |
-| `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed | `npm run check:bash` |
+| `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed; then **executes** the scripts marked `# check-bash: run` | `npm run check:bash` |
 | `examples/javascript` | `node --check` on every `.mjs`/`.cjs`, then **executes** each runnable file, then `node --test` | `npm run check:js` |
 | `examples/python` | compiles and **executes** every standalone `.py`; when installed: `mypy --strict` (plus every quoted `<- mypy:` error), ruff, pytest, notebook execution, and building/installing the Poetry projects | `npm run check:python` |
 
@@ -91,6 +91,12 @@ lets the JavaScript pages quote real program output. Every example is written to
 terminate on its own; one that legitimately cannot be run unattended opts out
 with a `// check-js: no-run` marker comment, which is visible in the rendered
 snippet so the exemption documents itself.
+
+`scripts/check-bash.sh` runs scripts the other way round: most shell examples
+back up, delete or need root, so **running is opt-in**. A script that only works
+inside its own `mktemp -d` sandbox, like every example under `examples/bash/git`,
+carries a `# check-bash: run` line near the top, and the check executes it and
+requires exit code 0.
 
 Fenced code blocks are still the right choice for two things: an
 **anti-pattern** (deliberately broken code that must not be checked), and

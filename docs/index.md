@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Best Practices Repo"
   text: "Documentation, built from Markdown"
-  tagline: In-depth JavaScript & TypeScript (incl. Node.js and React), Python, and Linux/Bash guides - with every code sample checked in CI.
+  tagline: In-depth JavaScript & TypeScript (incl. Node.js and React), Python, Linux/Bash and Git guides - with every code sample checked in CI.
   actions:
     - theme: brand
       text: JavaScript & TypeScript
@@ -15,6 +15,9 @@ hero:
     - theme: brand
       text: Linux, Bash & the Terminal
       link: /linux/
+    - theme: brand
+      text: Git & Collaboration
+      link: /git/
     - theme: alt
       text: How this site is built
       link: /guide/

@@ -1,6 +1,7 @@
 # Python
 
-A guide to modern Python: the language first, then how Python projects are set
+A guide to modern Python: the language first, then the standard library you
+reach for every day (asyncio, logging, files), then how Python projects are set
 up in practice. That means virtual environments and dependencies with Poetry,
 modules and namespaces, building a package and importing it from another
 project, command-line tools, tests, type checking, and notebooks.
@@ -27,6 +28,14 @@ projects under `examples/python/projects`.
 | [Classes & Dataclasses](./classes) | Anatomy of a class, properties, class vs static methods, dunder methods, `@dataclass`, enums, inheritance and the MRO, ABCs vs Protocols, composition. |
 | [Errors & Context Managers](./errors-and-context-managers) | Exception hierarchies, `raise ... from`, EAFP, `add_note`, `ExceptionGroup`/`except*`, and `with` written three ways. |
 | [Iterators & Generators](./iterators-and-generators) | The iteration protocol, lazy pipelines, `yield from`, `send()`, custom iterables, and `itertools`. |
+
+**Standard library in practice**
+
+| Page | Focus |
+| --- | --- |
+| [Async with asyncio](./asyncio) | Coroutines vs tasks, `TaskGroup` and exception groups, cancellation, timeouts, `Semaphore` limits, worker queues, `to_thread`, and async generators. |
+| [Logging](./logging) | Loggers, handlers and levels, what libraries vs applications configure, `dictConfig`, lazy `%s` arguments, `logger.exception`, and JSON logs with request context. |
+| [Files, Paths & I/O](./files-and-io) | `pathlib`, encodings, text vs bytes, streaming large files, JSON and CSV, `shutil` and `tempfile`, and atomic writes. |
 
 **Projects & environments**
 

@@ -18,7 +18,8 @@ It currently holds three guides:
     functions, schema validation with zod, and what each `tsconfig` strictness
     flag catches.
   - **[React Best Practices](docs/react)** - components, props, hooks and hook
-    chaining, rendering, error boundaries, and events.
+    chaining, reducers, data fetching, forms, rendering, error boundaries,
+    events, and component testing.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
   generators), projects (Poetry, virtual environments, dependencies, modules and
   namespace packages), packaging (building wheels, consuming them from another
@@ -29,7 +30,8 @@ It currently holds three guides:
   scripting.
 
 Every code sample is backed by a real file under [`examples/`](examples):
-TypeScript/TSX examples are `strict`-mode type-checked, shell examples are
+TypeScript/TSX examples are `strict`-mode type-checked, the React examples'
+component tests are run with Vitest, shell examples are
 parsed with `bash -n` and linted with `shellcheck`, and JavaScript examples are
 parsed with `node --check` and then **actually executed**, and Python examples
 are executed, type-checked with `mypy --strict`, linted with ruff, and the real
@@ -43,6 +45,7 @@ npm install
 npm run docs:dev      # local dev server, http://localhost:5173
 npm run docs:build    # build the static site to docs/.vitepress/dist
 npm run typecheck     # type-check every TypeScript/TSX example under examples/
+npm run check:react   # run the React component tests (Vitest + Testing Library, jsdom)
 npm run check:bash    # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js      # node --check, then run every JavaScript example + node:test
 npm run check:python  # run every Python example; + mypy/ruff/pytest/poetry when installed
@@ -61,7 +64,7 @@ docs/           # published site content (Markdown)
   linux/        # Linux, Bash & terminal guide
 examples/       # real, checked source backing the docs' code samples
   typescript/   # compiled with tsc --noEmit
-  react/        # compiled with tsc --noEmit (react-jsx)
+  react/        # compiled with tsc --noEmit (react-jsx); *.test.tsx run by Vitest
   javascript/   # parsed with node --check, then executed (incl. node --test)
   python/       # executed, mypy --strict, ruff, pytest; Poetry projects built
   bash/         # checked with bash -n and shellcheck

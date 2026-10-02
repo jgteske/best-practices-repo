@@ -76,6 +76,7 @@ up as an npm script and included in `npm run check`:
 | Examples | Checked by | Script |
 | --- | --- | --- |
 | `examples/typescript`, `examples/react` | `tsc --noEmit` against `tsconfig.json` | `npm run typecheck` |
+| `examples/react/**/*.test.tsx` | **runs** the tests with Vitest + Testing Library in jsdom (`vitest.config.ts`) | `npm run check:react` |
 | `examples/bash` | `bash -n` on every `.sh`, plus `shellcheck` when it is installed | `npm run check:bash` |
 | `examples/javascript` | `node --check` on every `.mjs`/`.cjs`, then **executes** each runnable file, then `node --test` | `npm run check:js` |
 | `examples/python` | compiles and **executes** every standalone `.py`; when installed: `mypy --strict` (plus every quoted `<- mypy:` error), ruff, pytest, notebook execution, and building/installing the Poetry projects | `npm run check:python` |

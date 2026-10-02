@@ -125,6 +125,8 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     text: "React: State, Context & Refs",
     items: [
       { text: "State & Effects", link: "/react/state-and-effects" },
+      { text: "State with Reducers", link: "/react/state-with-reducers" },
+      { text: "Data Fetching", link: "/react/data-fetching" },
       { text: "Context: State & APIs", link: "/react/context" },
       { text: "When Elements & APIs Are Ready", link: "/react/refs-and-availability" },
     ],
@@ -143,6 +145,13 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: "Rendering & Component Lifecycle", link: "/react/rendering-and-lifecycle" },
       { text: "Event Handlers & Function Chaining", link: "/react/event-handlers" },
+    ],
+  },
+  {
+    text: "React: Forms & Testing",
+    items: [
+      { text: "Forms", link: "/react/forms" },
+      { text: "Testing Components", link: "/react/testing-components" },
     ],
   },
   {

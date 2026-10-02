@@ -31,6 +31,8 @@ and React pages on classes, errors or async work sit next to each other.
 | Page | Focus |
 | --- | --- |
 | [Context: State & APIs](./context) | Typed contexts with a guard hook, passing functions and whole APIs through context, modeling async readiness as a `status` union, and splitting contexts to avoid re-renders. |
+| [State with Reducers](./state-with-reducers) | `useReducer` with discriminated-union actions, rules in one pure function, reducer + split contexts, and testing a reducer without rendering. |
+| [Data Fetching](./data-fetching) | A `useQuery` hook with a status union, cancellation, validation and reload, a test for the stale-response race, and when to switch to TanStack Query. |
 | [When Elements & APIs Are Ready](./refs-and-availability) | The ref availability timeline, reacting to attach/detach with ref callbacks, and exposing a child's imperative API with `forwardRef` + `useImperativeHandle`. |
 
 **Hooks**
@@ -55,6 +57,13 @@ and React pages on classes, errors or async work sit next to each other.
 | Page | Focus |
 | --- | --- |
 | [Event Handlers & Function Chaining](./event-handlers) | Typing `onEvent` handlers with React's synthetic event types, and composing several single-purpose handlers into one. |
+
+**Forms & Testing**
+
+| Page | Focus |
+| --- | --- |
+| [Forms](./forms) | Controlled vs uncontrolled inputs, `FormData`, one zod schema for validation and types, accessible field errors, pending state, and server errors on fields. |
+| [Testing Components](./testing-components) | Vitest + Testing Library: querying by role, `user-event`, `renderHook`, fake timers, stubbing `fetch`, and what not to test. |
 
 **Reference**
 

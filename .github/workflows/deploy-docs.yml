@@ -10,6 +10,7 @@ on:
       - "package.json"
       - "package-lock.json"
       - "tsconfig.json"
+      - "vitest.config.ts"
       - "scripts/**"
       - ".github/workflows/deploy-docs.yml"
   # Allow running it by hand from the Actions tab.
@@ -50,6 +51,10 @@ jobs:
 
       - name: Type-check examples
         run: npm run typecheck
+
+      # Runs the React examples' component tests (Vitest + Testing Library in jsdom).
+      - name: Test React examples
+        run: npm run check:react
 
       - name: Check shell examples
         run: |

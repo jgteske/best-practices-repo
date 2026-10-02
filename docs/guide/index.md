@@ -52,6 +52,7 @@ npm install
 npm run docs:dev       # local dev server with hot reload
 npm run docs:build     # produces docs/.vitepress/dist
 npm run typecheck      # type-checks every TypeScript/TSX example
+npm run check:react    # runs the React component tests (Vitest + jsdom)
 npm run check:bash     # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js       # node --check, then run every JavaScript example
 npm run check:python   # run every Python example (+ mypy, ruff, pytest, Poetry if installed)
@@ -62,7 +63,7 @@ as a single CI step to make sure nothing in `examples/` broke and the site
 still builds.
 
 Each language gets a verification step appropriate to it: `tsc` for the
-TypeScript and React examples, `bash -n` plus `shellcheck` for the shell
+TypeScript and React examples (plus Vitest component tests for React), `bash -n` plus `shellcheck` for the shell
 examples, and for JavaScript `node --check` followed by **actually running**
 each example and the `node:test` suite - which is why the output quoted in the
 JavaScript pages is output the code really produced. Adding a new section means

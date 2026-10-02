@@ -15,17 +15,23 @@
     "check:bash": "bash scripts/check-bash.sh",
     "check:js": "bash scripts/check-js.sh",
     "check:python": "bash scripts/check-python.sh",
-    "check": "npm run typecheck && npm run check:bash && npm run check:js && npm run check:python && npm run docs:build"
+    "check": "npm run typecheck && npm run check:react && npm run check:bash && npm run check:js && npm run check:python && npm run docs:build",
+    "check:react": "vitest run"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
+    "jsdom": "^29.1.1",
     "mermaid": "^11.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.5.4",
     "vitepress": "^1.3.4",
     "vitepress-plugin-mermaid": "^2.0.17",
+    "vitest": "^5.0.3",
     "zod": "^4.6.5"
   }
 }

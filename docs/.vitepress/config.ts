@@ -135,6 +135,7 @@ export default withMermaid(defineConfig({
           text: "Rendering",
           items: [
             { text: "Rendering & Component Lifecycle", link: "/react/rendering-and-lifecycle" },
+            { text: "Error Boundaries & Error Handling", link: "/react/error-handling" },
           ],
         },
         {

@@ -42,6 +42,7 @@ is guaranteed to actually compile against React's own types.
 | Page | Focus |
 | --- | --- |
 | [Rendering & Component Lifecycle](./rendering-and-lifecycle) | The render → commit → effects pipeline, mount order (render top-down, effects bottom-up), how a hook behaves across mount/update/unmount, and StrictMode. |
+| [Error Boundaries & Error Handling](./error-handling) | What boundaries do and don't catch, a typed reusable `ErrorBoundary`, catch helpers (`toError`, `tryCatch`), expected errors as state vs. escalating with `useShowBoundary`, and where to place and reset boundaries. |
 
 **Events**
 

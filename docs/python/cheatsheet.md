@@ -86,6 +86,43 @@ with path.open("w", encoding="utf-8") as f: ...
 contextlib.suppress(FileNotFoundError) ; contextlib.ExitStack()
 ```
 
+## asyncio: [details](./asyncio)
+
+```python
+asyncio.run(main())                        # once, at the entry point
+task = asyncio.create_task(coro()) ; result = await task
+async with asyncio.TaskGroup() as tg: t = tg.create_task(coro())   # cancels siblings on failure
+except* ConnectionError as group: ...      # TaskGroup raises an ExceptionGroup
+async with asyncio.timeout(5): ...         # raises TimeoutError
+async with sem: ...                        # sem = asyncio.Semaphore(10): limit fan-out
+await asyncio.to_thread(blocking_fn, arg)  # never block the loop
+except asyncio.CancelledError: cleanup(); raise   # always re-raise
+```
+
+## Logging: [details](./logging)
+
+```python
+logger = logging.getLogger(__name__)       # every module
+logging.getLogger("mylib").addHandler(logging.NullHandler())   # libraries: nothing else
+logging.basicConfig(level=logging.INFO) ; logging.config.dictConfig(CONFIG)   # app, once
+logger.info("user %s logged in", user_id)  # args, not f-strings
+logger.exception("import failed")          # inside except: ERROR + traceback
+logger.info("paid", extra={"order_id": 7}) # structured fields
+```
+
+## Files & paths: [details](./files-and-io)
+
+```python
+Path(__file__).resolve().parent / "data" / "x.csv"
+p.name ; p.stem ; p.suffix ; p.parent ; p.with_suffix(".json")
+p.mkdir(parents=True, exist_ok=True) ; p.rglob("*.py") ; p.unlink(missing_ok=True)
+p.read_text(encoding="utf-8") ; p.write_text(s, encoding="utf-8") ; p.read_bytes()
+with p.open(encoding="utf-8") as f: for line in f: ...   # stream big files
+with p.open("w", encoding="utf-8", newline="") as f: csv.writer(f)
+with tempfile.TemporaryDirectory() as tmp: ...
+os.replace(tmp_path, path)                 # atomic swap, same filesystem
+```
+
 ## Modules & imports: [details](./modules-and-imports)
 
 ```python

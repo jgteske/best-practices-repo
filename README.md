@@ -19,7 +19,8 @@ It currently holds three guides:
   - **[React Best Practices](docs/react)** - components, props, hooks and hook
     chaining, rendering, error boundaries, and events.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
-  generators), projects (Poetry, virtual environments, dependencies, modules and
+  generators), the standard library in practice (asyncio, logging, files and
+  paths), projects (Poetry, virtual environments, dependencies, modules and
   namespace packages), packaging (building wheels, consuming them from another
   project, CLIs, standalone executables), and workflow (pytest, ruff, mypy,
   Jupyter notebooks).

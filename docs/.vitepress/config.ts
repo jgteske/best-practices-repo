@@ -208,6 +208,14 @@ export default withMermaid(defineConfig({
           ],
         },
         {
+          text: "Standard Library in Practice",
+          items: [
+            { text: "Async with asyncio", link: "/python/asyncio" },
+            { text: "Logging", link: "/python/logging" },
+            { text: "Files, Paths & I/O", link: "/python/files-and-io" },
+          ],
+        },
+        {
           text: "Projects & Environments",
           items: [
             { text: "Poetry & Virtual Environments", link: "/python/poetry-and-virtualenvs" },

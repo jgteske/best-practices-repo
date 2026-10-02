@@ -64,6 +64,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: "Exhaustive Checks with never", link: "/typescript/exhaustive-checks-with-never" },
       { text: "Type-Safe Validation", link: "/typescript/type-safe-validation" },
+      { text: "Schema Validation with zod", link: "/typescript/schema-validation" },
     ],
   },
   {
@@ -91,6 +92,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
       { text: "ESM vs CommonJS", link: "/javascript/modules-esm-and-cjs" },
       { text: ".ts, .tsx & .d.ts", link: "/typescript/file-kinds-and-declarations" },
       { text: "Namespaces & Declaration Merging", link: "/typescript/namespaces" },
+      { text: "tsconfig & Strictness Flags", link: "/typescript/tsconfig-and-strictness" },
     ],
   },
   {

@@ -22,7 +22,7 @@ and React pages on classes, errors or async work sit next to each other.
 
 | Page | Focus |
 | --- | --- |
-| [Make Illegal States Unrepresentable](./modeling-with-unions) | Discriminated unions and state machines that make bad states impossible to type, so they need no runtime checks. |
+| [Make Illegal States Unrepresentable](./modeling-with-unions) | Discriminated unions and state machines that make bad states impossible to type, plus spotting unions hidden in optional fields, boolean flags and API responses. |
 | [Derive Types with `typeof`](./derive-types-with-typeof) | Using `ReturnType`, `Parameters`, `Awaited`, and plain `typeof` to derive types from real functions and values instead of hand-writing types that drift. |
 | [Const Assertions & Enum Alternatives](./const-assertions-and-enums) | `as const` for literal/`readonly` inference, and the recommended `as const` object over native `enum`. |
 | [Template Literal Types](./template-literal-types) | Giving strings real structure - typed ids, generated combinations, and route params parsed at the type level. |
@@ -31,9 +31,9 @@ and React pages on classes, errors or async work sit next to each other.
 
 | Page | Focus |
 | --- | --- |
-| [Generics In-Depth](./generics-in-depth) | Inference over explicit type args, minimal constraints, and conditional types with `infer`. |
-| [Mapped & Conditional Types](./mapped-and-conditional-types) | Building your own utility types with key remapping, modifiers, and recursion. |
-| [Function Signatures & Overloads](./function-signatures) | Union params vs overloads vs conditional returns, and assertion signatures. |
+| [Generics In-Depth](./generics-in-depth) | Inference over explicit type args, minimal constraints, conditional types with `infer`, `const` type parameters, `NoInfer`, and variance annotations. |
+| [Mapped & Conditional Types](./mapped-and-conditional-types) | Building your own utility types with key remapping and modifiers, deriving unions from a map, distribution and the `never` trap, and depth-limited recursion. |
+| [Function Signatures & Overloads](./function-signatures) | Union params vs overloads vs conditional returns, assertion signatures, `this` parameters, tuple parameter lists, lookup maps, and `satisfies` for callback tables. |
 
 **Classes**
 
@@ -52,7 +52,8 @@ and React pages on classes, errors or async work sit next to each other.
 | --- | --- |
 | [Exhaustive Checks with `never`](./exhaustive-checks-with-never) | Making the compiler fail the build when a union/enum grows a new member and a `switch` wasn't updated to match. |
 | [Type-Safe Validation](./type-safe-validation) | Type guards, branded/nominal types, and `satisfies` for validating `unknown` data without losing precision. |
-| [Error Handling & Result Types](./error-handling) | Putting expected failures in the return type with `Result<T, E>`, and narrowing `unknown` in `catch`. |
+| [Schema Validation with zod](./schema-validation) | One schema for both the runtime check and the type, parsing env vars and API responses at the boundary, transforms, and branded output. |
+| [Error Handling & Result Types](./error-handling) | Putting expected failures in the return type with `Result<T, E>`, composing Results, `Error` subclasses with `cause`, `AggregateError`, and narrowing `unknown` in `catch`. |
 
 **Runtime Patterns**
 
@@ -75,6 +76,7 @@ and React pages on classes, errors or async work sit next to each other.
 | --- | --- |
 | [`.ts`, `.tsx` & `.d.ts`](./file-kinds-and-declarations) | What each file kind is for, the JSX-vs-generics trap in `.tsx`, ambient modules for untyped packages, and why script-mode declares while module-mode augments. |
 | [Namespaces & Declaration Merging](./namespaces) | What a namespace is and what it compiles to, why modules replaced it, and the merging patterns that are still the right answer. |
+| [tsconfig & Strictness Flags](./tsconfig-and-strictness) | What every strictness flag catches (checked with `@ts-expect-error`), `target`/`lib`/`moduleResolution`, `isolatedModules` vs `verbatimModuleSyntax`, and project references. |
 
 **Reference**
 

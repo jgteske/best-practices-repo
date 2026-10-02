@@ -47,6 +47,47 @@ TypeScript won't infer `asserts`. That explicitness is the point: you're
 vouching for something the compiler can't verify on its own, so keep the
 runtime check and the asserted type in lockstep.
 
+## More signature tools
+
+<<< ../../examples/typescript/function-signatures/this-tuples-and-maps.ts
+
+```
+calling moveTo with [1,2]
+(1, 2)
+hello Ada
+```
+
+### `this` parameters
+
+A first parameter named `this` declares what the receiver must be. It is
+erased in the output, so it costs nothing at runtime. A bare `increment(1)`
+becomes a compile error instead of a `TypeError` in production. The
+[methods & callers page](./class-methods-and-callers) covers the class
+version of this problem.
+
+### Tuple types as parameter lists
+
+`...args: [x: number, y: number, animate?: boolean]` describes a parameter list
+as a type. The labels show up in editor hints, and the type can be reused,
+stored and forwarded. A generic wrapper over `Args extends unknown[]` keeps the
+wrapped function's **exact** parameters, which `(...args: any[])` would erase.
+
+### A lookup map instead of overloads
+
+When the return type depends on a string argument, a map type
+(`ElementsByKind[K]`) scales better than one overload per case. Adding a kind
+is one line, and the relationship is visible in a single place. The one cast in
+`createField` is the price: TypeScript can't prove that the object built in the body
+matches `ElementsByKind[K]` for every `K`.
+
+### `satisfies` for tables of callbacks
+
+Annotating `const commands: Record<string, Command>` types the parameters but
+**forgets the keys**, so `commands.missing(...)` compiles and crashes at runtime.
+`satisfies Record<string, Command>` checks each entry and types its
+parameters, and keeps the object's literal keys. See
+[Type-Safe Validation](./type-safe-validation) for `satisfies` in general.
+
 ## Summary
 
 - Default to a single signature with union parameters; it's the simplest
@@ -56,3 +97,6 @@ runtime check and the asserted type in lockstep.
 - Keep the implementation signature broad - callers never see it.
 - Use assertion signatures for `assert`-style helpers that narrow types by
   throwing; annotate them explicitly.
+- Use `this` parameters for functions that need a receiver, and labeled tuples for reusable parameter lists.
+- Prefer a lookup map type over a stack of overloads keyed by a string.
+- Use `satisfies` (not an annotation) for callback tables, so the keys stay known.

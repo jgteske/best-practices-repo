@@ -43,6 +43,42 @@ Pair this with the [`assertNever`](./exhaustive-checks-with-never) pattern in
 the `switch` and the compiler will also force you to handle every new state
 you add later.
 
+## Spotting unions in everyday shapes
+
+The same rule applies far beyond request state. **Whenever you think "field X only
+makes sense when Y", you are looking at a union waiting to be written.**
+
+<<< ../../examples/typescript/discriminated-unions/modeling-real-data.ts
+
+```
+PayPal (ada@example.com)
+2 items (last page)
+retry in 30s
+6
+```
+
+Three smells to look for:
+
+| Smell | Example | Replace with |
+| --- | --- | --- |
+| optional fields that depend on another field | `last4?` only for cards, `email?` only for PayPal | one variant per `type`, each with required fields |
+| several booleans describing one thing | `isUploading`, `isDone`, `isError` (8 combinations, 4 legal) | a single `state` discriminant |
+| "either data or error" responses typed as both optional | `{ data?: T; error?: E }` | `{ ok: true; data } \| { ok: false; error }` |
+
+### Narrowing without a discriminant: `in`
+
+For unions you don't control, often third-party types without a shared
+literal field, the `in` operator narrows to the members that declare a key
+(`"radius" in shape`). Prefer a real discriminant in your own types. `in` is
+the tool for everyone else's.
+
+### Related techniques
+
+- **IDs that mustn't be mixed up** (`UserId` vs `OrderId`, both strings) call
+  for [branded types](./type-safe-validation#branded-types-making-validated-a-distinct-type).
+- **Data from outside** still needs a runtime check before it is trusted as a
+  union. See [Schema Validation with zod](./schema-validation).
+
 ## Summary
 
 - Model each distinct state as its own union variant with a literal
@@ -52,3 +88,5 @@ you add later.
 - Illegal combinations that can't be typed need no runtime checks, no tests,
   and cause no bugs.
 - Combine with exhaustive `switch` checks so growth stays safe.
+- Optional fields that depend on each other, and clusters of booleans, are unions in disguise.
+- Use `in` to narrow unions you don't own. Give your own unions a literal discriminant.

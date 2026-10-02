@@ -14,8 +14,9 @@ It currently holds three guides:
     (publishing, version ranges, and how npm resolves a dependency tree).
   - **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
     types, generics, classes (fields, `this`, abstract classes, `implements`,
-    chaining, mixins), runtime patterns, and design patterns built from factory
-    functions.
+    chaining, mixins), runtime patterns, design patterns built from factory
+    functions, schema validation with zod, and what each `tsconfig` strictness
+    flag catches.
   - **[React Best Practices](docs/react)** - components, props, hooks and hook
     chaining, rendering, error boundaries, and events.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,

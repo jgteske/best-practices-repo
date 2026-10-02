@@ -79,6 +79,11 @@ They compose: a type guard's internal `switch` can (and should) end in
 name, and a `satisfies`-checked config map is a natural place to store the
 allowed values a type guard checks against.
 
+::: tip Nested or large payloads
+Hand-written guards get long once data is nested. [Schema Validation with zod](./schema-validation)
+derives the guard *and* the type from one schema.
+:::
+
 ## Summary
 
 - Validate `unknown` input with a `value is T` type guard, not a cast.

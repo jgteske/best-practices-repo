@@ -10,7 +10,7 @@ It currently holds four guides:
 - **JavaScript & TypeScript** - one section, grouped by topic, made up of:
   - **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
     objects, iteration, dates, modules, the event loop), the runtime (the CLI, core
-    APIs, streams, HTTP, shutdown, and the built-in test runner), and packages
+    APIs, streams, HTTP, SQLite, shutdown, and the built-in test runner), and packages
     (publishing, version ranges, and how npm resolves a dependency tree).
   - **[TypeScript Best Practice Patterns](docs/typescript)** - modeling with
     types, generics, classes (fields, `this`, abstract classes, `implements`,
@@ -22,7 +22,7 @@ It currently holds four guides:
     events, and component testing.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
   generators), the standard library in practice (asyncio, logging, files and
-  paths, dates and time zones), projects (Poetry, virtual environments, dependencies, modules and
+  paths, dates and time zones, SQLite), projects (Poetry, virtual environments, dependencies, modules and
   namespace packages), packaging (building wheels, consuming them from another
   project, CLIs, standalone executables), and workflow (pytest, ruff, mypy,
   Jupyter notebooks).

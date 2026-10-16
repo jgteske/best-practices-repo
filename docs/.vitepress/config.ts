@@ -113,6 +113,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
       { text: "Node Core APIs", link: "/javascript/core-apis" },
       { text: "Streams & Buffers", link: "/javascript/streams-and-buffers" },
       { text: "HTTP & Networking", link: "/javascript/http-and-networking" },
+      { text: "SQL with node:sqlite", link: "/javascript/sqlite" },
       { text: "Testing with node:test", link: "/javascript/testing-with-node-test" },
     ],
   },
@@ -229,6 +230,7 @@ export default withMermaid(defineConfig({
             { text: "Logging", link: "/python/logging" },
             { text: "Files, Paths & I/O", link: "/python/files-and-io" },
             { text: "Dates, Times & Time Zones", link: "/python/dates-and-times" },
+            { text: "SQL with sqlite3", link: "/python/sqlite" },
           ],
         },
         {

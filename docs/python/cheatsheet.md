@@ -135,6 +135,19 @@ datetime.fromtimestamp(ts, tz=UTC)         # always pass tz=
 time.perf_counter() ; time.monotonic()     # durations / deadlines
 ```
 
+## sqlite3: [details](./sqlite)
+
+```python
+conn = sqlite3.connect("app.db", autocommit=True)
+conn.execute("PRAGMA foreign_keys = ON"); conn.autocommit = False   # pragma before any transaction
+conn.execute("SELECT * FROM t WHERE id = ?", (id_,))     # placeholders, never f-strings
+conn.execute("... WHERE a = :a", {"a": 1}) ; conn.executemany(sql, rows)
+conn.row_factory = sqlite3.Row                           # row["col"]
+with conn: ...                                           # commit / rollback, does NOT close
+with closing(sqlite3.connect(...)) as conn: ...          # closes
+conn.execute("EXPLAIN QUERY PLAN SELECT ...")            # SCAN vs SEARCH USING INDEX
+```
+
 ## Modules & imports: [details](./modules-and-imports)
 
 ```python

@@ -190,6 +190,17 @@ if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);  // fetch does NOT th
 await r.body?.cancel()                   // release the socket if you skip the body
 ```
 
+## SQLite — [details](./sqlite)
+
+```js
+import { DatabaseSync } from "node:sqlite";       // Node 22.13+
+const db = new DatabaseSync("app.db"); db.exec("PRAGMA foreign_keys = ON");
+const stmt = db.prepare("SELECT * FROM t WHERE id = ?"); // prepare once
+stmt.get(id) ; stmt.all() ; stmt.iterate() ; stmt.run(a, b) // { changes, lastInsertRowid }
+db.prepare("... VALUES ($a)").run({ a: 1 })      // named params
+db.exec("BEGIN IMMEDIATE"); try { ...; db.exec("COMMIT") } catch (e) { db.exec("ROLLBACK"); throw e }
+```
+
 ## Shutdown — [details](./errors-and-shutdown)
 
 ```js

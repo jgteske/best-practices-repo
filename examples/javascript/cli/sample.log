@@ -1,0 +1,7 @@
+2026-10-16T09:00:00Z INFO  server started on :8080
+2026-10-16T09:00:02Z DEBUG loaded 42 routes
+2026-10-16T09:01:13Z INFO  GET /health 200
+2026-10-16T09:03:40Z WARN  disk 91% full
+this line is not a log line
+2026-10-16T09:04:05Z ERROR upload failed: connection reset
+2026-10-16T09:04:06Z INFO  retrying upload

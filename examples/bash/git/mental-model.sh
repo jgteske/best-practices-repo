@@ -9,6 +9,11 @@ set -euo pipefail
 sandbox="$(mktemp -d)"
 trap 'rm -rf -- "$sandbox"' EXIT
 export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
+# No background housekeeping: a detached `git gc --auto` / `git maintenance` can still be
+# writing into .git while the EXIT trap deletes the sandbox ("Directory not empty").
+export GIT_CONFIG_COUNT=3 GIT_CONFIG_KEY_0=gc.auto GIT_CONFIG_VALUE_0=0 \
+  GIT_CONFIG_KEY_1=gc.autoDetach GIT_CONFIG_VALUE_1=false \
+  GIT_CONFIG_KEY_2=maintenance.auto GIT_CONFIG_VALUE_2=false
 export GIT_AUTHOR_NAME="Ada" GIT_AUTHOR_EMAIL="ada@example.com"
 export GIT_COMMITTER_NAME="Ada" GIT_COMMITTER_EMAIL="ada@example.com"
 # Fixed timestamps make every commit hash reproducible, so the output below is exact.

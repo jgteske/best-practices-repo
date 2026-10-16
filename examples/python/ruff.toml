@@ -18,4 +18,4 @@ ignore = [
 ]
 
 [lint.isort]
-known-first-party = ["slugkit", "blog_app", "acme", "shop"]
+known-first-party = ["slugkit", "blog_app", "acme", "shop", "logq"]

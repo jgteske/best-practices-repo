@@ -108,6 +108,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     text: "The Node Runtime",
     items: [
       { text: "Running Node", link: "/javascript/running-node" },
+      { text: "Building CLIs with Node & TypeScript", link: "/javascript/building-clis" },
       { text: "Node Core APIs", link: "/javascript/core-apis" },
       { text: "Streams & Buffers", link: "/javascript/streams-and-buffers" },
       { text: "HTTP & Networking", link: "/javascript/http-and-networking" },
@@ -242,6 +243,7 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Building & Consuming Packages", link: "/python/building-packages" },
             { text: "Command-Line Apps", link: "/python/cli-apps" },
+            { text: "CLI Patterns: Config, Output & Signals", link: "/python/cli-patterns" },
             { text: "Standalone Executables", link: "/python/standalone-executables" },
           ],
         },

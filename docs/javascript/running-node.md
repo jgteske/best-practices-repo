@@ -95,7 +95,8 @@ dependency:
 
 For anything with subcommands, nested help, or shell completion, a library
 (`commander`, `yargs`) earns its place. For a single script, `parseArgs` is
-enough.
+enough. [Building CLIs](./building-clis) shows how far `parseArgs` goes in a
+real multi-command tool, written in TypeScript that Node runs directly.
 
 **Every value in `process.env` is a string or `undefined`.** There are no
 booleans: `"false"`, `"0"`, and `""` are all truthy as strings, so compare

@@ -52,6 +52,7 @@ projects under `examples/python/projects`.
 | --- | --- |
 | [Building & Consuming Packages](./building-packages) | `poetry build`, what goes in a wheel and an sdist, `py.typed`, versioning, importing your package from another project, publishing. |
 | [Command-Line Apps](./cli-apps) | `argparse` with subcommands, stdin/stdout/stderr, exit codes, `[project.scripts]`, `__main__.py`, testing a CLI, and when Click or Typer earn their place. |
+| [CLI Patterns: Config, Output & Signals](./cli-patterns) | Defaults < config file < env < flags, `--json`, colour and `NO_COLOR`, `-v`/`-q`, streaming input, Ctrl-C and `\| head` without tracebacks, and testing with injected I/O. |
 
 **Quality & workflow**
 

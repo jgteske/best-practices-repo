@@ -185,6 +185,10 @@ Adding either is one `poetry add`. The rest of this page still applies: a thin
 CLI layer, `main()` returning an exit code, stdout for data, stderr for
 errors, and a `[project.scripts]` entry.
 
+Once the CLI has users, [CLI Patterns](./cli-patterns) takes the next step:
+config files and environment variables in a predictable order, `--json` and
+colour output, `-v`/`-q`, and exiting cleanly on Ctrl-C and `| head`.
+
 ## Checklist
 
 - `main(argv: Sequence[str] | None = None) -> int`, called by

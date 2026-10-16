@@ -18,6 +18,11 @@
 #
 #     # check-python: no-run
 #
+# A file that needs a third-party package names it, and is skipped (not run,
+# not type-checked) when that package is not importable:
+#
+#     # check-python: requires pydantic
+#
 set -euo pipefail
 
 cd "$(dirname -- "$0")/.."
@@ -57,6 +62,7 @@ done
 echo
 echo "running the standalone examples..."
 ran=0
+missing_requirements=()
 for source in "${sources[@]}"; do
   dir=$(dirname -- "$source")
   name=$(basename -- "$source")
@@ -66,6 +72,16 @@ for source in "${sources[@]}"; do
 
   if grep -q 'check-python: no-run' "$source"; then
     echo "  skipped    ${source}  (marked no-run)"
+    continue
+  fi
+
+  missing=""
+  for package in $(sed -n 's/^# check-python: requires //p' "$source"); do
+    "$PYTHON" -c "import ${package}" 2>/dev/null || missing+="${package} "
+  done
+  if [[ -n "$missing" ]]; then
+    echo "  skipped    ${source}  (missing: ${missing% }; pip install ${missing% })"
+    missing_requirements+=("${source#"$ROOT"/}")
     continue
   fi
 
@@ -91,7 +107,12 @@ if command -v mypy >/dev/null 2>&1; then
   echo "type-checking with mypy --strict..."
   # projects/ is excluded here: each project is checked inside its own Poetry
   # environment, with its own [tool.mypy] settings, by check-projects.sh.
-  (cd "$ROOT" && mypy --config-file mypy.ini .) || failed=1
+  # Files skipped above for a missing package would only fail on its imports.
+  excludes=()
+  for skipped in "${missing_requirements[@]}"; do
+    excludes+=(--exclude "^${skipped//./\\.}\$")
+  done
+  (cd "$ROOT" && mypy --config-file mypy.ini "${excludes[@]}" .) || failed=1
   echo "checking the mypy errors quoted in comments..."
   "$PYTHON" -B scripts/check_mypy_comments.py "$ROOT" || failed=1
 else

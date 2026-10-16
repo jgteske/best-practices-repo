@@ -21,11 +21,12 @@ It currently holds four guides:
     chaining, reducers, data fetching, forms, rendering, error boundaries,
     events, and component testing.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
-  generators), the standard library in practice (asyncio, logging, files and
-  paths, dates and time zones, SQLite), projects (Poetry, virtual environments, dependencies, modules and
-  namespace packages), packaging (building wheels, consuming them from another
-  project, CLIs, standalone executables), and workflow (pytest, ruff, mypy,
-  Jupyter notebooks).
+  generators), the standard library in practice (asyncio, threads and
+  processes, logging, files and paths, dates and time zones, SQLite),
+  projects (Poetry, virtual environments, dependencies, modules and namespace
+  packages), packaging (building wheels, consuming them from another project,
+  CLIs, standalone executables), and workflow (pytest, ruff, mypy, validation
+  with pydantic, profiling and caching, Jupyter notebooks).
 - **[Linux, Bash & the Terminal](docs/linux)** - everyday commands, pipes and
   text processing, permissions, processes, services, networking, and shell
   scripting.
@@ -54,7 +55,7 @@ npm run typecheck     # type-check every TypeScript/TSX example under examples/
 npm run check:react   # run the React component tests (Vitest + Testing Library, jsdom)
 npm run check:bash    # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js      # node --check, then run every JavaScript example + node:test
-npm run check:python  # run every Python example; + mypy/ruff/pytest/poetry when installed
+npm run check:python  # run every Python example; + mypy/ruff/pytest/pydantic/poetry when installed
 npm run check         # all of the above, useful as a single CI step
 ```
 

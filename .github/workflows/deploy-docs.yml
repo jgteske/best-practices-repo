@@ -77,7 +77,7 @@ jobs:
       # also type-check, lint, run pytest, execute the notebook, and build and
       # install the Poetry projects - the same way shellcheck is added above.
       - name: Install Python tooling
-        run: pip install poetry mypy ruff pytest nbconvert ipykernel
+        run: pip install poetry mypy ruff pytest nbconvert ipykernel pydantic
 
       - name: Check Python examples
         run: npm run check:python

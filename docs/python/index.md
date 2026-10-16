@@ -34,6 +34,7 @@ projects under `examples/python/projects`.
 | Page | Focus |
 | --- | --- |
 | [Async with asyncio](./asyncio) | Coroutines vs tasks, `TaskGroup` and exception groups, cancellation, timeouts, `Semaphore` limits, worker queues, `to_thread`, and async generators. |
+| [Threads vs Processes](./threads-and-processes) | The GIL, I/O-bound vs CPU-bound work, `ThreadPoolExecutor` vs `ProcessPoolExecutor`, races and locks, `queue.Queue`, timeouts, the `__main__` guard, and free-threaded 3.13t. |
 | [Logging](./logging) | Loggers, handlers and levels, what libraries vs applications configure, `dictConfig`, lazy `%s` arguments, `logger.exception`, and JSON logs with request context. |
 | [Files, Paths & I/O](./files-and-io) | `pathlib`, encodings, text vs bytes, streaming large files, JSON and CSV, `shutil` and `tempfile`, and atomic writes. |
 | [Dates, Times & Time Zones](./dates-and-times) | Naive vs aware, `datetime.now(UTC)`, store UTC and convert at the edge, `zoneinfo` and DST gaps/folds, ISO 8601 parsing, monotonic clocks, and an injectable clock. |
@@ -62,6 +63,8 @@ projects under `examples/python/projects`.
 | --- | --- |
 | [Testing with pytest](./testing-with-pytest) | Layout, plain `assert`, fixtures and `conftest.py`, `parametrize`, `tmp_path`, `monkeypatch`, and what to test. |
 | [Linting & Type Checking](./tooling) | ruff for lint and format, mypy in strict mode, configuring both in `pyproject.toml`, pre-commit, and CI. |
+| [Validation with pydantic](./validation-with-pydantic) | Models as runtime checks and static types, lax vs strict mode, error paths, cross-field rules, `TypeAdapter`, discriminated unions, and parsing at the boundary. |
+| [Performance & Caching](./performance-and-caching) | `timeit`, `cProfile` and `tracemalloc`, `cache`/`lru_cache`/`cached_property`, the method-cache leak, `slots=True`, and what usually helps. |
 | [Jupyter Notebooks](./jupyter-notebooks) | Jupyter in a Poetry project, kernels, VS Code, autoreload, importing your own code, notebooks in git, and running them headless. |
 
 **Reference**

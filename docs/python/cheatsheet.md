@@ -99,6 +99,17 @@ await asyncio.to_thread(blocking_fn, arg)  # never block the loop
 except asyncio.CancelledError: cleanup(); raise   # always re-raise
 ```
 
+## Threads & processes: [details](./threads-and-processes)
+
+```python
+with ThreadPoolExecutor(max_workers=8) as pool: list(pool.map(fetch, urls))     # I/O-bound
+with ProcessPoolExecutor() as pool: list(pool.map(crunch, chunks))              # CPU-bound; __main__ guard!
+for f in as_completed(futures): f.result()                 # re-raises the worker's exception
+with lock: counter += 1                                    # the GIL does not protect your data
+q = queue.Queue(maxsize=100) ; q.put(x) ; q.get()          # thread-safe hand-off
+pool.shutdown(cancel_futures=True)
+```
+
 ## Logging: [details](./logging)
 
 ```python
@@ -230,6 +241,27 @@ tmp_path ; monkeypatch.setenv("X", "1") ; capsys.readouterr().out ; caplog
 ```bash
 ruff check --fix . ; ruff format . ; mypy src tests
 pre-commit install ; pre-commit run --all-files
+```
+
+## Validation (pydantic): [details](./validation-with-pydantic)
+
+```python
+class User(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    id: int ; email: Annotated[str, Field(min_length=3)]
+User.model_validate(data) ; User.model_validate_json(raw) ; user.model_dump_json()
+except ValidationError as e: e.errors()                    # [{"loc": (...), "msg": ...}, ...]
+TypeAdapter(list[Event]).validate_json(raw)                # any type, build once
+Annotated[A | B, Field(discriminator="kind")]
+```
+
+## Performance: [details](./performance-and-caching)
+
+```python
+min(timeit.repeat(f, number=100, repeat=5))                # take the minimum
+python -m cProfile -s cumulative script.py
+@cache ; @lru_cache(maxsize=1024) ; f.cache_info() ; @cached_property
+@dataclass(slots=True)                                     # many instances
 ```
 
 ## Notebooks: [details](./jupyter-notebooks)

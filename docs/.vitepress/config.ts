@@ -227,6 +227,7 @@ export default withMermaid(defineConfig({
           text: "Standard Library in Practice",
           items: [
             { text: "Async with asyncio", link: "/python/asyncio" },
+            { text: "Threads vs Processes", link: "/python/threads-and-processes" },
             { text: "Logging", link: "/python/logging" },
             { text: "Files, Paths & I/O", link: "/python/files-and-io" },
             { text: "Dates, Times & Time Zones", link: "/python/dates-and-times" },
@@ -256,6 +257,8 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Testing with pytest", link: "/python/testing-with-pytest" },
             { text: "Linting & Type Checking", link: "/python/tooling" },
+            { text: "Validation with pydantic", link: "/python/validation-with-pydantic" },
+            { text: "Performance & Caching", link: "/python/performance-and-caching" },
             { text: "Jupyter Notebooks", link: "/python/jupyter-notebooks" },
           ],
         },

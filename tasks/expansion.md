@@ -5,7 +5,7 @@ Plan: ~/.claude/plans/think-about-what-other-immutable-clarke.md. Branch `docs/e
 - [x] 1. Dates & times: `docs/python/dates-and-times.md` + `examples/python/dates/`, `docs/javascript/dates-and-times.md` + `examples/javascript/datetime/`
 - [x] 2. SQLite: Python `sqlite3` + `node:sqlite` pages
 - [x] 3. Python depth: threads & processes, performance & caching, pydantic validation (+ `requires` marker in check-python.sh)
-- [ ] 4a. React performance (Profiler-counted renders)
+- [x] 4a. React performance (render counts asserted in tests)
 - [ ] 4b. Git power tools (worktrees, cherry-pick, bisect run, autosquash, rerere)
 - [ ] 5. CI/CD & GitHub Actions section, actionlint check, split repo CI into check + deploy
 - [ ] verify: `npm run check` green on the full branch; deliberate breaks caught
@@ -22,3 +22,7 @@ Plan: ~/.claude/plans/think-about-what-other-immutable-clarke.md. Branch `docs/e
   config's `exclude`) when the package is missing; verified in a pydantic-free venv. CI installs pydantic.
   Timing claims: only the robust ones are asserted (8 waits on threads < 1.0 s; executor finish order with
   ≥ 100 ms gaps). The lost-update race is forced with `time.sleep(0)`, consistently ~200/1600.
+- 4a: Plan said "count renders with `<Profiler onRender>`" - wrong: a probe showed Profiler fires on every parent
+  render even when the memo child bails out (3 calls either way). Switched to a no-deps `useEffect` counter behind
+  a context (`render-counter.tsx`); the page explains why. Deliberate break (inline style object) -> 4 != 1.
+  Inline `{{ }}` in a markdown table is parsed by Vue: wrapped in `::: v-pre`.

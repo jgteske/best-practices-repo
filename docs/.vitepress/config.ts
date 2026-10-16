@@ -149,6 +149,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: "Rendering & Component Lifecycle", link: "/react/rendering-and-lifecycle" },
       { text: "Event Handlers & Function Chaining", link: "/react/event-handlers" },
+      { text: "Performance", link: "/react/performance" },
     ],
   },
   {

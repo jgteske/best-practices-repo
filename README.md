@@ -18,7 +18,7 @@ It currently holds four guides:
     functions, schema validation with zod, and what each `tsconfig` strictness
     flag catches.
   - **[React Best Practices](docs/react)** - components, props, hooks and hook
-    chaining, reducers, data fetching, forms, rendering, error boundaries,
+    chaining, reducers, data fetching, forms, rendering, performance, error boundaries,
     events, and component testing.
 - **[Python](docs/python)** - the language (values, typing, classes, errors,
   generators), the standard library in practice (asyncio, threads and

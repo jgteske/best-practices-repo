@@ -2,6 +2,8 @@ node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 *.log
+# ...except the fixtures the CLI examples and their tests read.
+!examples/**/sample.log
 .DS_Store
 
 # Python examples

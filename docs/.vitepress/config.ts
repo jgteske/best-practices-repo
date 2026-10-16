@@ -20,6 +20,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
       { text: "Scope, Closures & this", link: "/javascript/scope-and-closures" },
       { text: "Functions, Arrows & Composition", link: "/javascript/functions-and-composition" },
       { text: "Arrays, Iteration & Collections", link: "/javascript/arrays-and-iteration" },
+      { text: "Dates, Times & Intl", link: "/javascript/dates-and-times" },
     ],
   },
   {
@@ -227,6 +228,7 @@ export default withMermaid(defineConfig({
             { text: "Async with asyncio", link: "/python/asyncio" },
             { text: "Logging", link: "/python/logging" },
             { text: "Files, Paths & I/O", link: "/python/files-and-io" },
+            { text: "Dates, Times & Time Zones", link: "/python/dates-and-times" },
           ],
         },
         {

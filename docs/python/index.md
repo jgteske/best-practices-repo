@@ -36,6 +36,7 @@ projects under `examples/python/projects`.
 | [Async with asyncio](./asyncio) | Coroutines vs tasks, `TaskGroup` and exception groups, cancellation, timeouts, `Semaphore` limits, worker queues, `to_thread`, and async generators. |
 | [Logging](./logging) | Loggers, handlers and levels, what libraries vs applications configure, `dictConfig`, lazy `%s` arguments, `logger.exception`, and JSON logs with request context. |
 | [Files, Paths & I/O](./files-and-io) | `pathlib`, encodings, text vs bytes, streaming large files, JSON and CSV, `shutil` and `tempfile`, and atomic writes. |
+| [Dates, Times & Time Zones](./dates-and-times) | Naive vs aware, `datetime.now(UTC)`, store UTC and convert at the edge, `zoneinfo` and DST gaps/folds, ISO 8601 parsing, monotonic clocks, and an injectable clock. |
 
 **Projects & environments**
 

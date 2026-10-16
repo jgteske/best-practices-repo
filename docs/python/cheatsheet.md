@@ -123,6 +123,18 @@ with tempfile.TemporaryDirectory() as tmp: ...
 os.replace(tmp_path, path)                 # atomic swap, same filesystem
 ```
 
+## Dates & times: [details](./dates-and-times)
+
+```python
+datetime.now(UTC)                          # aware "now"; never utcnow()
+dt.astimezone(UTC).isoformat()             # store/transmit
+datetime.fromisoformat("2026-03-01T08:30:00Z")
+dt.astimezone(ZoneInfo("Europe/Berlin"))   # display; store zone NAMES, not offsets
+(b.astimezone(UTC) - a.astimezone(UTC))    # real elapsed time across DST
+datetime.fromtimestamp(ts, tz=UTC)         # always pass tz=
+time.perf_counter() ; time.monotonic()     # durations / deadlines
+```
+
 ## Modules & imports: [details](./modules-and-imports)
 
 ```python

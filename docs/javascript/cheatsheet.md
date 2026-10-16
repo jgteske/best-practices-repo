@@ -130,6 +130,18 @@ queueMicrotask(fn)                       // portable; nextTick ordering is not
 import { setTimeout as delay } from "node:timers/promises";
 ```
 
+## Dates — [details](./dates-and-times)
+
+```js
+new Date("2026-03-01T08:30:00Z")         // only parse ISO 8601 with Z/offset
+new Date(2026, 2, 1)                     // month is 0-based: March
+Number.isNaN(d.getTime())                // Invalid Date check
+d.toISOString()                          // store/transmit; always UTC
+new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Berlin" })
+new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day") // "yesterday"
+performance.now()                        // durations, not Date.now()
+```
+
 ## Files & paths — [details](./core-apis)
 
 ```js

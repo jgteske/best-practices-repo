@@ -33,6 +33,7 @@ and React pages on classes, errors or async work sit next to each other.
 | [Objects, Prototypes & Classes](./objects-and-classes) | The prototype chain, what `class` desugars to, `#private`, getters, `Object.freeze`, `?.` and `??`. |
 | [Classes at Runtime](./classes-at-runtime) | The order initializers really run in, how `this` is lost, `super` and `new.target`, `#field in obj` brand checks, static blocks, and mixins. |
 | [Arrays, Iteration & Collections](./arrays-and-iteration) | `map`/`filter`/`reduce`, destructuring and spread, `Map`/`Set`/`WeakMap`, iterators and generators. |
+| [Dates, Times & Intl](./dates-and-times) | What a `Date` really is, 0-based months, parsing traps, mutation, DST, `Intl.DateTimeFormat` with `timeZone`, relative times, testable clocks, and Temporal. |
 
 **Modules & async**
 

@@ -24,7 +24,8 @@ why `memo` and `useCallback` come as a pair:
 Apply this to fix a **measured** re-render problem, not reflexively. For most
 components, re-rendering is cheap and the memoization machinery costs more than
 it saves. See
-[When to useEffect / useCallback / useMemo](./hooks-when-to-use).
+[When to useEffect / useCallback / useMemo](./hooks-when-to-use), and
+[Performance](./performance) for the cheaper fixes to try first.
 
 ## Controlled inputs
 

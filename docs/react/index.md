@@ -58,6 +58,7 @@ and React pages on classes, errors or async work sit next to each other.
 | Page | Focus |
 | --- | --- |
 | [Event Handlers & Function Chaining](./event-handlers) | Typing `onEvent` handlers with React's synthetic event types, and composing several single-purpose handlers into one. |
+| [Performance](./performance) | Measuring renders, moving state down, children as props, `memo` with stable props (render counts asserted in tests), `useDeferredValue`, `useTransition`, and the React Compiler. |
 
 **Forms & Testing**
 

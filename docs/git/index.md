@@ -27,6 +27,7 @@ exactly what the scripts print.
 | [Branching, Merging & Rebasing](./branching-merge-rebase) | Fast-forward vs merge commits, rebasing onto `main`, resolving a conflict, and when to use each. |
 | [Undoing Things](./undoing-things) | `restore`, `--amend`, the three `reset` modes, recovering "lost" commits from the reflog, and `revert` for shared history. |
 | [Remotes & Pull Requests](./remotes-and-prs) | `fetch` vs `pull`, upstreams, rejected pushes and `pull --rebase`, `--force-with-lease`, and a pull-request workflow. |
+| [Power Tools](./power-tools) | Worktrees, `cherry-pick -x`, `bisect run` with a test script, fixup commits and `--autosquash`, `--update-refs` for stacked branches, and `rerere`. |
 | [Config, Ignore Files & Hooks](./config-ignore-hooks) | `.gitignore` and untracking files, `.gitattributes` and line endings, aliases, and hooks. |
 | [Cheat Sheet](./cheatsheet) | One-line reminders grouped by task. |
 

@@ -130,6 +130,18 @@ queueMicrotask(fn)                       // portable; nextTick ordering is not
 import { setTimeout as delay } from "node:timers/promises";
 ```
 
+## Dates — [details](./dates-and-times)
+
+```js
+new Date("2026-03-01T08:30:00Z")         // only parse ISO 8601 with Z/offset
+new Date(2026, 2, 1)                     // month is 0-based: March
+Number.isNaN(d.getTime())                // Invalid Date check
+d.toISOString()                          // store/transmit; always UTC
+new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Berlin" })
+new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(-1, "day") // "yesterday"
+performance.now()                        // durations, not Date.now()
+```
+
 ## Files & paths — [details](./core-apis)
 
 ```js
@@ -176,6 +188,17 @@ server.close() ; server.closeIdleConnections()
 const r = await fetch(url, { signal: AbortSignal.timeout(5_000) });
 if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);  // fetch does NOT throw on 4xx/5xx
 await r.body?.cancel()                   // release the socket if you skip the body
+```
+
+## SQLite — [details](./sqlite)
+
+```js
+import { DatabaseSync } from "node:sqlite";       // Node 22.13+
+const db = new DatabaseSync("app.db"); db.exec("PRAGMA foreign_keys = ON");
+const stmt = db.prepare("SELECT * FROM t WHERE id = ?"); // prepare once
+stmt.get(id) ; stmt.all() ; stmt.iterate() ; stmt.run(a, b) // { changes, lastInsertRowid }
+db.prepare("... VALUES ($a)").run({ a: 1 })      // named params
+db.exec("BEGIN IMMEDIATE"); try { ...; db.exec("COMMIT") } catch (e) { db.exec("ROLLBACK"); throw e }
 ```
 
 ## Shutdown — [details](./errors-and-shutdown)

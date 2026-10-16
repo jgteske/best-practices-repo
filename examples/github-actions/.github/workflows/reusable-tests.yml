@@ -1,0 +1,47 @@
+# A reusable workflow: called from other workflows like a function.
+# In a real repository it must live in .github/workflows/.
+name: Reusable tests
+
+# region workflow-call
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        type: string
+        default: "24"
+      working-directory:
+        type: string
+        default: "."
+    secrets:
+      NPM_TOKEN:
+        required: false              # only for private packages
+    outputs:
+      passed:
+        description: Whether the suite passed
+        value: ${{ jobs.test.outputs.passed }}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      passed: ${{ steps.run.outputs.passed }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+      - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - id: run
+        run: npm test && echo "passed=true" >> "$GITHUB_OUTPUT"
+# endregion workflow-call

@@ -20,6 +20,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
       { text: "Scope, Closures & this", link: "/javascript/scope-and-closures" },
       { text: "Functions, Arrows & Composition", link: "/javascript/functions-and-composition" },
       { text: "Arrays, Iteration & Collections", link: "/javascript/arrays-and-iteration" },
+      { text: "Dates, Times & Intl", link: "/javascript/dates-and-times" },
     ],
   },
   {
@@ -112,6 +113,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
       { text: "Node Core APIs", link: "/javascript/core-apis" },
       { text: "Streams & Buffers", link: "/javascript/streams-and-buffers" },
       { text: "HTTP & Networking", link: "/javascript/http-and-networking" },
+      { text: "SQL with node:sqlite", link: "/javascript/sqlite" },
       { text: "Testing with node:test", link: "/javascript/testing-with-node-test" },
     ],
   },
@@ -147,6 +149,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: "Rendering & Component Lifecycle", link: "/react/rendering-and-lifecycle" },
       { text: "Event Handlers & Function Chaining", link: "/react/event-handlers" },
+      { text: "Performance", link: "/react/performance" },
     ],
   },
   {
@@ -168,7 +171,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux and Git guides.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git and CI/CD guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -191,6 +194,7 @@ export default withMermaid(defineConfig({
       { text: "Python", link: "/python/" },
       { text: "Linux", link: "/linux/" },
       { text: "Git", link: "/git/" },
+      { text: "CI/CD", link: "/ci/" },
     ],
 
     sidebar: {
@@ -225,8 +229,11 @@ export default withMermaid(defineConfig({
           text: "Standard Library in Practice",
           items: [
             { text: "Async with asyncio", link: "/python/asyncio" },
+            { text: "Threads vs Processes", link: "/python/threads-and-processes" },
             { text: "Logging", link: "/python/logging" },
             { text: "Files, Paths & I/O", link: "/python/files-and-io" },
+            { text: "Dates, Times & Time Zones", link: "/python/dates-and-times" },
+            { text: "SQL with sqlite3", link: "/python/sqlite" },
           ],
         },
         {
@@ -252,6 +259,8 @@ export default withMermaid(defineConfig({
           items: [
             { text: "Testing with pytest", link: "/python/testing-with-pytest" },
             { text: "Linting & Type Checking", link: "/python/tooling" },
+            { text: "Validation with pydantic", link: "/python/validation-with-pydantic" },
+            { text: "Performance & Caching", link: "/python/performance-and-caching" },
             { text: "Jupyter Notebooks", link: "/python/jupyter-notebooks" },
           ],
         },
@@ -313,6 +322,7 @@ export default withMermaid(defineConfig({
             { text: "Branching, Merging & Rebasing", link: "/git/branching-merge-rebase" },
             { text: "Undoing Things", link: "/git/undoing-things" },
             { text: "Remotes & Pull Requests", link: "/git/remotes-and-prs" },
+            { text: "Power Tools", link: "/git/power-tools" },
           ],
         },
         {
@@ -322,6 +332,25 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "Git Cheat Sheet", link: "/git/cheatsheet" }],
+        },
+      ],
+      "/ci/": [
+        {
+          text: "CI/CD with GitHub Actions",
+          items: [{ text: "Overview", link: "/ci/" }],
+        },
+        {
+          text: "Workflows",
+          items: [
+            { text: "Workflow Anatomy", link: "/ci/workflow-anatomy" },
+            { text: "Security", link: "/ci/security" },
+            { text: "Matrices, Caching & Artifacts", link: "/ci/caching-and-matrices" },
+            { text: "Reusable Workflows", link: "/ci/reusable-workflows" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "GitHub Actions Cheat Sheet", link: "/ci/cheatsheet" }],
         },
       ],
     },

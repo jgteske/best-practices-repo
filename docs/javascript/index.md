@@ -33,6 +33,7 @@ and React pages on classes, errors or async work sit next to each other.
 | [Objects, Prototypes & Classes](./objects-and-classes) | The prototype chain, what `class` desugars to, `#private`, getters, `Object.freeze`, `?.` and `??`. |
 | [Classes at Runtime](./classes-at-runtime) | The order initializers really run in, how `this` is lost, `super` and `new.target`, `#field in obj` brand checks, static blocks, and mixins. |
 | [Arrays, Iteration & Collections](./arrays-and-iteration) | `map`/`filter`/`reduce`, destructuring and spread, `Map`/`Set`/`WeakMap`, iterators and generators. |
+| [Dates, Times & Intl](./dates-and-times) | What a `Date` really is, 0-based months, parsing traps, mutation, DST, `Intl.DateTimeFormat` with `timeZone`, relative times, testable clocks, and Temporal. |
 
 **Modules & async**
 
@@ -52,6 +53,7 @@ and React pages on classes, errors or async work sit next to each other.
 | [Core APIs](./core-apis) | `node:fs/promises`, `node:path`, `process`, `node:os`, child processes, and worker threads. |
 | [Streams & Buffers](./streams-and-buffers) | Why streams exist, `pipeline()`, async iteration, backpressure, and `Buffer` vs `TypedArray`. |
 | [HTTP & Networking](./http-and-networking) | A `node:http` server, body parsing and limits, the global `fetch`, timeouts, and when a framework earns its keep. |
+| [SQL with node:sqlite](./sqlite) | The built-in synchronous SQLite driver: prepared statements, SQL injection, `STRICT` tables and foreign keys, a `transaction()` helper, and `user_version` migrations. |
 | [Errors & Graceful Shutdown](./errors-and-shutdown) | Custom errors and `cause`, `unhandledRejection`, signal handling, draining connections, and exit codes. |
 | [Testing with `node:test`](./testing-with-node-test) | The built-in runner, `assert/strict`, mocking, coverage, and what makes code testable in the first place. |
 

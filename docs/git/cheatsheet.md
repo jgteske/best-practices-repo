@@ -57,6 +57,19 @@ git push --force-with-lease         # after rewriting YOUR branch
 git push origin --delete <branch>
 ```
 
+## Power tools: [details](./power-tools)
+
+```bash
+git worktree add ../hotfix release/1.x   # second checkout, same repo
+git worktree list ; git worktree remove ../hotfix
+git cherry-pick -x <commit>         # copy one commit, record its origin
+git bisect start BAD GOOD ; git bisect run ./test.sh ; git bisect reset
+git commit --fixup=<commit>         # or --fixup=":/message text"
+git rebase -i --autosquash main     # meld fixups into their targets
+git rebase -i --update-refs main    # move stacked branches too
+git config rerere.enabled true      # replay recorded conflict resolutions
+```
+
 ## Repository setup: [details](./config-ignore-hooks)
 
 ```bash

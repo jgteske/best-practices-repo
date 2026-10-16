@@ -15,7 +15,8 @@
     "check:bash": "bash scripts/check-bash.sh",
     "check:js": "bash scripts/check-js.sh",
     "check:python": "bash scripts/check-python.sh",
-    "check": "npm run typecheck && npm run check:react && npm run check:bash && npm run check:js && npm run check:python && npm run docs:build",
+    "check:actions": "bash scripts/check-actions.sh",
+    "check": "npm run typecheck && npm run check:react && npm run check:bash && npm run check:js && npm run check:python && npm run check:actions && npm run docs:build",
     "check:react": "vitest run"
   },
   "devDependencies": {

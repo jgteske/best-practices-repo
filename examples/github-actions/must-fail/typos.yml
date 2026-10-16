@@ -1,0 +1,19 @@
+# MUST FAIL actionlint: mistakes that only show up at run time without a linter.
+# expect-error: unexpected key "branchs" for "push" section
+# expect-error: property "metadata" is not defined
+# expect-error: SC2086
+name: Typos
+
+on:
+  push:
+    branchs: [main]                  # typo: this key does not exist, so the filter never applies
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - id: meta
+        run: echo "tag=v1" >> "$GITHUB_OUTPUT"
+      - run: echo "${{ steps.metadata.outputs.tag }}"   # wrong step id: always an empty string
+      - run: echo $UNQUOTED_VAR       # shellcheck (via actionlint): SC2086, unquoted variable

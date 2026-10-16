@@ -99,6 +99,17 @@ await asyncio.to_thread(blocking_fn, arg)  # never block the loop
 except asyncio.CancelledError: cleanup(); raise   # always re-raise
 ```
 
+## Threads & processes: [details](./threads-and-processes)
+
+```python
+with ThreadPoolExecutor(max_workers=8) as pool: list(pool.map(fetch, urls))     # I/O-bound
+with ProcessPoolExecutor() as pool: list(pool.map(crunch, chunks))              # CPU-bound; __main__ guard!
+for f in as_completed(futures): f.result()                 # re-raises the worker's exception
+with lock: counter += 1                                    # the GIL does not protect your data
+q = queue.Queue(maxsize=100) ; q.put(x) ; q.get()          # thread-safe hand-off
+pool.shutdown(cancel_futures=True)
+```
+
 ## Logging: [details](./logging)
 
 ```python
@@ -121,6 +132,31 @@ with p.open(encoding="utf-8") as f: for line in f: ...   # stream big files
 with p.open("w", encoding="utf-8", newline="") as f: csv.writer(f)
 with tempfile.TemporaryDirectory() as tmp: ...
 os.replace(tmp_path, path)                 # atomic swap, same filesystem
+```
+
+## Dates & times: [details](./dates-and-times)
+
+```python
+datetime.now(UTC)                          # aware "now"; never utcnow()
+dt.astimezone(UTC).isoformat()             # store/transmit
+datetime.fromisoformat("2026-03-01T08:30:00Z")
+dt.astimezone(ZoneInfo("Europe/Berlin"))   # display; store zone NAMES, not offsets
+(b.astimezone(UTC) - a.astimezone(UTC))    # real elapsed time across DST
+datetime.fromtimestamp(ts, tz=UTC)         # always pass tz=
+time.perf_counter() ; time.monotonic()     # durations / deadlines
+```
+
+## sqlite3: [details](./sqlite)
+
+```python
+conn = sqlite3.connect("app.db", autocommit=True)
+conn.execute("PRAGMA foreign_keys = ON"); conn.autocommit = False   # pragma before any transaction
+conn.execute("SELECT * FROM t WHERE id = ?", (id_,))     # placeholders, never f-strings
+conn.execute("... WHERE a = :a", {"a": 1}) ; conn.executemany(sql, rows)
+conn.row_factory = sqlite3.Row                           # row["col"]
+with conn: ...                                           # commit / rollback, does NOT close
+with closing(sqlite3.connect(...)) as conn: ...          # closes
+conn.execute("EXPLAIN QUERY PLAN SELECT ...")            # SCAN vs SEARCH USING INDEX
 ```
 
 ## Modules & imports: [details](./modules-and-imports)
@@ -205,6 +241,27 @@ tmp_path ; monkeypatch.setenv("X", "1") ; capsys.readouterr().out ; caplog
 ```bash
 ruff check --fix . ; ruff format . ; mypy src tests
 pre-commit install ; pre-commit run --all-files
+```
+
+## Validation (pydantic): [details](./validation-with-pydantic)
+
+```python
+class User(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    id: int ; email: Annotated[str, Field(min_length=3)]
+User.model_validate(data) ; User.model_validate_json(raw) ; user.model_dump_json()
+except ValidationError as e: e.errors()                    # [{"loc": (...), "msg": ...}, ...]
+TypeAdapter(list[Event]).validate_json(raw)                # any type, build once
+Annotated[A | B, Field(discriminator="kind")]
+```
+
+## Performance: [details](./performance-and-caching)
+
+```python
+min(timeit.repeat(f, number=100, repeat=5))                # take the minimum
+python -m cProfile -s cumulative script.py
+@cache ; @lru_cache(maxsize=1024) ; f.cache_info() ; @cached_property
+@dataclass(slots=True)                                     # many instances
 ```
 
 ## Notebooks: [details](./jupyter-notebooks)

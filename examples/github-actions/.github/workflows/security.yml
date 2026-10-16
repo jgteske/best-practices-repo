@@ -1,0 +1,40 @@
+# Least privilege, pinned actions, and untrusted input handled as data.
+name: Label PR
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+# region permissions
+# Start from nothing at the top level, then grant each job exactly what it needs.
+permissions: {}
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write           # to add a label - and nothing else
+    steps:
+      # endregion permissions
+      # region pinning
+      # A tag (@v4) can be moved to different code at any time; a commit SHA cannot.
+      # Keep the version in a comment so humans (and Dependabot/Renovate) can read and bump it.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false # don't leave the token in .git/config for later steps
+      # endregion pinning
+
+      # region untrusted-input
+      # The PR title is attacker-controlled. Pass it through an environment variable:
+      # the shell sees a variable, never code. (See ../../must-fail/injection.yml for the bug.)
+      - name: Label by title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [[ "$TITLE" == fix:* ]]; then
+            gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label bug
+          fi
+      # endregion untrusted-input

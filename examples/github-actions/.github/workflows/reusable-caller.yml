@@ -1,0 +1,28 @@
+# Calling a reusable workflow, once per package of a monorepo.
+name: Monorepo CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # region call
+  packages:
+    strategy:
+      matrix:
+        package: [api, web]
+    # Same repository: a path. Another repository: owner/repo/.github/workflows/file.yml@<sha>.
+    uses: ./.github/workflows/reusable-tests.yml
+    with:
+      working-directory: packages/${{ matrix.package }}
+    secrets: inherit                 # or pass them one by one: secrets: { NPM_TOKEN: ... }
+
+  report:
+    needs: packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: echo "all packages passed" >> "$GITHUB_STEP_SUMMARY"
+  # endregion call

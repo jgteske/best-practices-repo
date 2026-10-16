@@ -5,7 +5,7 @@ turning plain Markdown files into a static documentation site - the same
 role a tool like `pydoc`/Sphinx plays for Python docstrings, but for
 hand-written guides.
 
-It currently holds four guides:
+It currently holds these guides:
 
 - **JavaScript & TypeScript** - one section, grouped by topic, made up of:
   - **[JavaScript & Node.js](docs/javascript)** - the language (values, scope,
@@ -35,6 +35,10 @@ It currently holds four guides:
   mistakes and the reflog, remotes and pull requests, power tools (worktrees,
   cherry-pick, bisect, autosquash, rerere), and repository setup
   (`.gitignore`, `.gitattributes`, hooks).
+- **[CI/CD with GitHub Actions](docs/ci)** - workflow anatomy (triggers, jobs,
+  outputs, concurrency), security (least-privilege permissions, SHA pinning,
+  script injection, OIDC), matrices, caching and artifacts, and reusable
+  workflows.
 
 Every code sample is backed by a real file under [`examples/`](examples):
 TypeScript/TSX examples are `strict`-mode type-checked, the React examples'
@@ -43,7 +47,8 @@ parsed with `bash -n` and linted with `shellcheck` (and the Git examples are
 run, in throwaway repositories), and JavaScript examples are
 parsed with `node --check` and then **actually executed**, and Python examples
 are executed, type-checked with `mypy --strict`, linted with ruff, and the real
-Poetry projects are built and installed - so the examples in the docs can never
+Poetry projects are built and installed, and GitHub Actions workflows are linted
+with actionlint (and deliberately broken ones must be rejected) - so the examples in the docs can never
 silently drift from code that actually works.
 
 ## Quick start
@@ -57,6 +62,7 @@ npm run check:react   # run the React component tests (Vitest + Testing Library,
 npm run check:bash    # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js      # node --check, then run every JavaScript example + node:test
 npm run check:python  # run every Python example; + mypy/ruff/pytest/pydantic/poetry when installed
+npm run check:actions # actionlint over .github/workflows and examples/github-actions, if installed
 npm run check         # all of the above, useful as a single CI step
 ```
 
@@ -71,13 +77,15 @@ docs/           # published site content (Markdown)
   python/       # Python guide
   linux/        # Linux, Bash & terminal guide
   git/          # Git & collaboration guide
+  ci/           # CI/CD with GitHub Actions guide
 examples/       # real, checked source backing the docs' code samples
   typescript/   # compiled with tsc --noEmit
   react/        # compiled with tsc --noEmit (react-jsx); *.test.tsx run by Vitest
   javascript/   # parsed with node --check, then executed (incl. node --test)
   python/       # executed, mypy --strict, ruff, pytest; Poetry projects built
   bash/         # checked with bash -n and shellcheck; git/ scripts are also run
-scripts/        # repo tooling (check-bash.sh, check-js.sh, check-python.sh)
+  github-actions/ # linted with actionlint; must-fail/ fixtures must be rejected
+scripts/        # repo tooling (check-bash.sh, check-js.sh, check-python.sh, check-actions.sh)
 ```
 
 See [`docs/guide`](docs/guide) for how the site is built and how to add new

@@ -1,0 +1,72 @@
+# The parts of a workflow: triggers, jobs, steps, dependencies, outputs and conditions.
+# Lives at .github/workflows/<name>.yml in a real repository.
+name: Test
+
+# region triggers
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md"]          # docs-only pushes don't need the test suite
+  pull_request:                      # every PR, from branches AND forks (read-only token for forks)
+  workflow_dispatch:                 # a "Run workflow" button in the Actions tab...
+    inputs:
+      verbose:
+        description: Print every test name
+        type: boolean
+        default: false
+  schedule:
+    - cron: "17 3 * * 1"             # ...and every Monday 03:17 UTC (catches dependency rot)
+# endregion triggers
+
+# region defaults
+permissions:
+  contents: read                     # the default for every job below; see security.yml
+
+concurrency:
+  # One run per branch/PR. A new push cancels the outdated run - but never on main.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+defaults:
+  run:
+    shell: bash                      # adds -o pipefail; the implicit default is plain `bash -e`
+# endregion defaults
+
+jobs:
+  # region job-and-steps
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15              # the default is 6 hours of burned minutes
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc  # one source of truth for the version
+          cache: npm
+      - run: npm ci                  # ci, not install: exact lockfile, fails if it is out of date
+      - name: Test
+        run: npm test -- ${{ inputs.verbose && '--reporter=verbose' || '' }}
+  # endregion job-and-steps
+
+  # region outputs-and-needs
+  version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.read.outputs.version }}   # job output <- step output
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - id: read
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+  release-notes:
+    needs: [test, version]           # waits for both; skipped if either fails
+    if: github.event_name == 'push'  # not for PRs, schedules or manual runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Summary
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: echo "### Tested v${VERSION} :white_check_mark:" >> "$GITHUB_STEP_SUMMARY"
+  # endregion outputs-and-needs

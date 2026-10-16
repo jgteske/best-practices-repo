@@ -171,7 +171,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux and Git guides.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git and CI/CD guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -194,6 +194,7 @@ export default withMermaid(defineConfig({
       { text: "Python", link: "/python/" },
       { text: "Linux", link: "/linux/" },
       { text: "Git", link: "/git/" },
+      { text: "CI/CD", link: "/ci/" },
     ],
 
     sidebar: {
@@ -331,6 +332,25 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "Git Cheat Sheet", link: "/git/cheatsheet" }],
+        },
+      ],
+      "/ci/": [
+        {
+          text: "CI/CD with GitHub Actions",
+          items: [{ text: "Overview", link: "/ci/" }],
+        },
+        {
+          text: "Workflows",
+          items: [
+            { text: "Workflow Anatomy", link: "/ci/workflow-anatomy" },
+            { text: "Security", link: "/ci/security" },
+            { text: "Matrices, Caching & Artifacts", link: "/ci/caching-and-matrices" },
+            { text: "Reusable Workflows", link: "/ci/reusable-workflows" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "GitHub Actions Cheat Sheet", link: "/ci/cheatsheet" }],
         },
       ],
     },

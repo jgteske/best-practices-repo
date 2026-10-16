@@ -57,6 +57,7 @@ npm run check:react    # runs the React component tests (Vitest + jsdom)
 npm run check:bash     # bash -n (+ shellcheck, if installed), then runs scripts marked `# check-bash: run`
 npm run check:js       # node --check, then run every JavaScript example
 npm run check:python   # run every Python example (+ mypy, ruff, pytest, Poetry if installed)
+npm run check:actions  # actionlint over the workflows, if installed
 ```
 
 `npm run check` runs the checks and the production build together - useful

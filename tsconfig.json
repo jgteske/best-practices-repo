@@ -15,6 +15,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
+    // Lets examples import "../x.ts" the way Node runs them (type stripping).
+    // Allowed because nothing is emitted.
+    "allowImportingTsExtensions": true,
     "noEmit": true
   },
   "include": ["examples/**/*.ts", "examples/**/*.tsx"]

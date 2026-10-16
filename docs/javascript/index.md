@@ -48,6 +48,7 @@ and React pages on classes, errors or async work sit next to each other.
 | Page | Focus |
 | --- | --- |
 | [Running Node](./running-node) | Installing and pinning versions, the CLI flags worth knowing, `--watch`, `--env-file`, arguments, and exit codes. |
+| [Building CLIs with Node & TypeScript](./building-clis) | Running `.ts` directly, subcommands on `parseArgs`, config precedence, `--json` and colour, backpressure and `EPIPE`, testing with injected I/O, and shipping a `bin`. |
 | [Core APIs](./core-apis) | `node:fs/promises`, `node:path`, `process`, `node:os`, child processes, and worker threads. |
 | [Streams & Buffers](./streams-and-buffers) | Why streams exist, `pipeline()`, async iteration, backpressure, and `Buffer` vs `TypedArray`. |
 | [HTTP & Networking](./http-and-networking) | A `node:http` server, body parsing and limits, the global `fetch`, timeouts, and when a framework earns its keep. |

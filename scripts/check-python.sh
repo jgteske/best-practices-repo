@@ -112,7 +112,9 @@ fi
 echo
 if "$PYTHON" -c 'import pytest' 2>/dev/null; then
   echo "running the pytest examples..."
-  (cd "$ROOT/testing" && "$PYTHON" -B -m pytest -q -p no:cacheprovider) || failed=1
+  for suite in testing cli; do
+    (cd "$ROOT/$suite" && "$PYTHON" -B -m pytest -q -p no:cacheprovider) || failed=1
+  done
 else
   echo "pytest not installed - skipping tests (pip install pytest)"
 fi

@@ -3,7 +3,8 @@
 # Verifies every JavaScript example under examples/javascript/:
 #   * `node --check` parses each .mjs/.cjs file (always runs, no dependencies)
 #   * every example is then actually executed and must exit 0
-#   * `node --test` runs the *.test.mjs files
+#   * `node --test` runs the *.test.mjs files, then the *.test.ts files
+#     (TypeScript that Node runs as-is, e.g. examples/javascript/cli)
 #
 # This is the JavaScript equivalent of `npm run typecheck` and
 # `npm run check:bash`: a snippet embedded in the docs cannot silently rot.
@@ -72,6 +73,14 @@ done
 echo
 echo "running the test suite..."
 if ! node --test 'examples/javascript/**/*.test.mjs'; then
+  failed=1
+fi
+
+# TypeScript examples that Node runs directly by stripping the types (Node
+# 22.18+). `npm run typecheck` type-checks them; this executes their tests.
+echo
+echo "running the TypeScript test suite..."
+if ! node --test 'examples/javascript/**/*.test.ts'; then
   failed=1
 fi
 

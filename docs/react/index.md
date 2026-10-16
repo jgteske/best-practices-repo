@@ -25,6 +25,7 @@ and React pages on classes, errors or async work sit next to each other.
 | --- | --- |
 | [Component Declarations](./component-declarations) | Declaring components as plain typed functions, destructuring props with defaults, and why to skip `React.FC`. |
 | [Props & Passing Parameters](./props-and-parameters) | Typing props precisely, `children` and slots, discriminated props that make illegal combinations impossible, and composition over prop drilling. |
+| [Elements, `$$typeof` & Special Types](./elements-and-special-types) | What JSX compiles to, why `$$typeof` is a Symbol, how React tells Fragment, StrictMode, Suspense, Profiler, `memo`, `forwardRef`, `lazy`, context and portals apart, and working with `children`. |
 
 **Sharing State & APIs**
 

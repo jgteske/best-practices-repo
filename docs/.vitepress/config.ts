@@ -119,6 +119,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: "Component Declarations", link: "/react/component-declarations" },
       { text: "Props & Passing Parameters", link: "/react/props-and-parameters" },
+      { text: "Elements & Special Types", link: "/react/elements-and-special-types" },
     ],
   },
   {

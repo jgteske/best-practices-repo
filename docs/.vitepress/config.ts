@@ -321,6 +321,7 @@ export default withMermaid(defineConfig({
             { text: "Branching, Merging & Rebasing", link: "/git/branching-merge-rebase" },
             { text: "Undoing Things", link: "/git/undoing-things" },
             { text: "Remotes & Pull Requests", link: "/git/remotes-and-prs" },
+            { text: "Power Tools", link: "/git/power-tools" },
           ],
         },
         {

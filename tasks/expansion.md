@@ -6,7 +6,7 @@ Plan: ~/.claude/plans/think-about-what-other-immutable-clarke.md. Branch `docs/e
 - [x] 2. SQLite: Python `sqlite3` + `node:sqlite` pages
 - [x] 3. Python depth: threads & processes, performance & caching, pydantic validation (+ `requires` marker in check-python.sh)
 - [x] 4a. React performance (render counts asserted in tests)
-- [ ] 4b. Git power tools (worktrees, cherry-pick, bisect run, autosquash, rerere)
+- [x] 4b. Git power tools (worktrees, cherry-pick, bisect run, autosquash, rerere)
 - [ ] 5. CI/CD & GitHub Actions section, actionlint check, split repo CI into check + deploy
 - [ ] verify: `npm run check` green on the full branch; deliberate breaks caught
 
@@ -26,3 +26,7 @@ Plan: ~/.claude/plans/think-about-what-other-immutable-clarke.md. Branch `docs/e
   render even when the memo child bails out (3 calls either way). Switched to a no-deps `useEffect` counter behind
   a context (`render-counter.tsx`); the page explains why. Deliberate break (inline style object) -> 4 != 1.
   Inline `{{ }}` in a markdown table is parsed by Vue: wrapped in `::: v-pre`.
+- 4b: `git bisect start -q` / `reset -q` are not valid (`-q` parsed as a commit). Deliberate break of
+  `--update-refs` first PASSED: an empty fixup + fixed timestamps rewrote commits byte-identically, so the hashes
+  (and the lower branch) never changed. The fixup now changes content, and the script also asserts the lower
+  branch was rewritten. Disabling rerere fails the script, as it should.

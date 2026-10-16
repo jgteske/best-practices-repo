@@ -32,7 +32,8 @@ It currently holds four guides:
   scripting.
 - **[Git & Collaboration](docs/git)** - the data model (snapshots, branches as
   pointers, the index), the everyday workflow, merging and rebasing, undoing
-  mistakes and the reflog, remotes and pull requests, and repository setup
+  mistakes and the reflog, remotes and pull requests, power tools (worktrees,
+  cherry-pick, bisect, autosquash, rerere), and repository setup
   (`.gitignore`, `.gitattributes`, hooks).
 
 Every code sample is backed by a real file under [`examples/`](examples):

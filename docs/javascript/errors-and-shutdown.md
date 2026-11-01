@@ -166,6 +166,27 @@ Order matters on the way out: stop accepting new work → finish in-flight work 
 close outbound resources (pools, consumers, files) → exit. Closing the database
 pool first means the in-flight requests you were draining fail anyway.
 
+```mermaid
+sequenceDiagram
+  participant O as Orchestrator
+  participant P as Process
+  participant R as Requests
+  participant D as Resources
+  O->>P: SIGTERM<br/>grace period starts (30 s by default)
+  P->>P: shuttingDown = true
+  P->>R: server.close()<br/>stop accepting, start 5 s deadline
+  alt Requests finish before the deadline
+    R-->>P: server emits "close"
+    P->>D: release pools, consumers, files
+    P-->>O: exits
+  else Deadline fires first
+    P-->>O: process.exit(1)
+  end
+  opt Still alive when the grace period ends
+    O-xP: SIGKILL, cannot be caught
+  end
+```
+
 ::: tip Fail readiness before you stop accepting
 In a load-balanced deployment, flip your readiness probe to unhealthy and wait a
 couple of seconds *before* calling `server.close()`. Otherwise the load balancer

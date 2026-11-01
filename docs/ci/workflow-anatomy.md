@@ -62,6 +62,17 @@ repository activity.
 
 <<< ../../examples/github-actions/.github/workflows/anatomy.yml#outputs-and-needs{yaml}
 
+:::
+
+```mermaid
+flowchart TD
+  S["Step: read<br/>writes version=... to $GITHUB_OUTPUT"] --> SO["steps.read.outputs.version"]
+  SO -->|"job re-exports it under outputs:"| JO["Job: version<br/>outputs.version"]
+  JO -->|"later job declares needs: version"| N["needs.version.outputs.version"]
+```
+
+::: v-pre
+
 A step writes `name=value` lines to the file at `$GITHUB_OUTPUT`. The job
 re-exports the values it wants under `outputs:`, and a later job reads them
 as `needs.<job>.outputs.<name>`. `$GITHUB_STEP_SUMMARY` takes Markdown that

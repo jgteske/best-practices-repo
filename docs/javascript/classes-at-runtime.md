@@ -24,6 +24,24 @@ construction order:
   6. derived constructor body, after super()
 ```
 
+```mermaid
+sequenceDiagram
+  participant D as Derived
+  participant B as Base
+  Note over D: 1. constructor body, before super()
+  D->>B: super()
+  Note over B: 2. field initializer
+  Note over B: 3. parameter default
+  Note over B: 4. constructor body
+  opt Base constructor calls an overridden method
+    B->>D: runs the override, derived fields don't exist yet
+    D-->>B: returns
+  end
+  B-->>D: super() returns
+  Note over D: 5. field initializer
+  Note over D: 6. constructor body, after super()
+```
+
 Two of those surprise almost everybody.
 
 **A base class initializes its fields before its own parameter defaults.** Field

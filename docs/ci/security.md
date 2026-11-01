@@ -65,6 +65,21 @@ and expands it as data:
 
 ### `pull_request_target` and `workflow_run`
 
+:::
+
+```mermaid
+flowchart TD
+  PR["Fork opens a pull request"] --> E{"Which trigger?"}
+  E -->|pull_request| A["Read-only token, no secrets"]
+  A --> A2["Runs the PR's code:<br/>safe by design"]
+  E -->|pull_request_target| B["Base repository context:<br/>write token and secrets"]
+  B --> C{"Does it execute<br/>the PR's code?"}
+  C -->|"no: label or comment only"| OK["Safe, if no expression<br/>is injectable"]
+  C -->|"yes: checks out head.sha, builds"| BAD["The PR's author<br/>gets your secrets"]
+```
+
+::: v-pre
+
 `pull_request` runs a fork's PR with a **read-only token and no secrets**,
 which is safe by design. `pull_request_target` runs in the context of the
 **base** repository, with a write token and secrets, so that it can label or

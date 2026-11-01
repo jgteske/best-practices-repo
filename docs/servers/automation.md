@@ -12,6 +12,12 @@ they change at different rates and carry different risks.
 | App | Your tests | Build image, push, trigger Coolify |
 | Schedule | | Drift detection |
 
+:::
+
+![Each change type passes pull request checks, then after merging waits for approval in the production environment before reaching the server or Coolify. A manual rollback passes the same gate, and a weekly schedule checks for drift through the drift environment, where a failed run is the alert](./diagrams/delivery-pipelines.drawio.png)
+
+::: v-pre
+
 The workflows are real files in
 [`examples/github-actions`](https://github.com/jgteske/best-practices-repo/tree/main/examples/github-actions/.github/workflows),
 and they assume a repository with `infra/terraform` and `infra/ansible` folders.

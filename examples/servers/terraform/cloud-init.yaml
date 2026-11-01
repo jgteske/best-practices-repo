@@ -1,0 +1,7 @@
+#cloud-config
+# Only what Ansible needs to take over. Everything else belongs in a role, where
+# it can be re-run; cloud-init runs once and is never applied again.
+ssh_pwauth: false
+package_update: true
+packages:
+  - python3

@@ -82,7 +82,7 @@ jobs:
       # notebook, and build and install the Poetry projects - the same way
       # shellcheck is added above. actionlint (pinned) is for check:actions.
       - name: Install Python tooling
-        run: pip install poetry mypy ruff pytest nbconvert ipykernel pydantic actionlint-py==1.7.12.25
+        run: pip install poetry mypy ruff pytest nbconvert ipykernel pydantic actionlint-py==1.7.12.25 ansible-core==2.21.5 ansible-lint==26.10.1
 
       - name: Check Python examples
         run: npm run check:python
@@ -90,6 +90,18 @@ jobs:
       # actionlint over this workflow and the examples (shellcheck is installed above).
       - name: Check workflow files
         run: npm run check:actions
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: 1.13.2
+          tofu_wrapper: false
+
+      # Validates and lints only; nothing is applied to a real server or account.
+      - name: Check server examples
+        env:
+          REQUIRE_ALL_TOOLS: 1
+        run: npm run check:servers
 
       - name: Build site
         run: npm run docs:build

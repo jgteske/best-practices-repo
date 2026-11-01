@@ -39,6 +39,10 @@ It currently holds these guides:
   outputs, concurrency), security (least-privilege permissions, SHA pinning,
   script injection, OIDC), matrices, caching and artifacts, and reusable
   workflows.
+- **[Servers with Terraform, Ansible & Coolify](docs/servers)** - which tool owns
+  which layer, provisioning, OS hardening and patching, deploying with Coolify,
+  Docker setups, automating it all with CI/CD, day-to-day operations and backups,
+  and a walkthrough for running your own server.
 
 Every code sample is backed by a real file under [`examples/`](examples):
 TypeScript/TSX examples are `strict`-mode type-checked, the React examples'
@@ -48,8 +52,9 @@ run, in throwaway repositories), and JavaScript examples are
 parsed with `node --check` and then **actually executed**, and Python examples
 are executed, type-checked with `mypy --strict`, linted with ruff, and the real
 Poetry projects are built and installed, and GitHub Actions workflows are linted
-with actionlint (and deliberately broken ones must be rejected) - so the examples in the docs can never
-silently drift from code that actually works.
+with actionlint (and deliberately broken ones must be rejected), and server
+examples are validated and linted (but not applied to a real server) - so the
+examples in the docs can never silently drift from code that actually works.
 
 ## Quick start
 
@@ -63,6 +68,7 @@ npm run check:bash    # bash -n (+ shellcheck, if installed) over examples/bash
 npm run check:js      # node --check, then run every JavaScript example + node:test
 npm run check:python  # run every Python example; + mypy/ruff/pytest/pydantic/poetry when installed
 npm run check:actions # actionlint over .github/workflows and examples/github-actions, if installed
+npm run check:servers # tofu validate, ansible-lint, docker build over examples/servers, if installed
 npm run check         # all of the above, useful as a single CI step
 ```
 
@@ -78,6 +84,7 @@ docs/           # published site content (Markdown)
   linux/        # Linux, Bash & terminal guide
   git/          # Git & collaboration guide
   ci/           # CI/CD with GitHub Actions guide
+  servers/      # Terraform, Ansible & Coolify server management guide
 examples/       # real, checked source backing the docs' code samples
   typescript/   # compiled with tsc --noEmit
   react/        # compiled with tsc --noEmit (react-jsx); *.test.tsx run by Vitest
@@ -85,7 +92,8 @@ examples/       # real, checked source backing the docs' code samples
   python/       # executed, mypy --strict, ruff, pytest; Poetry projects built
   bash/         # checked with bash -n and shellcheck; git/ scripts are also run
   github-actions/ # linted with actionlint; must-fail/ fixtures must be rejected
-scripts/        # repo tooling (check-bash.sh, check-js.sh, check-python.sh, check-actions.sh)
+  servers/      # tofu validate, ansible-lint, docker build; never applied
+scripts/        # repo tooling (check-bash.sh, check-js.sh, check-python.sh, check-actions.sh, check-servers.sh)
 ```
 
 See [`docs/guide`](docs/guide) for how the site is built and how to add new

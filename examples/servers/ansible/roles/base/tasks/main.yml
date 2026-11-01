@@ -1,0 +1,76 @@
+---
+# region admin-user
+- name: Refuse to run without an admin key
+  ansible.builtin.assert:
+    that:
+      - base_admin_ssh_keys | length > 0
+    fail_msg: Set base_admin_ssh_keys, or SSH hardening can lock you out.
+
+- name: Create the admin user
+  ansible.builtin.user:
+    name: "{{ base_admin_user }}"
+    shell: /bin/bash
+    groups: sudo
+    append: true
+    # "*" disables password login but leaves the account usable with SSH keys.
+    password: "*"
+    update_password: on_create
+
+- name: Create the admin SSH directory
+  ansible.builtin.file:
+    path: "/home/{{ base_admin_user }}/.ssh"
+    state: directory
+    owner: "{{ base_admin_user }}"
+    group: "{{ base_admin_user }}"
+    mode: "0700"
+
+# Writing the whole file means a key removed from Git is removed from the server.
+- name: Install the admin SSH keys
+  ansible.builtin.copy:
+    content: "{{ base_admin_ssh_keys | join('\n') }}\n"
+    dest: "/home/{{ base_admin_user }}/.ssh/authorized_keys"
+    owner: "{{ base_admin_user }}"
+    group: "{{ base_admin_user }}"
+    mode: "0600"
+
+- name: Allow the admin user passwordless sudo
+  ansible.builtin.copy:
+    content: "{{ base_admin_user }} ALL=(ALL) NOPASSWD: ALL\n"
+    dest: "/etc/sudoers.d/90-{{ base_admin_user }}"
+    owner: root
+    group: root
+    mode: "0440"
+    # A broken sudoers file can lock you out of sudo, so check it first.
+    validate: visudo -cf %s
+# endregion admin-user
+
+# region patching
+- name: Install baseline packages
+  ansible.builtin.apt:
+    name:
+      - unattended-upgrades
+      - fail2ban
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Enable daily security updates
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Reboot automatically when an update needs it
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/52unattended-reboot
+    content: |
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "{{ base_reboot_time }}";
+    owner: root
+    group: root
+    mode: "0644"
+# endregion patching

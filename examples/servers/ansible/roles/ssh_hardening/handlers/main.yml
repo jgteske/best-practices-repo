@@ -1,0 +1,6 @@
+---
+# Reload rather than restart: open sessions survive, so a bad change can be undone.
+- name: Reload ssh
+  ansible.builtin.systemd_service:
+    name: ssh
+    state: reloaded

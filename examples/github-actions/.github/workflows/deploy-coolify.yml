@@ -1,0 +1,72 @@
+# Build an image, push it, then tell Coolify to deploy it. Run by hand to roll back.
+name: Deploy app
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      rollback_to:
+        description: Existing image tag (a commit SHA) to deploy instead of building
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    permissions:
+      contents: read
+      packages: write # to push to GHCR - and nothing else
+    steps:
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      # region build
+      # Every image keeps its commit SHA as a tag, which is what makes rollback possible.
+      # Coolify is configured to deploy the moving `production` tag.
+      - name: Build and push
+        if: inputs.rollback_to == ''
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE }}:production
+      # endregion build
+
+      # region rollback
+      # Rolling back moves the tag to an image that's already built and tested.
+      - name: Point production at an older image
+        if: inputs.rollback_to != ''
+        env:
+          ROLLBACK_TO: ${{ inputs.rollback_to }}
+        run: docker buildx imagetools create --tag "$IMAGE:production" "$IMAGE:$ROLLBACK_TO"
+      # endregion rollback
+
+      # region trigger
+      - name: Trigger the Coolify deployment
+        env:
+          COOLIFY_URL: ${{ vars.COOLIFY_URL }}
+          COOLIFY_APP_UUID: ${{ vars.COOLIFY_APP_UUID }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 30 --request POST \
+            --header "Authorization: Bearer $COOLIFY_TOKEN" \
+            "$COOLIFY_URL/api/v1/deploy?uuid=$COOLIFY_APP_UUID"
+      # endregion trigger

@@ -1,0 +1,60 @@
+services:
+  # region app
+  app:
+    image: ghcr.io/example/app:${APP_TAG:?set APP_TAG}
+    restart: unless-stopped
+    # `expose` reaches other containers and the proxy. `ports` would publish to the host.
+    expose:
+      - "8080"
+    environment:
+      DATABASE_URL: postgres://app:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - default
+      - backend
+    # Take away what the service doesn't use, to limit what an attacker gets.
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # One runaway container shouldn't take down everything else on the server.
+    mem_limit: 256m
+    cpus: 0.5
+    logging: &logging
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+  # endregion app
+
+  # region db
+  db:
+    image: postgres:17-alpine@sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    # No `ports`, and only on the internal network: the database has no route in from outside.
+    networks:
+      - backend
+    mem_limit: 512m
+    logging: *logging
+  # endregion db
+
+volumes:
+  db-data:
+
+networks:
+  backend:
+    internal: true

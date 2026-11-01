@@ -1,0 +1,22 @@
+---
+# region install
+- name: Download the Coolify installer
+  ansible.builtin.get_url:
+    url: https://cdn.coollabs.io/coolify/install.sh
+    dest: /root/coolify-install.sh
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Install Coolify
+  ansible.builtin.command:
+    cmd: /root/coolify-install.sh {{ coolify_version | quote }}
+    # Install once. Later upgrades are a deliberate step, not a side effect of this role.
+    creates: /data/coolify/source/.env
+  environment:
+    AUTOUPDATE: "false"
+    ROOT_USERNAME: "{{ coolify_root_username }}"
+    ROOT_USER_EMAIL: "{{ coolify_root_email }}"
+    ROOT_USER_PASSWORD: "{{ coolify_root_password }}"
+  no_log: true
+# endregion install

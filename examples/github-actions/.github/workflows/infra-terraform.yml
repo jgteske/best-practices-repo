@@ -1,0 +1,80 @@
+# Terraform/OpenTofu: plan on every pull request, apply after a human approves.
+name: Infrastructure
+
+on:
+  pull_request:
+    paths: ["infra/terraform/**"]
+  push:
+    branches: [main]
+    paths: ["infra/terraform/**"]
+
+permissions:
+  contents: read
+
+# Never run two applies at once, and never cancel one midway.
+concurrency:
+  group: terraform-production
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: infra/terraform
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_VAR_ssh_public_key: ${{ vars.SSH_PUBLIC_KEY }}
+  TF_VAR_admin_cidrs: ${{ vars.ADMIN_CIDRS }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.STATE_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.STATE_SECRET_ACCESS_KEY }}
+
+jobs:
+  # region plan
+  plan:
+    # Fork PRs get no secrets, and their code must never see the cloud token.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: 1.13.2
+          tofu_wrapper: false
+      - run: tofu fmt -check -recursive
+      - run: tofu init -input=false -lockfile=readonly -backend-config=backend.hcl
+      - run: tofu validate
+      - name: Plan with a read-only token
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN_READONLY }}
+        run: |
+          tofu plan -input=false -lock=false -no-color -out=tfplan
+          {
+            echo '```'
+            tofu show -no-color tfplan
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+  # endregion plan
+
+  # region apply
+  apply:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Required reviewers on this environment pause the job until someone approves.
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: 1.13.2
+          tofu_wrapper: false
+      - run: tofu init -input=false -lockfile=readonly -backend-config=backend.hcl
+      - name: Apply
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+        run: tofu apply -input=false -auto-approve
+  # endregion apply

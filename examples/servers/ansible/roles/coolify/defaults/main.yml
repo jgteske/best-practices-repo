@@ -1,0 +1,7 @@
+---
+coolify_version: "4.5.3"
+# Override these from an Ansible Vault file. Without them the first person to
+# open the dashboard gets to create the admin account.
+coolify_root_username: admin
+coolify_root_email: admin@example.com
+coolify_root_password: "{{ undef(hint='Set coolify_root_password in Ansible Vault') }}"

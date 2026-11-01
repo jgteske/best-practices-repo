@@ -6,6 +6,9 @@ docs/.vitepress/cache/
 !examples/**/sample.log
 .DS_Store
 
+# Claude
+.tasks
+
 # Python examples
 __pycache__/
 .venv/
@@ -14,3 +17,10 @@ dist/
 .pytest_cache/
 .ruff_cache/
 .ipynb_checkpoints/
+
+# Terraform examples (.terraform.lock.hcl is meant to be committed)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+tfplan

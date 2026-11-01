@@ -1,0 +1,81 @@
+# Find changes made outside Git. A failed run is the alert: GitHub notifies you.
+name: Drift detection
+
+on:
+  schedule:
+    - cron: "17 5 * * 1" # Mondays; avoid minute 0, when scheduled runs get delayed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: drift # holds read-only credentials, with no reviewers to wait for
+    defaults:
+      run:
+        working-directory: infra/terraform
+    env:
+      TF_VAR_ssh_public_key: ${{ vars.SSH_PUBLIC_KEY }}
+      TF_VAR_admin_cidrs: ${{ vars.ADMIN_CIDRS }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.STATE_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.STATE_SECRET_ACCESS_KEY }}
+      HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN_READONLY }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: opentofu/setup-opentofu@a1320f892987e89d278cc92dc5adc984fb93aca4 # v2.0.2
+        with:
+          tofu_version: 1.13.2
+          tofu_wrapper: false
+      - run: tofu init -input=false -lockfile=readonly -backend-config=backend.hcl
+      # region terraform-drift
+      # -detailed-exitcode: 0 = no changes, 1 = error, 2 = reality differs from the code.
+      - run: tofu plan -input=false -lock=false -detailed-exitcode
+      # endregion terraform-drift
+
+  ansible:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: drift
+    defaults:
+      run:
+        working-directory: infra/ansible
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.13"
+      - run: pip install ansible-core==2.21.5
+      - uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4.4.0
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ vars.SSH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          (umask 077; printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519)
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      # region ansible-drift
+      # --check exits 0 even when it would change something, so read the recap instead.
+      - name: Check for configuration drift
+        shell: bash # unlike the default, this sets pipefail, so tee can't hide a failed run
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        run: |
+          (umask 077; printf '%s' "$ANSIBLE_VAULT_PASSWORD" > "$RUNNER_TEMP/vault-pass")
+          ansible-playbook site.yml --check --diff --vault-password-file "$RUNNER_TEMP/vault-pass" | tee "$RUNNER_TEMP/recap"
+          if grep -E 'changed=[1-9]' "$RUNNER_TEMP/recap"; then
+            echo "::error::Server configuration differs from Git"
+            exit 1
+          fi
+      # endregion ansible-drift

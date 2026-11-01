@@ -43,6 +43,9 @@ It currently holds these guides:
   which layer, provisioning, OS hardening and patching, deploying with Coolify,
   Docker setups, automating it all with CI/CD, day-to-day operations and backups,
   and a walkthrough for running your own server.
+- **[AI Agents on a Server](docs/ai)** - installing Paperclip with Docker, working
+  with agents (tasks, instructions, schedules, workspaces), and managing them
+  (budgets, security limits, secrets, backups, updates).
 
 Every code sample is backed by a real file under [`examples/`](examples):
 TypeScript/TSX examples are `strict`-mode type-checked, the React examples'
@@ -85,6 +88,7 @@ docs/           # published site content (Markdown)
   git/          # Git & collaboration guide
   ci/           # CI/CD with GitHub Actions guide
   servers/      # Terraform, Ansible & Coolify server management guide
+  ai/           # AI agents on a server with Paperclip guide
 examples/       # real, checked source backing the docs' code samples
   typescript/   # compiled with tsc --noEmit
   react/        # compiled with tsc --noEmit (react-jsx); *.test.tsx run by Vitest

@@ -36,7 +36,8 @@ hand-written Markdown guides rather than docstrings extracted from source.
 │   ├── linux/                # the Linux, Bash & terminal guide
 │   ├── git/                  # the Git & collaboration guide
 │   ├── ci/                   # the CI/CD with GitHub Actions guide
-│   └── servers/              # the Terraform, Ansible & Coolify guide
+│   ├── servers/              # the Terraform, Ansible & Coolify guide
+│   └── ai/                   # the AI agents with Paperclip guide
 ├── examples/                 # real, checked source backing the docs
 │   ├── typescript/           # .ts        - type-checked
 │   ├── react/                # .tsx       - type-checked

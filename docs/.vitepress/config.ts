@@ -171,7 +171,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git, CI/CD and server management guides.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git, CI/CD, server management and AI agent guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -196,6 +196,7 @@ export default withMermaid(defineConfig({
       { text: "Git", link: "/git/" },
       { text: "CI/CD", link: "/ci/" },
       { text: "Servers", link: "/servers/" },
+      { text: "AI", link: "/ai/" },
     ],
 
     sidebar: {
@@ -379,6 +380,25 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "Servers Cheat Sheet", link: "/servers/cheatsheet" }],
+        },
+      ],
+      "/ai/": [
+        {
+          text: "AI Agents",
+          items: [{ text: "Overview", link: "/ai/" }],
+        },
+        {
+          text: "Paperclip",
+          items: [
+            { text: "Installing Paperclip", link: "/ai/paperclip-install" },
+            { text: "Private Access with Tailscale", link: "/ai/paperclip-tailscale" },
+            { text: "Working with Agents", link: "/ai/paperclip-agents" },
+            { text: "Managing Agents", link: "/ai/paperclip-operations" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "AI Agents Cheat Sheet", link: "/ai/cheatsheet" }],
         },
       ],
     },

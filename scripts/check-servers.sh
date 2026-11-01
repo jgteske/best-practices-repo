@@ -70,6 +70,10 @@ if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
   step "compose config" env APP_TAG=test POSTGRES_PASSWORD=test \
     docker compose -f "$ROOT/docker/compose.yaml" config --quiet
   step "build" docker build --quiet --tag best-practices-server-example "$ROOT/docker"
+  step "paperclip compose config" env POSTGRES_PASSWORD=test PAPERCLIP_PUBLIC_URL=http://localhost:3100 \
+    BETTER_AUTH_SECRET=test PAPERCLIP_AGENT_JWT_SECRET=test \
+    PAPERCLIP_TOOL_ACTION_SIGNING_SECRET=test PAPERCLIP_SECRETS_MASTER_KEY=test \
+    docker compose -f "$ROOT/paperclip/compose.yaml" config --quiet
 else
   missing "a running docker daemon"
 fi

@@ -81,7 +81,7 @@ up as an npm script and included in `npm run check`:
 | `examples/javascript` | `node --check` on every `.mjs`/`.cjs`, then **executes** each runnable file, then `node --test` | `npm run check:js` |
 | `examples/python` | compiles and **executes** every standalone `.py`; when installed: `mypy --strict` (plus every quoted `<- mypy:` error), ruff, pytest, notebook execution, and building/installing the Poetry projects | `npm run check:python` |
 | `examples/github-actions` | `actionlint` (with shellcheck on `run:` steps) over the example workflows and `.github/workflows`; every `must-fail/` fixture must be **rejected** with the errors its `# expect-error:` lines name | `npm run check:actions` |
-| `examples/servers` | when installed: `tofu` or `terraform` (`fmt`, `validate`), `ansible-playbook --syntax-check`, `ansible-lint`, `docker compose config`, `docker build`. CI sets `REQUIRE_ALL_TOOLS=1`, so a missing tool fails there. Nothing is applied to a real server | `npm run check:servers` |
+| `examples/servers` | when installed: `tofu` or `terraform` (`fmt`, `validate`), `ansible-playbook --syntax-check`, `ansible-lint`, `docker compose config` (including the Paperclip stack used by the AI guide), `docker build`. CI sets `REQUIRE_ALL_TOOLS=1`, so a missing tool fails there. Nothing is applied to a real server | `npm run check:servers` |
 
 `scripts/check-bash.sh` is the pattern to copy for a new language: find the
 example files, run the strictest checker that is guaranteed to be available,

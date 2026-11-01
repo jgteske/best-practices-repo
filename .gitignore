@@ -9,6 +9,9 @@ docs/.vitepress/cache/
 # Claude
 .tasks
 
+# Real secrets, such as the Paperclip example's
+.env
+
 # Python examples
 __pycache__/
 .venv/

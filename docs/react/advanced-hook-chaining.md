@@ -57,42 +57,7 @@ own `useEffectEvent` forbids. Use it for behaviour, never for derived values.
 
 Every hook below stacks on the same two layers:
 
-```mermaid
-flowchart TD
-  subgraph L0["Layer 0 — freshness"]
-    LR["useLatestRef&lt;T&gt;()<br/>ref updated in a layout effect"]
-  end
-  subgraph L1["Layer 1 — stable identity"]
-    EC["useEventCallback()<br/>same identity, newest body"]
-  end
-  subgraph L2["Layer 2 — timing policy"]
-    T["useTimeout<br/>(fire once, later)"]
-    D["useDebouncedCallback<br/>(collapse a burst)"]
-    I["useInterval<br/>(repeat, null = pause)"]
-    F["useFrameThrottledCallback<br/>(≤1 per repaint)"]
-    TH["useThrottledCallback<br/>(≤1 per wait ms)"]
-    LD["useLoadingDelay<br/>(perceived timing —<br/>owns its own timers)"]
-  end
-  subgraph L3["Layer 3 — domain policy"]
-    DS["useDebouncedSearch<br/>+ AbortController"]
-    P["usePolling<br/>+ backoff + visibility"]
-    S["useScrollProgress"]
-    TP["useTypingPresence"]
-    SR["useSearchResults"]
-  end
-  LR --> EC
-  LR --> T
-  LR --> I
-  EC --> D
-  EC --> F
-  EC --> TH
-  D --> DS
-  I --> P
-  F --> S
-  TH --> TP
-  LD --> SR
-  L3 --> C["Components"]
-```
+![Hooks stacked in four layers: useLatestRef feeds useEventCallback, useTimeout and useInterval; useEventCallback feeds the debounced and throttled callbacks; those feed the domain hooks, which components consume](./diagrams/hook-chain-layers.drawio.png)
 
 ## Debounce: collapse a burst, then cancel the loser
 

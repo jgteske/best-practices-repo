@@ -54,18 +54,7 @@ effect runs, every child has already mounted and run its own effects.
 
 <<< ../../examples/react/lifecycle/mount-order.tsx
 
-```mermaid
-flowchart TD
-  subgraph render["Render — top-down"]
-    direction TB
-    P1[Parent] --> Ca1[Child a] --> Cb1[Child b]
-  end
-  subgraph effects["Effects — bottom-up"]
-    direction TB
-    Ca2[child a effect] --> Cb2[child b effect] --> P2[parent effect]
-  end
-  render ==> effects
-```
+![Render runs top-down from Parent to Child a to Child b, then effects run bottom-up from child a effect to child b effect to parent effect](./diagrams/render-effect-order.drawio.png)
 
 | Phase | Order |
 | --- | --- |

@@ -10,18 +10,7 @@ knowing **when that API is ready**, and keeping re-renders under control.
 When a deeply nested component needs data from the top, passing it prop-by-prop
 forces every component in between to accept and forward props it doesn't use:
 
-```mermaid
-flowchart TD
-  subgraph drilling["❌ Prop drilling"]
-    A1[App: user] -->|user| B1[Layout]
-    B1 -->|user| C1[Sidebar]
-    C1 -->|user| D1[Avatar ✔ uses it]
-  end
-  subgraph context["✅ Context"]
-    A2[App + Provider] -.->|provides| D2[Avatar useAuth ✔]
-    A2 --> B2[Layout] --> C2[Sidebar] --> D2
-  end
-```
+![Prop drilling passes user from App through Layout and Sidebar to Avatar; with context, the Provider in App supplies Avatar directly while Layout and Sidebar only render their children](./diagrams/prop-drilling-vs-context.drawio.png)
 
 `Layout` and `Sidebar` on the right never see `user` - the `Avatar` reaches into
 the context directly.

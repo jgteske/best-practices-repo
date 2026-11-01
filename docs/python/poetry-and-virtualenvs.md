@@ -33,22 +33,7 @@ One project, one venv. Never `pip install` into the system Python, and never
 
 ## The pieces
 
-```mermaid
-flowchart LR
-  subgraph machine["Your machine"]
-    py["Python interpreters<br/>3.12, 3.13, 3.14"]
-    poetry["Poetry<br/>(installed once, globally, with pipx)"]
-  end
-  subgraph project["weather-cli/"]
-    pyproject["pyproject.toml<br/>what you asked for"]
-    lock["poetry.lock<br/>exact versions resolved"]
-    venv[".venv/<br/>what is installed"]
-  end
-  poetry -- "reads/writes" --> pyproject
-  poetry -- "reads/writes" --> lock
-  poetry -- "creates from an interpreter" --> venv
-  py --> venv
-```
+![Poetry on your machine reads and writes pyproject.toml and poetry.lock in the project, and creates .venv from one of the installed Python interpreters](./diagrams/poetry-pieces.drawio.png)
 
 | Piece | Committed to git? | Role |
 | --- | --- | --- |

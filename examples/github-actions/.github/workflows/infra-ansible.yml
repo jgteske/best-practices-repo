@@ -1,0 +1,81 @@
+# Ansible: lint every pull request; on main, dry-run and then apply to the server.
+name: Server configuration
+
+on:
+  pull_request:
+    paths: ["infra/ansible/**"]
+  push:
+    branches: [main]
+    paths: ["infra/ansible/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ansible-production
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: infra/ansible
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.13"
+      - run: pip install ansible-core==2.21.5 ansible-lint==26.10.1
+      - run: ansible-playbook site.yml --syntax-check
+      - run: ansible-lint
+
+  apply:
+    needs: lint
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.13"
+      - run: pip install ansible-core==2.21.5
+
+      # region connect
+      # Join the private network, so port 22 never has to open to GitHub's IP ranges.
+      - uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4.4.0
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      # The host key comes from a repository variable. ssh-keyscan here would
+      # trust whichever machine answered, which defeats the check.
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ vars.SSH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          (umask 077; printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519)
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      # endregion connect
+
+      # region run
+      - name: Dry run
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        run: |
+          (umask 077; printf '%s' "$ANSIBLE_VAULT_PASSWORD" > "$RUNNER_TEMP/vault-pass")
+          ansible-playbook site.yml --check --diff --vault-password-file "$RUNNER_TEMP/vault-pass"
+      - name: Apply
+        run: ansible-playbook site.yml --diff --vault-password-file "$RUNNER_TEMP/vault-pass"
+      # endregion run

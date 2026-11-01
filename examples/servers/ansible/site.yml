@@ -1,0 +1,8 @@
+---
+- name: Configure Coolify servers
+  hosts: coolify_servers
+  become: true
+  roles:
+    - base
+    - ssh_hardening
+    - coolify

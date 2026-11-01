@@ -1,0 +1,8 @@
+---
+base_admin_user: admin
+base_admin_ssh_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleKeyReplaceMe admin@laptop
+base_reboot_time: "04:00"
+
+# Updates happen by changing this line in a pull request, not on their own.
+coolify_version: "4.5.3"

@@ -34,14 +34,18 @@ hand-written Markdown guides rather than docstrings extracted from source.
 │   ├── javascript/           # the JavaScript & Node.js guide
 │   ├── python/               # the Python guide
 │   ├── linux/                # the Linux, Bash & terminal guide
-│   └── git/                  # the Git & collaboration guide
+│   ├── git/                  # the Git & collaboration guide
+│   ├── ci/                   # the CI/CD with GitHub Actions guide
+│   └── servers/              # the Terraform, Ansible & Coolify guide
 ├── examples/                 # real, checked source backing the docs
 │   ├── typescript/           # .ts        - type-checked
 │   ├── react/                # .tsx       - type-checked
 │   ├── javascript/           # .mjs/.cjs  - parsed, then executed
 │   ├── python/               # .py/.ipynb - executed, type-checked, linted
-│   └── bash/                 # .sh        - parsed and linted (git/ ones also run)
-├── scripts/                  # check-bash.sh, check-js.sh, check-python.sh
+│   ├── bash/                 # .sh        - parsed and linted (git/ ones also run)
+│   ├── github-actions/       # .yml       - linted with actionlint
+│   └── servers/              # .tf/.yml   - validated, linted and built, never applied
+├── scripts/                  # check-bash.sh, check-js.sh, check-python.sh, check-actions.sh, check-servers.sh
 ├── tsconfig.json             # typechecks everything under examples/
 └── package.json              # docs:dev / docs:build / typecheck / check:*
 ```
@@ -58,6 +62,7 @@ npm run check:bash     # bash -n (+ shellcheck, if installed), then runs scripts
 npm run check:js       # node --check, then run every JavaScript example
 npm run check:python   # run every Python example (+ mypy, ruff, pytest, Poetry if installed)
 npm run check:actions  # actionlint over the workflows, if installed
+npm run check:servers  # tofu validate, ansible-lint and docker build, if installed
 ```
 
 `npm run check` runs the checks and the production build together - useful

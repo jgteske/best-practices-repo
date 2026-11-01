@@ -14,3 +14,10 @@ dist/
 .pytest_cache/
 .ruff_cache/
 .ipynb_checkpoints/
+
+# Terraform examples (.terraform.lock.hcl is meant to be committed)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+tfplan

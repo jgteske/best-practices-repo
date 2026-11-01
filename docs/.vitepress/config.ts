@@ -171,7 +171,7 @@ const jsTsSidebar: DefaultTheme.SidebarItem[] = [
 
 export default withMermaid(defineConfig({
   title: "Best Practices Repo",
-  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git and CI/CD guides.",
+  description: "A general documentation site, built from Markdown, with in-depth TypeScript, React, JavaScript, Python, Linux, Git, CI/CD and server management guides.",
   lastUpdated: true,
   cleanUrls: true,
 
@@ -195,6 +195,7 @@ export default withMermaid(defineConfig({
       { text: "Linux", link: "/linux/" },
       { text: "Git", link: "/git/" },
       { text: "CI/CD", link: "/ci/" },
+      { text: "Servers", link: "/servers/" },
     ],
 
     sidebar: {
@@ -351,6 +352,33 @@ export default withMermaid(defineConfig({
         {
           text: "Reference",
           items: [{ text: "GitHub Actions Cheat Sheet", link: "/ci/cheatsheet" }],
+        },
+      ],
+      "/servers/": [
+        {
+          text: "Servers",
+          items: [{ text: "Overview", link: "/servers/" }],
+        },
+        {
+          text: "The Tools",
+          items: [
+            { text: "Provisioning with Terraform", link: "/servers/terraform" },
+            { text: "Configuring with Ansible", link: "/servers/ansible" },
+            { text: "Deploying with Coolify", link: "/servers/coolify" },
+            { text: "Docker Setups", link: "/servers/docker" },
+          ],
+        },
+        {
+          text: "Running It",
+          items: [
+            { text: "Automating with CI/CD", link: "/servers/automation" },
+            { text: "Day-to-Day Operations", link: "/servers/operations" },
+            { text: "Running Your Own Server", link: "/servers/your-own-server" },
+          ],
+        },
+        {
+          text: "Reference",
+          items: [{ text: "Servers Cheat Sheet", link: "/servers/cheatsheet" }],
         },
       ],
     },

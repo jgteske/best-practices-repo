@@ -6,6 +6,9 @@ docs/.vitepress/cache/
 !examples/**/sample.log
 .DS_Store
 
+# Claude
+.tasks
+
 # Python examples
 __pycache__/
 .venv/
